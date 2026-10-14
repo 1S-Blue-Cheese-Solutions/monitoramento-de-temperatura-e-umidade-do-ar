@@ -21,7 +21,7 @@ function verSenha() {
 
 
     function entrar() {
-        aguardar();
+       // aguardar();
         validar();
         
         var emailVar = imail.value;
