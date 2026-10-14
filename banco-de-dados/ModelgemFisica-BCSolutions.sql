@@ -12,6 +12,20 @@ flush privileges;
 -- verifica se a permissão foi salva
 show grants for 'usuario_insert'@'localhost';
 
+create table cliente (
+idCliente int primary key auto_increment,
+nome varchar(60),
+cpf varchar(45),
+email varchar(100),
+	constraint chkEmail check (email like'%@%'),
+numeroCelular char(11)
+);
+
+insert into cliente (nome, cpf, email, numeroCelular) values
+('Marcos Almeida', '123.456.789-01', 'marcos.almeida@queijariaserra.com.br', '11987654321'),
+('Fernanda Souza', '234.567.890-12', 'fernanda@laticiniosvale.com.br', '11976543210'),
+('Rafael Moreira', '345.678.901-23', 'rafael.moreira@fazendaazul.com.br', '19965432109');
+
 create table empresa (
 idEmpresa int primary key auto_increment,
 nomeFantasia varchar(50),
@@ -24,8 +38,6 @@ insert into empresa (nomeFantasia, cnpj, fkCliente) values
 ('Queijaria Serra Azul', '12.345.678/0001-90', 1),
 ('Laticínios Vale Verde', '23.456.789/0001-01', 2),
 ('Fazenda Azul Gourmet', '34.567.890/0001-12', 3);
-
-select * from cliente;
 
 create table endereco (
 idEndereco int primary key auto_increment,
@@ -43,20 +55,6 @@ insert into endereco (logradouro, numero, bairro, cidade, estado, cep, fkEmpresa
 ('Estrada do Queijo', '1500', 'Zona Rural', 'Cunha', 'SP', '12530000', 1),
 ('Rua das Acácias', '230', 'Centro', 'Poços de Caldas', 'MG', '37701000', 2),
 ('Rodovia SP-340 km 12', 's/n', 'Zona Rural', 'Mogi Mirim', 'SP', '13800000', 3);
-
-create table cliente (
-idCliente int primary key auto_increment,
-nome varchar(60),
-cpf varchar(45),
-email varchar(100),
-	constraint chkEmail check (email like'%@%'),
-numeroCelular char(11)
-);
-
-insert into cliente (nome, cpf, email, numeroCelular) values
-('Marcos Almeida', '123.456.789-01', 'marcos.almeida@queijariaserra.com.br', '11987654321'),
-('Fernanda Souza', '234.567.890-12', 'fernanda@laticiniosvale.com.br', '11976543210'),
-('Rafael Moreira', '345.678.901-23', 'rafael.moreira@fazendaazul.com.br', '19965432109');
 
 create table ambienteProcesso (
 idAmbienteProcesso int primary key auto_increment,
