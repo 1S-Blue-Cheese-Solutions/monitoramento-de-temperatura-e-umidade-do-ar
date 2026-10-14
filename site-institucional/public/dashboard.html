@@ -48,12 +48,23 @@
           </select>
         </label>
         <label>Período
-          <select>
-            <option>Últimas 24 h</option>
-            <option>Últimas 12 h</option>
-            <option>Últimas 6 h</option>
+          <select id="select_periodo" onchange="trocarPeriodo()" autocomplete="off">
+            <option value="24">Últimas 24 h</option>
+            <option value="12" selected>Últimas 12 h</option>
+            <option value="6">Últimas 6 h</option>
+            <option >Personalizado</option>
           </select>
         </label>
+        <!-- aparece no modo "Personalizado" -->
+        <div class="dashboard-periodo" id="div_periodo">
+          <label>De
+            <input type="date" id="input_inicio" value="2026-10-11">
+          </label>
+          <label>Até
+            <input type="date" id="input_fim" value="2026-10-13">
+          </label>
+          <button onclick="filtrar()">Filtrar</button>
+        </div>
       </div>
     </div>
 
@@ -90,7 +101,7 @@
     <div class="dashboard-grid">
       <div class="dashboard-panel">
         <div class="dashboard-panel-header">
-          <h2>Temperatura em Celsius no Tempo da Maturação</h2>
+          <h2>Temperatura em Graus Celsius por Hora</h2>
           <span>Faixa sombreada = intervalo ideal da fase</span>
         </div>
         <div class="dashboard-chart-container">
@@ -114,7 +125,7 @@
 
       <div class="dashboard-panel">
         <div class="dashboard-panel-header">
-          <h2>Umidade Relativa em Porcentagem no Tempo da Maturação</h2>
+          <h2>Umidade Relativa em Porcentagem por Hora</h2>
           <span>Faixa sombreada = intervalo ideal da fase</span>
         </div>
         <div class="dashboard-chart-container">
@@ -187,7 +198,6 @@
       </div>
     </div>
 
-    <p class="dashboard-demo-notice">Dados ilustrativos para demonstrar a interface.</p>
   </div>
 
   <script src="./js/dashboard.js"></script>
