@@ -74,7 +74,7 @@ function verSenha() {
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizarAguardar(texto);
+                //    finalizarAguardar(texto);
                 });
             }
 
@@ -86,5 +86,5 @@ function verSenha() {
     }
 
     function sumirMensagem() {
-        cardErro.style.display = "none"
+     //   cardErro.style.display = "none"
     }
