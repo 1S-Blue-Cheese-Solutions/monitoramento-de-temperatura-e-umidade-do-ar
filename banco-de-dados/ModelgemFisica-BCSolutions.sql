@@ -4,6 +4,7 @@ use BlueCheeseSol;
 create user 'usuario_insert '@'localhost' identified by 'QueijoAzul100';
 
 grant insert on BlueCheeseSol.* to 'usuario_insert '@'localhost';
+grant select on BlueCheeseSol.* to 'usuario_insert '@'localhost';
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
