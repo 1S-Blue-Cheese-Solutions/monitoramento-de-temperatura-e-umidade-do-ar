@@ -100,13 +100,23 @@ function registrar() {
 
 }
 
-function verSenha() {
+function verSenha1() {
     if (isenha.type == 'password') {
         isenha.type = 'text';
-        btn_ver.innerHTML = 'OCULTAR';
+        btn_ver1.innerHTML = 'OCULTAR';
     } else {
         isenha.type = 'password';
-        btn_ver.innerHTML = 'VER';
+        btn_ver1.innerHTML = 'VER';
+    }
+}
+
+function verSenha2() {
+    if (iconfirmacao.type == 'password') {
+        iconfirmacao.type = 'text';
+        btn_ver2.innerHTML = 'OCULTAR';
+    } else {
+        iconfirmacao.type = 'password';
+        btn_ver2.innerHTML = 'VER';
     }
 }
 
