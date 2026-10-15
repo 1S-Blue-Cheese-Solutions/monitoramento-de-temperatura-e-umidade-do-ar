@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,38 +7,42 @@
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./assets/LogoBlueCheese.png" type="image/x-icon">
     <title>Registro - Blue Cheese</title>
+
 </head>
+
 <body>
     <main class="main-login">
         <header class="site-header">
             <div class="container nav">
-            <a href="index.html#home" class="brand" aria-label="Blue Cheese - início">
-                <img src="./assets/LogoBlueCheese.png" alt="Logo Blue Cheese">
-            </a>
+                <a href="index.html#home" class="brand" aria-label="Blue Cheese - início">
+                    <img src="./assets/LogoBlueCheese.png" alt="Logo Blue Cheese">
+                </a>
 
-            <nav class="nav-links" id="nav_links" aria-label="Navegação principal">
-                <a href="index.html#home">Home</a>
-                <a href="index.html#sobre">Sobre</a>
-                <a href="index.html#como-funciona">Como funciona</a>
-                <a href="index.html#simulador">Simulador financeiro</a>
-                <a href="index.html#quem-somos">Quem somos</a>
-            </nav>
+                <nav class="nav-links" id="nav_links" aria-label="Navegação principal">
+                    <a href="index.html#home">Home</a>
+                    <a href="index.html#sobre">Sobre</a>
+                    <a href="index.html#como-funciona">Como funciona</a>
+                    <a href="index.html#simulador">Simulador financeiro</a>
+                    <a href="index.html#quem-somos">Quem somos</a>
+                </nav>
 
-            <a class="nav-cta" href="login.html">Monitoramento →</a>
+                <a class="nav-cta" href="login.html">Monitoramento →</a>
             </div>
         </header>
 
         <div class="login-overlay">
             <section class="login-card registro-card">
                 <div class="login-intro">
-                    <img src="assets/LogoBlueCheese.png">
+                    <img src="assets/LogoBlueCheese.png" alt="Logo Blue Cheese">
                     <h1>Cadastre a sua empresa!</h1>
                     <p>Preencha os dados ao lado para começar a monitorar a maturação dos seus queijos.</p>
                 </div>
 
                 <div class="login-panel">
                     <a href="index.html" class="login-fechar">X</a>
-                    <form class="login-form" autocomplete="on">
+
+                    <form class="login-form" autocomplete="on" novalidate onsubmit="registrar(); return false;">
+
                         <div class="registro-linha">
                             <div class="registro-campo">
                                 <label for="iempresa">Nome da empresa</label>
@@ -46,6 +51,7 @@
                                 </div>
                                 <div class="login-msg" id="div_result_empresa"></div>
                             </div>
+
                             <div class="registro-campo">
                                 <label for="icnpj">CNPJ</label>
                                 <div class="login-field">
@@ -63,6 +69,7 @@
                                 </div>
                                 <div class="login-msg" id="div_result_cliente"></div>
                             </div>
+
                             <div class="registro-campo">
                                 <label for="icpf">CPF</label>
                                 <div class="login-field">
@@ -80,6 +87,7 @@
                                 </div>
                                 <div class="login-msg" id="div_result_mail"></div>
                             </div>
+
                             <div class="registro-campo">
                                 <label for="icelular">Celular</label>
                                 <div class="login-field">
@@ -91,7 +99,7 @@
 
                         <label for="isenha">Senha</label>
                         <div class="login-field">
-                            <img class="lock-icon" src="assets/lockicon.svg">
+                            <img class="lock-icon" src="assets/lockicon.svg" alt="">
                             <input type="password" id="isenha" placeholder="••••••••" maxlength="30">
                             <button type="button" class="login-ver" id="btn_ver1" onclick="verSenha1()">VER</button>
                         </div>
@@ -99,20 +107,37 @@
 
                         <label for="iconfirmacao">Confirmação de senha</label>
                         <div class="login-field">
-                            <img class="lock-icon" src="assets/lockicon.svg">
+                            <img class="lock-icon" src="assets/lockicon.svg" alt="">
                             <input type="password" id="iconfirmacao" placeholder="••••••••" maxlength="30">
                             <button type="button" class="login-ver" id="btn_ver2" onclick="verSenha2()">VER</button>
                         </div>
                         <div class="login-msg" id="div_result_confirmacao_senha"></div>
 
-                        <button type="button" class="login-entrar" id="btn_registrar" onclick="registrar()">Registrar</button>
+                        <button type="submit" class="login-entrar" id="btn_registrar">Registrar</button>
                     </form>
 
-                    <p class="login-registro">Já possui conta? <a href="login.html">Entrar</a></p>
+                    <p class="login-registro">
+                        Já possui conta? <a href="login.html">Entrar</a>
+                    </p>
                 </div>
             </section>
         </div>
     </main>
+
+    <div id="popup"
+         class="bc-popup-overlay"
+         role="alertdialog"
+         aria-modal="true"
+         aria-hidden="true"
+         aria-labelledby="popupTitulo"
+         aria-describedby="mensagemPopup">
+
+        <div id="popupCard" class="bc-popup-card">
+            <h2 id="popupTitulo">Atenção</h2>
+            <p id="mensagemPopup"></p>
+            <button type="button" onclick="fecharPopup()">Fechar</button>
+        </div>
+    </div>
 
     <script src="./js/registro.js"></script>
 </body>
