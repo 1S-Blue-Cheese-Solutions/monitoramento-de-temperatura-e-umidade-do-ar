@@ -1,3 +1,4 @@
+
 function registrar() {
     // Implementar mais tarde o envio do cadastro
     let empresa = iempresa.value;
@@ -9,45 +10,45 @@ function registrar() {
     let flagError = false;
 
     if(empresa == '') {
-        div_result_empresa.innerHTML=`Informe o nome da empresa`
+        div_result_empresa.innerHTML = `Informe o nome da empresa`
         flagError = true;
     } else {
-        div_result_empresa.innerHTML=``
+        div_result_empresa.innerHTML = ``
     }
 
     if(cnpj.length != 14 || cnpj.includes("-") || cnpj.includes(".")) {
-        div_result_cnpj.innerHTML=`CNPJ deve ter 14 números`
+        div_result_cnpj.innerHTML = `CNPJ deve ter 14 números`
         flagError = true;
     } else {
-        div_result_cnpj.innerHTML=``
+        div_result_cnpj.innerHTML = ``
     }
 
     if(cliente == '') {
-        div_result_cliente.innerHTML=`Informe o seu nome`
+        div_result_cliente.innerHTML = `Informe o seu nome`
         flagError = true;
     } else {
-        div_result_cliente.innerHTML=``
+        div_result_cliente.innerHTML = ``
     }
 
     if(cpf.length != 11 || cnpj.includes("-") || cnpj.includes(".")) {
-        div_result_cpf.innerHTML=`CPF deve ter 11 números`
+        div_result_cpf.innerHTML = `CPF deve ter 11 números`
         flagError = true;
     } else {
-        div_result_cpf.innerHTML=``
+        div_result_cpf.innerHTML = ``
     }
 
     if(email.includes('@') && email.includes('.com')) {
-        div_result_mail.innerHTML=``
+        div_result_mail.innerHTML = ``
     } else {
-        div_result_mail.innerHTML=`Email deve conter @ e .com`
+        div_result_mail.innerHTML = `Email deve conter @ e .com`
         flagError = true;
     }
 
     if(celular.length != 11) {
-        div_result_celular.innerHTML=`Celular deve ter DDD + 9 números`
+        div_result_celular.innerHTML = `Celular deve ter DDD + 9 números`
         flagError = true;
     } else {
-        div_result_celular.innerHTML=``
+        div_result_celular.innerHTML = ``
     }
 
     // VALIDAÇÃO DA SENHA
@@ -57,27 +58,27 @@ function registrar() {
     let temMinuscula = senha !== senha.toLowerCase();
 
     if(temMaiuscula && temMinuscula && tamanhoSenha >= 8) {
-        div_result_senha.innerHTML=``
+        div_result_senha.innerHTML = ``
     } else if(temMaiuscula && temMinuscula) {
-        div_result_senha.innerHTML=`Senha deve ter mais que 8 caracteres`
+        div_result_senha.innerHTML = `Senha deve ter mais que 8 caracteres`
         flagError = true;
     } else if(temMaiuscula && tamanhoSenha >= 8) {
-        div_result_senha.innerHTML=`Senha deve conter letra minuscula`
+        div_result_senha.innerHTML = `Senha deve conter letra minuscula`
         flagError = true;
-    }else if(temMinuscula && tamanhoSenha >= 8) {
-        div_result_senha.innerHTML=`Senha deve conter letra maiscula`
+    } else if(temMinuscula && tamanhoSenha >= 8) {
+        div_result_senha.innerHTML = `Senha deve conter letra maiscula`
         flagError = true;
-    } else if(tamanhoSenha >= 8){
-        div_result_senha.innerHTML=`Senha deve conter Maiuscula e minuscula`
+    } else if(tamanhoSenha >= 8) {
+        div_result_senha.innerHTML = `Senha deve conter Maiuscula e minuscula`
         flagError = true;
     } else if(temMaiuscula) {
-        div_result_senha.innerHTML=`Senha deve ter mais que 8 caracteres <br> e conter minuscula`
+        div_result_senha.innerHTML = `Senha deve ter mais que 8 caracteres <br> e conter minuscula`
         flagError = true;
     } else if(temMinuscula) {
-        div_result_senha.innerHTML=`Senha deve ter mais que 8 caracteres <br> e conter minuscula`
+        div_result_senha.innerHTML = `Senha deve ter mais que 8 caracteres <br> e conter minuscula`
         flagError = true;
-    } else if(tamanhoSenha == 0){
-        div_result_senha.innerHTML=`Informe uma senha`
+    } else if(tamanhoSenha == 0) {
+        div_result_senha.innerHTML = `Informe uma senha`
         flagError = true;
     }
 
@@ -92,12 +93,11 @@ function registrar() {
         contador++;
     }
 
-    if(flagError){
+    if(flagError) {
         return
     }
 
     cadastrar();
-
 }
 
 function verSenha1() {
@@ -120,10 +120,10 @@ function verSenha2() {
     }
 }
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
+// Array para armazenar empresas cadastradas para validação de código de ativação
+let listaEmpresasCadastradas = [];
 
-  function cadastrar() {
+function cadastrar() {
     // aguardar();
 
     //Recupere o valor da nova input pelo nome do id
@@ -139,23 +139,23 @@ function verSenha2() {
 
     // Verificando se há algum campo em branco
     if (
-      nomeFantasiaVar == "" ||
-      numeroCelular == "" ||
-      cnpjVar == "" ||
-      nomeVar == "" ||
-      emailVar == "" ||
-      cpfVar == "" ||
-      senhaVar == "" ||
-      confirmacaoSenhaVar == ""
+        nomeFantasiaVar == "" ||
+        numeroCelular == "" ||
+        cnpjVar == "" ||
+        nomeVar == "" ||
+        emailVar == "" ||
+        cpfVar == "" ||
+        senhaVar == "" ||
+        confirmacaoSenhaVar == ""
     ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML =
+            "(Mensagem de erro para todos os campos em branco)";
 
-      finalizarAguardar();
-      return false;
+        finalizarAguardar();
+        return false;
     } else {
-      setInterval(sumirMensagem, 5000);
+        setInterval(sumirMensagem, 5000);
     }
 
     // Verificando se o código de ativação é de alguma empresa cadastrada
@@ -173,69 +173,83 @@ function verSenha2() {
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeFantasiaServer: nomeFantasiaVar,
-        numeroCelularServer: numeroCelular,
-        cnpjServer: cnpjVar,
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        cpfServer: cpfVar
-      }),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            nomeFantasiaServer: nomeFantasiaVar,
+            numeroCelularServer: numeroCelular,
+            cnpjServer: cnpjVar,
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+            cpfServer: cpfVar
+        }),
     })
-      .then(function (resposta) {
+    .then(function (resposta) {
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-          cardErro.style.display = "block";
+            cardErro.style.display = "block";
 
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+            mensagem_erro.innerHTML =
+                "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
-          setTimeout(() => {
-            window.location = "../login.html";
-          }, "2000");
+            setTimeout(() => {
+                window.location = "../login.html";
+            }, "2000");
 
-          limparFormulario();
-          finalizarAguardar();
+            limparFormulario();
+            finalizarAguardar();
         } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+            throw "Houve um erro ao tentar realizar o cadastro!";
         }
-      })
-      .catch(function (resposta) {
+    })
+    .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
         // finalizarAguardar();
-      });
+
+        // POPUP ADICIONADO
+        mostrarPopup("Não foi possível realizar o cadastro. Verifique a conexão e tente novamente.");
+    });
 
     return false;
-  }
+}
 
-  // Listando empresas cadastradas 
-  function listar() {
+// Listando empresas cadastradas
+function listar() {
     fetch("/empresas/listar", {
-      method: "GET",
+        method: "GET",
     })
-      .then(function (resposta) {
+    .then(function (resposta) {
         resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
+            empresas.forEach((empresa) => {
+                listaEmpresasCadastradas.push(empresa);
 
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
+                console.log("listaEmpresasCadastradas")
+                console.log(listaEmpresasCadastradas[0].codigo_ativacao)
+            });
         });
-      })
-      .catch(function (resposta) {
+    })
+    .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-      });
-  }
 
-  function sumirMensagem() {
+        mostrarPopup("Não foi possível carregar a lista de empresas. Verifique a conexão com a API.");
+    });
+}
+
+function sumirMensagem() {
     cardErro.style.display = "none";
-  }
+}
+
+function mostrarPopup(mensagem) {
+    document.getElementById("mensagemPopup").textContent = mensagem;
+    document.getElementById("popup").style.display = "flex";
+}
+
+function fecharPopup() {
+    document.getElementById("popup").style.display = "none";
+}
