@@ -148,14 +148,7 @@ function cadastrar() {
         senhaVar == "" ||
         confirmacaoSenhaVar == ""
     ) {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML =
-            "(Mensagem de erro para todos os campos em branco)";
-
-        finalizarAguardar();
-        return false;
-    } else {
-        setInterval(sumirMensagem, 5000);
+        mostrarPopup('Você precisa preencher todos os campos!')
     }
 
     // Verificando se o código de ativação é de alguma empresa cadastrada
@@ -167,7 +160,6 @@ function cadastrar() {
     //   } else {
     //     cardErro.style.display = "block";
     //     mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-    //     finalizarAguardar();
     //   }
     // }
 
@@ -193,63 +185,29 @@ function cadastrar() {
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-            cardErro.style.display = "block";
-
-            mensagem_erro.innerHTML =
-                "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
             setTimeout(() => {
                 window.location = "../login.html";
             }, "2000");
 
-            limparFormulario();
-            finalizarAguardar();
         } else {
             throw "Houve um erro ao tentar realizar o cadastro!";
         }
     })
     .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-        // finalizarAguardar();
 
-        // POPUP ADICIONADO
-        mostrarPopup("Não foi possível realizar o cadastro. Verifique a conexão e tente novamente.");
+        mostrarPopup(resposta);
     });
 
     return false;
 }
 
-// Listando empresas cadastradas
-function listar() {
-    fetch("/empresas/listar", {
-        method: "GET",
-    })
-    .then(function (resposta) {
-        resposta.json().then((empresas) => {
-            empresas.forEach((empresa) => {
-                listaEmpresasCadastradas.push(empresa);
-
-                console.log("listaEmpresasCadastradas")
-                console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-            });
-        });
-    })
-    .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-
-        mostrarPopup("Não foi possível carregar a lista de empresas. Verifique a conexão com a API.");
-    });
-}
-
-function sumirMensagem() {
-    cardErro.style.display = "none";
-}
-
 function mostrarPopup(mensagem) {
-    document.getElementById("mensagemPopup").textContent = mensagem;
-    document.getElementById("popup").style.display = "flex";
+    mensagemPopup.textContent = mensagem;
+    popup.style.display = "flex";
 }
 
 function fecharPopup() {
-    document.getElementById("popup").style.display = "none";
+    popup.style.display = "none";
 }
