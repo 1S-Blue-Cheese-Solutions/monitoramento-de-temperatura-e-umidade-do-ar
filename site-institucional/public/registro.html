@@ -41,8 +41,7 @@
                 <div class="login-panel">
                     <a href="index.html" class="login-fechar">X</a>
 
-                    <form class="login-form" autocomplete="on" novalidate onsubmit="registrar(); return false;">
-
+                    <form class="login-form">
                         <div class="registro-linha">
                             <div class="registro-campo">
                                 <label for="iempresa">Nome da empresa</label>
@@ -113,7 +112,7 @@
                         </div>
                         <div class="login-msg" id="div_result_confirmacao_senha"></div>
 
-                        <button type="submit" class="login-entrar" id="btn_registrar">Registrar</button>
+                        <button type="button" class="login-entrar" onclick="registrar()">Registrar</button>
                     </form>
 
                     <p class="login-registro">
