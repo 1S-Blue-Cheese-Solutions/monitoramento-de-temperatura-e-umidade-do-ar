@@ -6,7 +6,8 @@ function validarSessao() {
     var b_usuario = document.getElementById("b_usuario");
 
     if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+        // Informações do usuário
+        //b_usuario.innerHTML = nome;
     } else {
         window.location = "./login.html";
     }
@@ -14,7 +15,6 @@ function validarSessao() {
 
 function limparSessao() {
     sessionStorage.clear();
-    window.location = "./login.html";
 }
 
 function mostrarPopup(mensagem) {
