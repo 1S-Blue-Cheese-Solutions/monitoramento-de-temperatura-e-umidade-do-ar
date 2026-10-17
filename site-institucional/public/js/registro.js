@@ -40,7 +40,7 @@ function registrar() {
     if(email.includes('@') && email.includes('.com')) {
         div_result_mail.innerHTML = ``
     } else {
-        div_result_mail.innerHTML = `Email deve conter @ e .com`
+        div_result_mail.innerHTML = `E-mail deve conter @ e .com`
         flagError = true;
     }
 
