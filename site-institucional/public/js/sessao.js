@@ -16,3 +16,12 @@ function limparSessao() {
     sessionStorage.clear();
     window.location = "./login.html";
 }
+
+function mostrarPopup(mensagem) {
+    mensagemPopup.textContent = mensagem;
+    popup.style.display = "flex";
+}
+
+function fecharPopup() {
+    popup.style.display = "none";
+}

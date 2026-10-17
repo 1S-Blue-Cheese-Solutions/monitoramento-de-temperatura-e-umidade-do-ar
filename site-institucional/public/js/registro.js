@@ -183,19 +183,9 @@ function cadastrar() {
         }
     })
     .catch(function (resposta) {
+        mostrarPopup("Houve um erro ao tentar realizar o cadastro!");
         console.log(`#ERRO: ${resposta}`);
-
-        mostrarPopup(resposta);
     });
 
     return false;
-}
-
-function mostrarPopup(mensagem) {
-    mensagemPopup.textContent = mensagem;
-    popup.style.display = "flex";
-}
-
-function fecharPopup() {
-    popup.style.display = "none";
 }

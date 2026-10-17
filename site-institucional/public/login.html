@@ -63,6 +63,22 @@
         </div>
     </main>
 
+    <div id="popup"
+        class="bc-popup-overlay"
+        role="alertdialog"
+        aria-modal="true"
+        aria-hidden="true"
+        aria-labelledby="popupTitulo"
+        aria-describedby="mensagemPopup">
+
+        <div id="popupCard" class="bc-popup-card">
+            <h2 id="popupTitulo">Atenção</h2>
+            <p id="mensagemPopup"></p>
+            <button type="button" onclick="fecharPopup()">Fechar</button>
+        </div>
+    </div>
+
     <script src="./js/login.js"></script>
+    <script src="./js/sessao.js"></script>
 </body>
 </html>
