@@ -151,18 +151,6 @@ function cadastrar() {
         mostrarPopup('Você precisa preencher todos os campos!')
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-    //   if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-    //     idEmpresaVincular = listaEmpresasCadastradas[i].id
-    //     console.log("Código de ativação válido.");
-    //     break;
-    //   } else {
-    //     cardErro.style.display = "block";
-    //     mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-    //   }
-    // }
-
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
         method: "POST",
@@ -188,7 +176,7 @@ function cadastrar() {
 
             setTimeout(() => {
                 window.location = "../login.html";
-            }, "2000");
+            }, "1000");
 
         } else {
             throw "Houve um erro ao tentar realizar o cadastro!";
