@@ -12,7 +12,7 @@ function entrar() {
     var emailVar = imail.value;
     var senhaVar = isenha.value;
 
-    if(!(email.includes('@') && email.includes('.com'))) {
+    if(!(emailVar.includes('@') && emailVar.includes('.com'))) {
         mostrarPopup('o e-mail deve conter \'@\' e \'.com\'!');
         return false;
     }
@@ -45,9 +45,10 @@ function entrar() {
                 console.log(JSON.stringify(json));
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
+                sessionStorage.FK_CLIENTE = json.fkCliente;
 
                 setTimeout(function () {
-                    window.location = "../dashboard.html";
+                    window.location = "./dashboard.html";
                 }, 1000); // apenas para exibir o loading
 
             });
