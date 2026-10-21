@@ -4,17 +4,19 @@ use BlueCheeseSol;
 
 -- Usuario dat-acqu-ino
 create user 'user_ino'@'localhost' identified by 'Urubu@100';
-grant insert on BlueCheeseSol.* to 'user_ino '@'localhost';
+grant insert on BlueCheeseSol.* to 'user_ino'@'localhost'; -- comando deve ser copiado na VM
 
 -- Usuario web-data-viz
 create user 'user_dataViz'@'localhost' identified by 'Urubu@300';
-grant insert, select on BlueCheeseSol.* to 'user_dataViz '@'localhost';
+grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost'; -- comando deve ser copiado na VM
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
 
 -- verifica se a permissão foi salva
-show grants for 'usuario_insert'@'localhost';
+show grants for 'user_ino'@'localhost';
+show grants for 'user_dataViz'@'localhost';
+
 
 create table cliente (
 idCliente int primary key auto_increment,
@@ -141,7 +143,7 @@ select sensorTemperatura as 'Temperatura',
 		when sensorTemperatura between 8 and 12 then 'Dentro da faixa'
         else 'Fora da faixa'
 	end as 'Temperatura Atual'
-from sensorTemperatura;
+from leituraSensor;
 
 -- Segunda KPI: Umidade Atual
 select sensorUmidade as 'Umidade',
