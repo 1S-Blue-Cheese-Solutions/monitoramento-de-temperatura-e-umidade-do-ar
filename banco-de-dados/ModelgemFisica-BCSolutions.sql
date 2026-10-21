@@ -1,16 +1,13 @@
 create database BlueCheeseSol;
 
 use BlueCheeseSol;
-create user 'usuario_insert '@'localhost' identified by 'QueijoAzul100';
 
 -- Usuario dat-acqu-ino
-create user 'user_ino'@'localhost' identified by 'urubu100';
+create user 'user_ino'@'localhost' identified by 'Urubu@100';
+grant insert on BlueCheeseSol.* to 'user_ino '@'localhost';
 
-grant insert on BlueCheeseSol.* to 'insert_ino '@'localhost';
-
--- Usuario user web-data-viz
-create user 'user_dataViz'@'localhost' identified by 'urubu300';
-
+-- Usuario web-data-viz
+create user 'user_dataViz'@'localhost' identified by 'Urubu@300';
 grant insert, select on BlueCheeseSol.* to 'user_dataViz '@'localhost';
 
 -- comando para salvar as mudanças de usuario
