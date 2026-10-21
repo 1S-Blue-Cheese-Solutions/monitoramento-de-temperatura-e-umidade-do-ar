@@ -14,7 +14,9 @@ grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost'; -- comand
 flush privileges;
 
 -- verifica se a permissão foi salva
-show grants for 'usuario_insert'@'localhost';
+show grants for 'user_ino'@'localhost';
+show grants for 'user_dataViz'@'localhost';
+
 
 create table cliente (
 idCliente int primary key auto_increment,
