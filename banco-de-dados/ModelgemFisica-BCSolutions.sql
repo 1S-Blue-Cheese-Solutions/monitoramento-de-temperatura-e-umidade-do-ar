@@ -2,12 +2,12 @@ create database BlueCheeseSol;
 
 use BlueCheeseSol;
 
--- Usuario insert dat-acqu-ino
-create user 'insert_ino'@'localhost' identified by 'urubu100';
+-- Usuario dat-acqu-ino
+create user 'user_ino'@'localhost' identified by 'urubu100';
 
 grant insert on BlueCheeseSol.* to 'insert_ino '@'localhost';
 
--- Usuario insert web-data-viz
+-- Usuario user web-data-viz
 create user 'user_dataViz'@'localhost' identified by 'urubu300';
 
 grant insert, select on BlueCheeseSol.* to 'user_dataViz '@'localhost';
