@@ -139,6 +139,9 @@
 <section class="section" id="simulador">
       <div class="container">
         <div class="eyebrow">Simulador Financeiro</div>
+<<<<<<< HEAD
+        <h2 class="section-title" style="font-size:34px;">Calculadora de queijo perdido</h2><br>
+=======
         <h2 class="section-title" style="font-size:34px;">Calculadora de queijo perdido</h2>
     <span>
       Informe a quantidade de queijo perdida e o tipo para calcular o prejuízo
@@ -146,25 +149,26 @@
     </span>
     <br />
     <br>
+>>>>>>> b604706e202e3622df310fe30df250da8b0a97f8
     <label>Quantos quilos de queijo foram perdidos?</label><br />
-    <input type="text" id="input_quilos" /><br />
+    <input type="text" class="inputSimulador" id="input_quilos" /><br />
     <br>
     <label>Qual o tipo de queijo?</label><br />
-    <select id="select_queijo">
+    <select id="select_queijo" class="inputSimulador">
       <option value="0" selected disabled>Selecione uma opção</option>
       <option value="400">Roquefort (R$400,00 / kg)</option>
       <option value="120">Gorgonzola (R$120,00 / kg)</option>
     </select>
     <br />
     <br />
-    <button onclick="queijoPerdido()">Calcular Prejuízo</button><br /><br />
-    <div id="div_resultado"></div>
+    <button onclick="queijoPerdido()" class="buttonSimulador">Calcular Prejuízo</button><br /><br />
+    <div id="div_resultado" class="resultSimulador"></div>
     <br />
     <br />
     <h2 class="section-title" style="font-size:34px;">Calculadora de sensores</h2>
     <br>
-    <span> Escolha qual pacote de sensores você deseja </span>
-    <select id="select_pacote">
+    <span> Escolha qual pacote de sensores você deseja </span><br>
+    <select id="select_pacote" class="inputSimulador">
       <option selected disabled>Insira uma opção</option>
       <option value="1">Pacote 10 sensores</option>
       <option value="2">Pacote 20 sensores</option>
@@ -172,14 +176,26 @@
     </select>
     <br />
     <br>
+<<<<<<< HEAD
+    <button onclick="escolher()" class="buttonSimulador">Escolher</button> <br />
+
+    <div id="div_exbCalc" class="resultSimulador"></div>
+=======
     <button onclick="escolher()">Escolher</button> <br />
     <div id="div_exbCalc"></div>
+>>>>>>> b604706e202e3622df310fe30df250da8b0a97f8
     <br>
     <br>
     <h2 class="section-title" style="font-size:34px;">Calculadora de investimento x retorno</h2> 
     <br>
+<<<<<<< HEAD
+
+       <span> Escolha qual pacote de sensores você deseja </span><br>
+    <select id="select_pacote2" class="inputSimulador">
+=======
        <span> Escolha qual pacote de sensores você deseja </span>
     <select id="select_pacote2">
+>>>>>>> b604706e202e3622df310fe30df250da8b0a97f8
       <option selected disabled>Insira uma opção</option>
       <option value="1">Pacote 10 sensores (R$300)</option>
       <option value="2">Pacote 20 sensores (R$600)</option>
@@ -191,10 +207,11 @@
       Informe qual o seu lucro semanal com a venda de queijos
     </span>
     <br>
-    <input type="text" id="input_lucro" />
+    <input type="text" id="input_lucro" class="inputSimulador"/>
     <br>
-    <button onclick="calcularRetorno()">Calcular Retorno</button>
-    <div id="div_exbRoi"></div>
+    <br>
+    <button onclick="calcularRetorno()" class="buttonSimulador">Calcular Retorno</button>
+    <div id="div_exbRoi" class="resultSimulador"></div>
 
       </div>
     </section>
