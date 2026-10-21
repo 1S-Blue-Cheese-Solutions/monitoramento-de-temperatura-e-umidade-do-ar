@@ -37,3 +37,47 @@ function escolher() {
     div_exbCalc.innerHTML = `Você optou pelo sistema com 30 sensores, seu gasto com sensores será de R$${pacote30Format}`;
   }
 }
+
+function calcularRetorno() {
+  let pacote = select_pacote2.value;
+  let lucroSemanal = Number(input_lucro.value);
+  let unidSensor = 30;
+  let investimentoTotal;
+
+  if (pacote == "1") {
+    investimentoTotal = unidSensor * 10;
+  } else if (pacote == "2") {
+    investimentoTotal = unidSensor * 20;
+  } else if (pacote == "3") {
+    investimentoTotal = unidSensor * 30;
+  } else {
+    div_exbRoi.innerHTML = "Por favor, selecione um pacote de sensores.";
+    return;
+  }
+
+
+  let retornoMensal = lucroSemanal * 4 - investimentoTotal;
+  let contadorSemana = 0;
+  let contadorLucro = 0;
+
+  while (contadorLucro < investimentoTotal) {
+    contadorLucro += lucroSemanal;
+    contadorSemana++;
+
+    if (contadorSemana == 1) {
+      div_exbRoi.innerHTML = `O retorno do investimento será alcançado em apenas uma semana.`;
+    } else {
+      div_exbRoi.innerHTML = `O retorno do investimento será alcançado em ${contadorSemana} semanas.`;
+    }
+  
+  }
+
+  div_exbRoi.innerHTML += `
+        <div>
+            Investimento total: R$ ${investimentoTotal.toFixed(2)}<br>
+            Retorno mensal: R$ ${retornoMensal.toFixed(2)}
+        </div>
+    `;
+
+        
+}

@@ -176,6 +176,31 @@
     <button onclick="escolher()">Escolher</button> <br />
 
     <div id="div_exbCalc"></div>
+    <br>
+    <br>
+
+    <h2 class="section-title" style="font-size:34px;">Calculadora de investimento x retorno</h2> 
+    <br>
+
+       <span> Escolha qual pacote de sensores você deseja </span>
+    <select id="select_pacote2">
+      <option selected disabled>Insira uma opção</option>
+      <option value="1">Pacote 10 sensores (R$300)</option>
+      <option value="2">Pacote 20 sensores (R$600)</option>
+      <option value="3">Pacote 30 sensores (R$900)</option>
+    </select>
+    <br> 
+    <br>
+
+    <span> 
+      Informe qual o seu lucro semanal com a venda de queijos
+    </span>
+    <br>
+    <input type="text" id="input_lucro" />
+    <br>
+    <button onclick="calcularRetorno()">Calcular Retorno</button>
+    <div id="div_exbRoi"></div>
+
       </div>
     </section>
      <section class="section" id="quem-somos">
