@@ -8,7 +8,7 @@ grant insert on BlueCheeseSol.* to 'user_ino'@'localhost'; -- comando deve ser c
 
 -- Usuario web-data-viz
 create user 'user_dataViz'@'localhost' identified by 'Urubu@300';
-grant insert, select on BlueCheeseSol.* to 'user_dataViz '@'localhost'; -- comando deve ser copiado na VM
+grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost'; -- comando deve ser copiado na VM
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
