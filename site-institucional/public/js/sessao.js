@@ -2,13 +2,21 @@
 function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
     var nome = sessionStorage.NOME_CLIENTE;
-    
 
-    var b_usuario = document.getElementById("b_usuario");
+    var b_usuario = document.getElementById("nome_usuario");
+    var avatar_usuario = document.getElementById("avatar_usuario");
 
     if (email != null && nome != null) {
-        // Informações do usuário
-        //b_usuario.innerHTML = nome;
+        b_usuario.innerHTML = nome;
+
+        avatar_usuario.innerHTML = nome
+            .trim()
+            .split(" ")
+            .filter(palavra => palavra != "")
+            .map(palavra => palavra[0])
+            .slice(0, 2)
+            .join("")
+            .toUpperCase();
     } else {
         window.location = "./login.html";
     }
