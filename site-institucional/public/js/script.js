@@ -12,6 +12,10 @@ function queijoPerdido() {
                 Prejuízo total: R$ ${prejuizoTotal.toFixed(2)}
             </div>
         `;
+
+        div_resultado.style.display = 'block';
+
+
 }
 
 function escolher() {
@@ -36,6 +40,10 @@ function escolher() {
 
     div_exbCalc.innerHTML = `Você optou pelo sistema com 30 sensores, seu gasto com sensores será de R$${pacote30Format}`;
   }
+
+        div_exbCalc.style.display = 'flex';  
+
+
 }
 
 function calcularRetorno() {
@@ -79,5 +87,5 @@ function calcularRetorno() {
         </div>
     `;
 
-        
+        div_exbRoi.style.display = 'flex';  
 }
