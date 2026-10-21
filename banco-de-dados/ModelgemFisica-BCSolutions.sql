@@ -77,7 +77,8 @@ fkEndereco int not null,
 
 insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
 ('Câmara de Maturação 1', 'Câmara A', 'Maturação de Gorgonzola', 8.00, 12.00, 85, 95, 1),
-('Câmara de Maturação 2', 'Câmara B', 'Maturação de Roquefort', 6.00, 10.00, 90, 98, 2);
+('Câmara de Maturação 2', 'Câmara B', 'Maturação de Roquefort', 6.00, 10.00, 90, 98, 1),
+('Câmara de Maturação 3', 'Câmara C', 'Maturação de Gorgonzola', 7.00, 11.00, 92, 97, 1);
 
 create table usuario (
 idUsuario int auto_increment,
@@ -176,44 +177,3 @@ select
 from leituraSensor l
 	join ambienteProcesso a
 		on l.fkAmbienteProcesso = a.idAmbienteProcesso;
-
--- Quarta KPI:
-SELECT
-    COUNT(*)                        AS 'Alertas no Período',
-    SUM(critico)                    AS 'Críticos',
-    SUM(1 - critico)                AS 'Atenção'
-FROM (
-    -- Alertas de temperatura
-    SELECT
-        CASE
-            WHEN l.sensorTemperatura < a.temperaturaMin - 2
-              OR l.sensorTemperatura > a.temperaturaMax + 2
-            THEN 1
-            ELSE 0
-        END AS critico
-    FROM leituraSensor l
-        JOIN ambienteProcesso a
-            ON l.fkAmbienteProcesso = a.idAmbienteProcesso
-    WHERE l.dataHora >= '2026-10-11 00:00:00'
-      AND l.dataHora <  '2026-10-18 00:00:00'
-      AND (l.sensorTemperatura < a.temperaturaMin
-        OR l.sensorTemperatura > a.temperaturaMax)
-
-    UNION ALL
-
-    -- Alertas de umidade
-    SELECT
-        CASE
-            WHEN l.sensorUmidade < a.umidadeMin - 5
-              OR l.sensorUmidade > a.umidadeMax + 5
-            THEN 1
-            ELSE 0
-        END AS critico
-    FROM leituraSensor l
-        JOIN ambienteProcesso a
-            ON l.fkAmbienteProcesso = a.idAmbienteProcesso
-    WHERE l.dataHora >= '2026-10-11 00:00:00'
-      AND l.dataHora <  '2026-10-18 00:00:00'
-      AND (l.sensorUmidade < a.umidadeMin
-        OR l.sensorUmidade > a.umidadeMax)
-) AS alertas;
