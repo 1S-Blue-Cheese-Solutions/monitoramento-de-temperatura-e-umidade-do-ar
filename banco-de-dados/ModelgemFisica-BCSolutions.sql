@@ -1,4 +1,4 @@
--- create database BlueCheeseSol;
+create database BlueCheeseSol;
 
 use BlueCheeseSol;
 
@@ -143,7 +143,7 @@ select sensorTemperatura as 'Temperatura',
 		when sensorTemperatura between 8 and 12 then 'Dentro da faixa'
         else 'Fora da faixa'
 	end as 'Temperatura Atual'
-from sensorTemperatura;
+from leituraSensor;
 
 -- Segunda KPI: Umidade Atual
 select sensorUmidade as 'Umidade',
