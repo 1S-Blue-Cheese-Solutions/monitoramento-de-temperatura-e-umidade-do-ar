@@ -1,22 +1,37 @@
 create database BlueCheeseSol;
 
 use BlueCheeseSol;
-create user 'usuario_insert '@'localhost' identified by 'QueijoAzul100';
 
-grant insert on BlueCheeseSol.* to 'usuario_insert '@'localhost';
-grant select on BlueCheeseSol.* to 'usuario_insert '@'localhost';
+-- Usuario insert dat-acqu-ino
+create user 'insert_ino'@'localhost' identified by 'urubu100';
+
+grant insert on BlueCheeseSol.* to 'insert_ino '@'localhost';
+
+-- Usuario select dat-acqu-ino
+create user 'select_ino'@'localhost' identified by 'urubu200';
+
+grant insert on BlueCheeseSol.* to 'select_ino '@'localhost';
+
+-- Usuario insert web-data-viz
+create user 'insert_dataViz'@'localhost' identified by 'urubu300';
+
+grant insert on BlueCheeseSol.* to 'insert_dataViz '@'localhost';
+
+-- Usuario select web-data-viz
+create user 'select_dataViz'@'localhost' identified by 'urubu400';
+
+grant insert on BlueCheeseSol.* to 'select_dataViz '@'localhost';
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
 
--- verifica se a permissão foi salva
-show grants for 'usuario_insert'@'localhost';
+-- Tabelas
 
 create table cliente (
 idCliente int primary key auto_increment,
-nome varchar(60),
-cpf varchar(45),
-email varchar(100),
+nome varchar(60) not null,
+cpf varchar(45) not null,
+email varchar(100) not null,
 	constraint chkEmail check (email like'%@%'),
 numeroCelular char(11)
 );
@@ -28,8 +43,8 @@ insert into cliente (nome, cpf, email, numeroCelular) values
 
 create table empresa (
 idEmpresa int primary key auto_increment,
-nomeFantasia varchar(50),
-cnpj varchar(25),
+nomeFantasia varchar(50) not null,
+cnpj varchar(25) unique not null,
 fkCliente int not null,
 	constraint fkEmpresa_cliente foreign key (fkCliente) references cliente(idCliente)
 );
@@ -41,12 +56,12 @@ insert into empresa (nomeFantasia, cnpj, fkCliente) values
 
 create table endereco (
 idEndereco int primary key auto_increment,
-logradouro varchar(80),
+logradouro varchar(80) not null,
 numero varchar(10),
-bairro varchar(50),
-cidade varchar(50),
-estado char(2),
-cep char(8),
+bairro varchar(50) not null,
+cidade varchar(45) not null,
+estado char(2) not null,
+cep char(8) not null,
 fkEmpresa int not null,
 	constraint fkEndereco_empresa foreign key (fkEmpresa) references empresa(idEmpresa)
 );
@@ -58,15 +73,15 @@ insert into endereco (logradouro, numero, bairro, cidade, estado, cep, fkEmpresa
 
 create table ambienteProcesso (
 idAmbienteProcesso int primary key auto_increment,
-nomePrincipal varchar(45),
+nomePrincipal varchar(45) not null,
 nomeAuxiliar varchar(45),
 descricao varchar(45),
-temperaturaMin decimal(6,2),
-temperaturaMax decimal(6,2),
-umidadeMin int,
-umidadeMax int,
-fkEmpresa int not null,
-	constraint fkAmbienteProcesso_empresa foreign key (fkEmpresa) references empresa(idEmpresa)
+temperaturaMin decimal(6,2) not null,
+temperaturaMax decimal(6,2) not null,
+umidadeMin int not null,
+umidadeMax int not null,
+fkEndereco int not null,
+	constraint fkAmbienteProcesso_endereco foreign key (fkEndereco) references endereco(idEndereco)
 );
 
 insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEmpresa) values
@@ -76,8 +91,8 @@ insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperatur
 
 create table usuario (
 idUsuario int auto_increment,
-login varchar(45),
-senha varchar(45),
+login varchar(45) not null,
+senha varchar(45) not null,
 fkCliente int not null,
 	constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
 primary key (idUsuario,fkCliente)
@@ -131,3 +146,86 @@ insert into leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, f
 (79.8, 12.4, 3, 3);
 
 select * from leituraSensor;
+
+-- Selects dashboard
+
+-- Primeira KPI: Temperatura Atual
+select sensorTemperatura as 'Temperatura',
+	case
+		when sensorTemperatura between 8 and 12 then 'Dentro da faixa'
+        else 'Fora da faixa'
+	end as 'Temperatura Atual'
+from sensorTemperatura;
+
+-- Segunda KPI: Umidade Atual
+select sensorUmidade as 'Umidade',
+	case
+		when sensorUmidade between 90 and 98 then 'Dentro da faixa'
+        else 'Fora da faixa'
+	end as 'Umidade Atual'
+from leituraSensor;
+
+-- Terceira KPI: Tempo na Faixa Ideal
+select
+	round(
+		(
+			sum(
+				case
+					when l.sensorTemperatura between a.temperaturaMin and a.temperaturaMax
+					then 1
+					else 0
+				end
+			)
+			+ sum(
+				case
+					when l.sensorUmidade between a.umidadeMin and a.umidadeMax
+					then 1
+					else 0
+				end
+			)
+		) * 100.0 / (count(*) * 2), 1
+	) as 'Tempo na Faixa Ideal (%)'
+from leituraSensor l
+	join ambienteProcesso a
+		on l.fkAmbienteProcesso = a.idAmbienteProcesso;
+
+-- Quarta KPI:
+SELECT
+    COUNT(*)                        AS 'Alertas no Período',
+    SUM(critico)                    AS 'Críticos',
+    SUM(1 - critico)                AS 'Atenção'
+FROM (
+    -- Alertas de temperatura
+    SELECT
+        CASE
+            WHEN l.sensorTemperatura < a.temperaturaMin - 2
+              OR l.sensorTemperatura > a.temperaturaMax + 2
+            THEN 1
+            ELSE 0
+        END AS critico
+    FROM leituraSensor l
+        JOIN ambienteProcesso a
+            ON l.fkAmbienteProcesso = a.idAmbienteProcesso
+    WHERE l.dataHora >= '2026-10-11 00:00:00'
+      AND l.dataHora <  '2026-10-18 00:00:00'
+      AND (l.sensorTemperatura < a.temperaturaMin
+        OR l.sensorTemperatura > a.temperaturaMax)
+
+    UNION ALL
+
+    -- Alertas de umidade
+    SELECT
+        CASE
+            WHEN l.sensorUmidade < a.umidadeMin - 5
+              OR l.sensorUmidade > a.umidadeMax + 5
+            THEN 1
+            ELSE 0
+        END AS critico
+    FROM leituraSensor l
+        JOIN ambienteProcesso a
+            ON l.fkAmbienteProcesso = a.idAmbienteProcesso
+    WHERE l.dataHora >= '2026-10-11 00:00:00'
+      AND l.dataHora <  '2026-10-18 00:00:00'
+      AND (l.sensorUmidade < a.umidadeMin
+        OR l.sensorUmidade > a.umidadeMax)
+) AS alertas;
