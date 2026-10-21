@@ -7,26 +7,15 @@ create user 'insert_ino'@'localhost' identified by 'urubu100';
 
 grant insert on BlueCheeseSol.* to 'insert_ino '@'localhost';
 
--- Usuario select dat-acqu-ino
-create user 'select_ino'@'localhost' identified by 'urubu200';
-
-grant insert on BlueCheeseSol.* to 'select_ino '@'localhost';
-
 -- Usuario insert web-data-viz
-create user 'insert_dataViz'@'localhost' identified by 'urubu300';
+create user 'user_dataViz'@'localhost' identified by 'urubu300';
 
-grant insert on BlueCheeseSol.* to 'insert_dataViz '@'localhost';
-
--- Usuario select web-data-viz
-create user 'select_dataViz'@'localhost' identified by 'urubu400';
-
-grant insert on BlueCheeseSol.* to 'select_dataViz '@'localhost';
+grant insert, select on BlueCheeseSol.* to 'user_dataViz '@'localhost';
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
 
 -- Tabelas
-
 create table cliente (
 idCliente int primary key auto_increment,
 nome varchar(60) not null,
