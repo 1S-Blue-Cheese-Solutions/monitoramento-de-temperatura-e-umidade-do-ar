@@ -23,7 +23,8 @@ function autenticar(req, res) {
                         res.status(200).json({
                             id: resultadoAutenticar[0].idUsuario,
                             email: resultadoAutenticar[0].login,
-                            fkCliente: resultadoAutenticar[0].fkCliente
+                            fkCliente: resultadoAutenticar[0].fkCliente,
+                            nome: resultadoAutenticar[0].nome
                         });
                         
                         // aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
