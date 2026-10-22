@@ -5,59 +5,40 @@ function queijoPerdido() {
 
   let prejuizoTotal = quilos * precoPorKg;
 
-  div_resultado.innerHTML = `
-            <div>
-                Tipo de queijo: ${nomeQueijo}<br>
-                Quantidade perdida: ${quilos.toFixed(2)}kg<br>
-                Prejuízo total: R$ ${prejuizoTotal.toFixed(2)}
-            </div>
-        `;
-
-        div_resultado.style.display = 'block';
-
-
+  if (quilos <= 0) {
+    div_resultado.innerHTML = `Por favor, insira uma quantidade válida.`
+    div_resultado.style.display = 'block';  
+  } else {
+    div_resultado.innerHTML = `
+              <div>
+                  Tipo de queijo: ${nomeQueijo}<br>
+                  Quantidade perdida: ${quilos.toFixed(2)}kg<br>
+                  Prejuízo total: R$ ${prejuizoTotal.toFixed(2)}
+              </div>
+          `;
+  
+          div_resultado.style.display = 'block';
+  }
 }
 
-function escolher() {
-  let pacote = select_pacote.value;
-  let unidSensor = 11;
-
-  if (pacote == "1") {
-    let pacote10 = unidSensor * 10;
-    let pacote10Format = pacote10.toFixed(2);
-
-    div_exbCalc.innerHTML = `Você optou pelo sistema com 10 sensores, seu gasto com sensores será de R$${pacote10Format}`;
-  }
-  if (pacote == "2") {
-    let pacote20 = unidSensor * 20;
-    let pacote20Format = pacote20.toFixed(2);
-
-    div_exbCalc.innerHTML = `Você optou pelo sistema com 20 sensores, seu gasto com sensores será de R$${pacote20Format}`;
-  }
-  if (pacote == "3") {
-    let pacote30 = unidSensor * 30;
-    let pacote30Format = pacote30.toFixed(2);
-
-    div_exbCalc.innerHTML = `Você optou pelo sistema com 30 sensores, seu gasto com sensores será de R$${pacote30Format}`;
-  }
-
-        div_exbCalc.style.display = 'flex';  
-
-
-}
 
 function calcularRetorno() {
   let pacote = select_pacote2.value;
   let lucroSemanal = Number(input_lucro.value);
-  let unidSensor = 30;
+  let precoSensor = 30;
   let investimentoTotal;
 
+  if (lucroSemanal <= 0)  {
+      div_exbRoi.innerHTML = `Por favor, insira uma quantidade válida.`
+      div_exbRoi.style.display = 'flex';;
+  } else{
+
   if (pacote == "1") {
-    investimentoTotal = unidSensor * 10;
+    investimentoTotal = precoSensor * 10;
   } else if (pacote == "2") {
-    investimentoTotal = unidSensor * 20;
+    investimentoTotal = precoSensor * 20;
   } else if (pacote == "3") {
-    investimentoTotal = unidSensor * 30;
+    investimentoTotal = precoSensor * 30;
   } else {
     div_exbRoi.innerHTML = "Por favor, selecione um pacote de sensores.";
     return;
@@ -87,5 +68,5 @@ function calcularRetorno() {
         </div>
     `;
 
-        div_exbRoi.style.display = 'flex';  
+        div_exbRoi.style.display = 'flex';  }
 }
