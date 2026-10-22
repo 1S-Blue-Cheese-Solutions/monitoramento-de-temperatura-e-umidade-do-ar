@@ -177,7 +177,7 @@ select
 			)
 		) * 100.0 / (count(*) * 2), 1
 	) as 'Tempo na Faixa Ideal (%)'
-from leituraSensor l
-	join ambienteProcesso a
+from leituraSensor as l
+	join ambienteProcesso as a
 		on l.fkAmbienteProcesso = a.idAmbienteProcesso
         where l.fkAmbienteProcesso = 1;
