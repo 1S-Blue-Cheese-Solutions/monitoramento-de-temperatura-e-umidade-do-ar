@@ -13,6 +13,7 @@ const HOST_BD = process.env.HOST_BD;
 const USER_BD = process.env.USER_BD;
 const PASSWORD_BD = process.env.PASSWORD_BD;
 const DATABASE_BD = process.env.DATABASE_BD;
+const PORT = process.env.PORT;
 
 // constantes para configurações
 const SERIAL_BAUD_RATE = 9600;
@@ -34,7 +35,7 @@ const serial = async (
             user: USER_BD,
             password: PASSWORD_BD,
             database: DATABASE_BD,
-            port: 3306
+            port: PORT
         }
     ).promise();
 
