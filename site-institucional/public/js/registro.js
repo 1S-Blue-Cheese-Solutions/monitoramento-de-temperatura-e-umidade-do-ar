@@ -56,6 +56,7 @@ function registrar() {
     let tamanhoSenha = senha.length;
     let temMaiuscula = senha !== senha.toUpperCase();
     let temMinuscula = senha !== senha.toLowerCase();
+    let validacaoSenha = iconfirmacao.value
 
     if(temMaiuscula && temMinuscula && tamanhoSenha >= 8) {
         div_result_senha.innerHTML = ``
@@ -72,14 +73,25 @@ function registrar() {
         div_result_senha.innerHTML = `Senha deve conter Maiuscula e minuscula`
         flagError = true;
     } else if(temMaiuscula) {
-        div_result_senha.innerHTML = `Senha deve ter mais que 8 caracteres <br> e conter minuscula`
+        div_result_senha.innerHTML = `Senha deve ter mais que 8 caracteres <br> e conter letra maiuscula`
         flagError = true;
     } else if(temMinuscula) {
-        div_result_senha.innerHTML = `Senha deve ter mais que 8 caracteres <br> e conter minuscula`
+        div_result_senha.innerHTML = `Senha deve ter mais que 8 caracteres <br> e conter letra minuscula`
         flagError = true;
     } else if(tamanhoSenha == 0) {
         div_result_senha.innerHTML = `Informe uma senha`
         flagError = true;
+    }
+
+    if(senha != validacaoSenha) {
+        div_result_confirmacao_senha.innerHTML = `As senhas não conferem`
+        flagError = true;
+    } else if (validacaoSenha == ``){
+        div_result_confirmacao_senha.innerHTML = `Confirme sua senha`
+        flagError = true;
+    }
+    else {
+        div_result_confirmacao_senha.innerHTML = ``
     }
 
     let contador = 0;
