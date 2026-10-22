@@ -4,11 +4,13 @@ use BlueCheeseSol;
 
 -- Usuario dat-acqu-ino
 create user 'user_ino'@'localhost' identified by 'Urubu@100';
-grant insert on BlueCheeseSol.* to 'user_ino'@'localhost'; -- comando deve ser copiado na VM
+grant insert on BlueCheeseSol.* to 'user_ino'@'localhost';
+-- grant insert on BlueCheeseSol.* to 'user_ino'@'%'; -- comando deve ser copiado na VM
 
 -- Usuario web-data-viz
 create user 'user_dataViz'@'localhost' identified by 'Urubu@300';
-grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost'; -- comando deve ser copiado na VM
+grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost';
+-- grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'%'; -- comando deve ser copiado na VM
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
