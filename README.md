@@ -36,7 +36,7 @@ O projeto nasceu com **3 objetivos**:
 <div align="center">
   <img src=".docs/.assets/diagrama-de-negocios.png" alt="Diagrama de negócios da Blue Cheese Solutions" width="800" />
 </div>
-<br>
+
 <div align="center">
   <img src=".docs/.assets/Diagrama_de_solucao_tecnica.png" alt="Diagrama de solução técnica da Blue Cheese Solutions" width="800" />
 </div>
