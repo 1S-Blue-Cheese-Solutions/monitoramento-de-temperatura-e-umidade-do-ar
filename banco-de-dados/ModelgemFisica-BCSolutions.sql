@@ -21,8 +21,8 @@ show grants for 'user_dataViz'@'localhost';
 create table cliente (
 idCliente int primary key auto_increment,
 nome varchar(60) not null,
-cpf varchar(45) not null,
-email varchar(100) not null,
+cpf char(14) not null unique,
+email varchar(100) not null unique,
 	constraint chkEmail check (email like'%@%'),
 numeroCelular char(11)
 );
@@ -82,7 +82,7 @@ insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperatur
 
 create table usuario (
 idUsuario int auto_increment,
-login varchar(45) not null,
+login varchar(45) not null unique,
 senha varchar(45) not null,
 fkCliente int not null,
 	constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
@@ -107,6 +107,8 @@ insert into sensor (nome, descricao) values
 
 create table sensorAmbiente (
 idSensorAmbiente int auto_increment,
+dtInstalacao datetime default current_timestamp,
+dtRemocao datetime, 
 fkAmbienteProcesso int not null,
 	constraint fkSensorAmbiente_ambienteProcesso foreign key (fkAmbienteProcesso) references ambienteProcesso(idAmbienteProcesso),
 fkSensor int not null,
@@ -116,7 +118,8 @@ primary key (idSensorAmbiente,fkAmbienteProcesso)
 
 insert into sensorAmbiente (fkAmbienteProcesso, fkSensor) values
 (1, 1),
-(2, 2);
+(2, 2),
+(3, 3);
 
 create table leituraSensor (
 idLeituraSensor int auto_increment,
@@ -176,4 +179,5 @@ select
 	) as 'Tempo na Faixa Ideal (%)'
 from leituraSensor l
 	join ambienteProcesso a
-		on l.fkAmbienteProcesso = a.idAmbienteProcesso;
+		on l.fkAmbienteProcesso = a.idAmbienteProcesso
+        where l.fkAmbienteProcesso = 1;
