@@ -2,6 +2,17 @@
 const serialport = require('serialport');
 const express = require('express');
 const mysql = require('mysql2');
+const dotenv = require('dotenv');
+
+// Define o arquivo com base na variável NODE_ENV
+const envFile = process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env';
+dotenv.config({ path: envFile });
+
+// Definindo as variavéis do projeto
+const HOST_BD = process.env.HOST_BD;
+const USER_BD = process.env.USER_BD;
+const PASSWORD_BD = process.env.PASSWORD_BD;
+const DATABASE_BD = process.env.DATABASE_BD;
 
 // constantes para configurações
 const SERIAL_BAUD_RATE = 9600;
@@ -19,10 +30,10 @@ const serial = async (
     // conexão com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
-            host: 'localhost',
-            user: 'user_ino',
-            password: 'Urubu#100',
-            database: 'BlueCheeseSol',
+            host: HOST_BD,
+            user: USER_BD,
+            password: PASSWORD_BD,
+            database: DATABASE_BD,
             port: 3306
         }
     ).promise();
@@ -66,6 +77,7 @@ const serial = async (
                 'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 1, 1)',
                 [sensorAnalogicoUmidade, sensorAnalogicoTemp]
             );
+            console.log("valores inseridos no banco: ", sensorAnalogicoUmidade + ", " + sensorAnalogicoTemp);
 
             const ACRESCIMO_SALA_2_UMIDADE = sensorAnalogicoUmidade + 10;
             const ACRESCIMO_SALA_2_TEMPERATURA = sensorAnalogicoUmidade + 10;
@@ -73,6 +85,7 @@ const serial = async (
                 'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 2, 2)',
                 [ACRESCIMO_SALA_2_UMIDADE, ACRESCIMO_SALA_2_TEMPERATURA]
             );
+            console.log("valores inseridos no banco: ", ACRESCIMO_SALA_2_UMIDADE + ", " + ACRESCIMO_SALA_2_TEMPERATURA);
 
             const ACRESCIMO_SALA_3_UMIDADE = sensorAnalogicoUmidade + 10;
             const ACRESCIMO_SALA_3_TEMPERATURA = sensorAnalogicoUmidade + 10;
@@ -80,7 +93,7 @@ const serial = async (
                 'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 3, 3)',
                 [ACRESCIMO_SALA_3_UMIDADE, ACRESCIMO_SALA_3_TEMPERATURA]
             );
-            console.log("valores inseridos no banco: ", sensorAnalogicoUmidade + ", " + sensorAnalogicoTemp);
+            console.log("valores inseridos no banco: ", ACRESCIMO_SALA_3_UMIDADE + ", " + ACRESCIMO_SALA_3_TEMPERATURA);
 
         }
 

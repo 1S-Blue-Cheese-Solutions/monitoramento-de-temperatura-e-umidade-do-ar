@@ -4,7 +4,8 @@
   "description": "API para comunicação serial com Arduino. Atualizada para incluir suporte a novos sensores e melhorias na performance.",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "dev": "cross-env NODE_ENV=dev node main.js"
   },
   "author": "SPTECH_2022 by MariseMiranda",
   "contributors": [
@@ -13,8 +14,12 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.17.3",
     "mysql2": "^2.3.3",
     "serialport": "^10.4.0"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
   }
 }
