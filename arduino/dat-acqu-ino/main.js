@@ -63,8 +63,8 @@ const serial = async (
     arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
         console.log(data);
         const valores = data.split(';');
-        const sensorAnalogicoTemp = parseFloat(valores[1]);
         const sensorAnalogicoUmidade = parseFloat(valores[0]);
+        const sensorAnalogicoTemp = parseFloat(valores[1]);
 
         // armazena os valores dos sensores nos arrays correspondentes
         valoresSensorUmidade.push(sensorAnalogicoUmidade);
@@ -73,28 +73,27 @@ const serial = async (
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
 
-            // este insert irá inserir os dados na tabela "medida"
             await poolBancoDados.execute(
                 'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 1, 1)',
                 [sensorAnalogicoUmidade, sensorAnalogicoTemp]
             );
-            console.log("valores inseridos no banco: ", sensorAnalogicoUmidade + ", " + sensorAnalogicoTemp);
+            console.log("Valores da Câmara 1: ", sensorAnalogicoUmidade + ", " + sensorAnalogicoTemp);
 
-            const ACRESCIMO_SALA_2_UMIDADE = sensorAnalogicoUmidade + 10;
-            const ACRESCIMO_SALA_2_TEMPERATURA = sensorAnalogicoUmidade + 10;
+            const ACRESCIMO_SALA_2_UMIDADE = sensorAnalogicoUmidade + 40;
+            const ACRESCIMO_SALA_2_TEMPERATURA = sensorAnalogicoTemp + 10;
             await poolBancoDados.execute(
                 'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 2, 2)',
                 [ACRESCIMO_SALA_2_UMIDADE, ACRESCIMO_SALA_2_TEMPERATURA]
             );
-            console.log("valores inseridos no banco: ", ACRESCIMO_SALA_2_UMIDADE + ", " + ACRESCIMO_SALA_2_TEMPERATURA);
+            console.log("Valores da Câmara 2: ", ACRESCIMO_SALA_2_UMIDADE + ", " + ACRESCIMO_SALA_2_TEMPERATURA);
 
-            const ACRESCIMO_SALA_3_UMIDADE = sensorAnalogicoUmidade + 10;
-            const ACRESCIMO_SALA_3_TEMPERATURA = sensorAnalogicoUmidade + 10;
+            const ACRESCIMO_SALA_3_UMIDADE = sensorAnalogicoUmidade - 60;
+            const ACRESCIMO_SALA_3_TEMPERATURA = (sensorAnalogicoTemp - 30).toFixed(1);
             await poolBancoDados.execute(
                 'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 3, 3)',
                 [ACRESCIMO_SALA_3_UMIDADE, ACRESCIMO_SALA_3_TEMPERATURA]
             );
-            console.log("valores inseridos no banco: ", ACRESCIMO_SALA_3_UMIDADE + ", " + ACRESCIMO_SALA_3_TEMPERATURA);
+            console.log("Valores da Câmara 3: ", ACRESCIMO_SALA_3_UMIDADE + ", " + ACRESCIMO_SALA_3_TEMPERATURA);
 
         }
 
