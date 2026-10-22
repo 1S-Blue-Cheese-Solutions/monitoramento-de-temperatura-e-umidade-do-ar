@@ -31,10 +31,14 @@ O projeto nasceu com **3 objetivos**:
 | ♨ | **Acompanhamento de temperatura** | Checar a temperatura durante o processo evitando a degradação ou o endurecimento do queijo. |
 | ◉ | **Acompanhamento da umidade** | Visualizar a umidade relativa ao longo do tempo e evitar ressecamento ou excesso de mofo. |
 
-## ⚙️ Como funciona
+## ⚙️ Diagramas de negócio e de solução técnica
 
 <div align="center">
   <img src=".docs/.assets/diagrama-de-negocios.png" alt="Diagrama de negócios da Blue Cheese Solutions" width="800" />
+</div>
+<br>
+<div align="center">
+  <img src=".docs/.assets/Diagrama_de_solucao_tecnica.png" alt="Diagrama de solução técnica da Blue Cheese Solutions" width="800" />
 </div>
 
 ## 🔗 Links
