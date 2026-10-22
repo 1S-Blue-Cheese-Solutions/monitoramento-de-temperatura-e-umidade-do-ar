@@ -87,7 +87,7 @@ function registrar() {
         div_result_confirmacao_senha.innerHTML = `As senhas não conferem`
         flagError = true;
     } else if (validacaoSenha == ``){
-        div_result_confirmacao_senha.innerHTML = `Confirme a senha`
+        div_result_confirmacao_senha.innerHTML = `Confirme sua senha`
         flagError = true;
     }
     else {
