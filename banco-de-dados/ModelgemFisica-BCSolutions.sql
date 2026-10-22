@@ -80,7 +80,7 @@ fkEndereco int not null,
 insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
 ('Câmara de Maturação 1', 'Câmara A', 'Maturação de Gorgonzola', 8.00, 12.00, 85, 95, 1),
 ('Câmara de Maturação 2', 'Câmara B', 'Maturação de Roquefort', 6.00, 10.00, 90, 98, 1),
-('Câmara de Maturação 3', 'Câmara C', 'Maturação de Gorgonzola', 7.00, 11.00, 92, 97, 1);
+('Câmara de Maturação 3', 'Câmara C', 'Maturação de Gorgonzola', 8.00, 12.00, 85, 95, 1);
 
 create table usuario (
 idUsuario int auto_increment,
