@@ -1,3 +1,4 @@
+
 // sessão
 function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
@@ -6,10 +7,13 @@ function validarSessao() {
     var b_usuario = document.getElementById("nome_usuario");
     var avatar_usuario = document.getElementById("avatar_usuario");
 
-    if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+    var b_login = document.getElementById("nome_login");
+    var avatar_login = document.getElementById("avatar_login");
 
-        avatar_usuario.innerHTML = nome
+    if (email != null && nome != null) {
+        b_usuario.textContent = nome;
+
+        var iniciais = nome
             .trim()
             .split(" ")
             .filter(palavra => palavra != "")
@@ -17,6 +21,12 @@ function validarSessao() {
             .slice(0, 2)
             .join("")
             .toUpperCase();
+
+        avatar_usuario.textContent = iniciais;
+
+        b_login.textContent = nome;
+        avatar_login.textContent = iniciais;
+
     } else {
         window.location = "./login.html";
     }
