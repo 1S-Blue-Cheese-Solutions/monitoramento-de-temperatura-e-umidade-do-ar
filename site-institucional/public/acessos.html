@@ -33,27 +33,21 @@
       <h1>Usuários</h1>
       <button class="btn-azul" onclick="abrirNovoLogin()">+ Novo login</button>
     </div>
+<!-- Lista de logins -->
+<div class="acessos-lista">
+    <div class="acesso">
+        <span class="acesso-avatar" id="avatar_login"></span>
 
-    <!-- Lista de logins -->
-    <div class="acessos-lista">
-      <div class="acesso">
-        <span class="acesso-avatar">M</span>
-        <b>marcos.almeida</b>
+        <b id="nome_login"></b>
+
         <span class="acesso-voce">Você</span>
-        <button class="btn-link" onclick="abrirEditarLogin('marcos.almeida')">Editar</button>
-      </div>
-      <div class="acesso">
-        <span class="acesso-avatar">S</span>
-        <b>sala.maturacao</b>
-        <button class="btn-link" onclick="abrirEditarLogin('sala.maturacao')">Editar</button>
-      </div>
-      <div class="acesso">
-        <span class="acesso-avatar">Q</span>
-        <b>qualidade.serra</b>
-        <button class="btn-link" onclick="abrirEditarLogin('qualidade.serra')">Editar</button>
-      </div>
+
+        <button class="btn-link"
+            onclick="abrirEditarLogin(sessionStorage.NOME_CLIENTE)">
+            Editar
+        </button>
     </div>
-  </div>
+</div>
 
   <!-- Pop-up: Novo login -->
   <div class="popup-fundo" id="popup_novo_login">
