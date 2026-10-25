@@ -87,14 +87,15 @@ idUsuario int auto_increment,
 login varchar(45) not null unique,
 senha varchar(45) not null,
 fkCliente int not null,
-	constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
+constraint chkLogin check (login like '%_@_%.com'),
+constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
 primary key (idUsuario,fkCliente)
 );
 
 insert into usuario (login, senha, fkCliente) values
-('marcos.almeida', 'Senha@123', 1),
-('fernanda.souza', 'Senha@456', 2),
-('rafael.moreira', 'Senha@789', 3);
+('marcos.almeida@email.com', 'Senha@123', 1),
+('fernanda.souza@email.com', 'Senha@456', 2),
+('rafael.moreira@email.com', 'Senha@789', 3);
  
 create table sensor (
 idSensor int primary key auto_increment,
