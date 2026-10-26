@@ -26,6 +26,8 @@ const HABILITAR_OPERACAO_INSERIR = true;
 const serial = async (
     valoresSensorUmidade,
     valoresSensorTemp,
+    valoresSala2Umidade,
+    valoresSala2Temperatura,
 ) => {
 
     // conexão com o banco de dados MySQL
@@ -65,10 +67,14 @@ const serial = async (
         const valores = data.split(';');
         const sensorAnalogicoUmidade = parseFloat(valores[0]);
         const sensorAnalogicoTemp = parseFloat(valores[1]);
+        const ACRESCIMO_SALA_2_UMIDADE = sensorAnalogicoUmidade + 40;
+        const ACRESCIMO_SALA_2_TEMPERATURA = sensorAnalogicoTemp + 10;
 
         // armazena os valores dos sensores nos arrays correspondentes
         valoresSensorUmidade.push(sensorAnalogicoUmidade);
         valoresSensorTemp.push(sensorAnalogicoTemp);
+        valoresSala2Umidade.push(ACRESCIMO_SALA_2_UMIDADE);
+        valoresSala2Temperatura.push(ACRESCIMO_SALA_2_TEMPERATURA);
 
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
@@ -79,8 +85,8 @@ const serial = async (
             );
             console.log("Valores da Câmara 1: ", sensorAnalogicoUmidade + ", " + sensorAnalogicoTemp);
 
-            const ACRESCIMO_SALA_2_UMIDADE = sensorAnalogicoUmidade + 40;
-            const ACRESCIMO_SALA_2_TEMPERATURA = sensorAnalogicoTemp + 10;
+
+
             await poolBancoDados.execute(
                 'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 2, 2)',
                 [ACRESCIMO_SALA_2_UMIDADE, ACRESCIMO_SALA_2_TEMPERATURA]
@@ -94,7 +100,6 @@ const serial = async (
                 [ACRESCIMO_SALA_3_UMIDADE, ACRESCIMO_SALA_3_TEMPERATURA]
             );
             console.log("Valores da Câmara 3: ", ACRESCIMO_SALA_3_UMIDADE + ", " + ACRESCIMO_SALA_3_TEMPERATURA);
-
         }
 
     });
@@ -108,7 +113,9 @@ const serial = async (
 // função para criar e configurar o servidor web
 const servidor = (
     valoresSensorUmidade,
-    valoresSensorTemp
+    valoresSensorTemp,
+    valoresSala2Umidade,
+    valoresSala2Temperatura,
 ) => {
     const app = express();
 
@@ -131,6 +138,12 @@ const servidor = (
     app.get('/sensores/temperatura', (_, response) => {
         return response.json(valoresSensorTemp);
     });
+    app.get('/sensores/umidade2', (_, response) => {
+        return response.json(valoresSala2Umidade);
+    });
+    app.get('/sensores/temperatura2', (_, response) => {
+        return response.json(valoresSala2Temperatura);
+    });
 }
 
 // função principal assíncrona para iniciar a comunicação serial e o servidor web
@@ -138,16 +151,23 @@ const servidor = (
     // arrays para armazenar os valores dos sensores
     const valoresSensorUmidade = [];
     const valoresSensorTemp = [];
+    const valoresSala2Umidade = [];
+    const valoresSala2Temperatura = [];
+
 
     // inicia a comunicação serial
     await serial(
         valoresSensorUmidade,
-        valoresSensorTemp
+        valoresSensorTemp,
+        valoresSala2Umidade,
+        valoresSala2Temperatura,
     );
 
     // inicia o servidor web
     servidor(
         valoresSensorUmidade,
-        valoresSensorTemp
+        valoresSensorTemp,
+        valoresSala2Umidade,
+        valoresSala2Temperatura,
     );
 })();

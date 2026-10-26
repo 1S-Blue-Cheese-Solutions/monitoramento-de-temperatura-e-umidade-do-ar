@@ -46,11 +46,11 @@ O projeto nasceu com **3 objetivos**:
 | Documento | Link |
 |---|---|
 | Backlog | [Excel](https://bandteccom-my.sharepoint.com/:x:/g/personal/igor_pereira_sptech_school/IQCYeAtm0fkGRqVhzG7jpZtQAcOZTMoEFPwweehO5mv2s1w?e=xhvkvV) |
-| Planilha de Riscos | [Excel](https://bandteccom-my.sharepoint.com/:x:/g/personal/guilherme_rosa_sptech_school/IQCg7UB4xyClRrnbfCy09L_mASW8E9gfAGzkURspt6Sb4SU?e=tempbw) |
+| Planilha de Riscos | [Excel](https://bandteccom-my.sharepoint.com/:x:/g/personal/guilherme_rosa_sptech_school/cQpYv3Ri_dnSQKLpHYityW9_EgUB3_q3NjNdunA85xzND84qSw) |
 | Documentação | [Word](https://bandteccom-my.sharepoint.com/:w:/g/personal/igor_pereira_sptech_school/IQCqt9FMeYdbRJukiGQAj8gjAfKs-cL8G7m08feIw0PGads?e=Yv3O12) |
 | Protótipo do Site Institucional | [Figma](https://www.figma.com/design/x1H7kIV6jTcIsrpbcfmXkY/Prot%C3%B3tipo-Site-Institucional?t=VjGqwV4s5uzStGkh-1) |
 | Gerenciador de Tarefas | [Trello](https://trello.com/b/UveA5rzU/1s-blue-cheese-solutions) |
-| Slide de Apresentação | [Canva](https://canva.link/xmequv2bsg04uer) |
+| Slide de Apresentação | [Canva](https://canva.link/slide-bluecheese) |
 | Arduino | [Tinkercad](https://www.tinkercad.com/things/8F3M1LrF4G5-1s-blue-cheese-solutions?sharecode=fDw5O4h4axVky3vQgS56hJP7YLyChheD-giTP9izQ8A) |
 
 ## 👥 Equipe
