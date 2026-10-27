@@ -32,8 +32,8 @@ async function cadastrar(nomeFantasia, numeroCelular, cnpj, nome, email, senha, 
     var idEmpresa = resultadoEmpresa.insertId;
     
     var sqlUsuario = `
-        INSERT INTO usuario (login, senha, fkCliente, fkEmpresa)
-        VALUES ('${email}', '${senha}', ${idCliente}, ${idEmpresa});
+        INSERT INTO usuario (login, senha, cargo, fkCliente, fkEmpresa)
+        VALUES ('${email}', '${senha}', 'Dono', ${idCliente}, ${idEmpresa});
     `;
     return database.executar(sqlUsuario);
 }
