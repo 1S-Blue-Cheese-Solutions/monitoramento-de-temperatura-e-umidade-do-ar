@@ -86,19 +86,20 @@ create table usuario (
 idUsuario int auto_increment,
 login varchar(45) not null unique,
 senha varchar(45) not null,
-papel varchar(45) not null,
+cargo varchar(11) not null default 'Funcionario',
 fkCliente int not null,
-constraint chkLogin check (login like '%_@_%.com'),
-constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
 fkEmpresa int,
+constraint chkLogin check (login like '%_@_%.com'),
+constraint chkCargo check (cargo IN ('Dono', 'Funcionario')),
+constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
 constraint fkUsuario_empresa foreign key (fkEmpresa) references empresa(idEmpresa),
 primary key (idUsuario,fkCliente,fkEmpresa)
 );
 
-insert into usuario (login, senha, fkCliente, fkEmpresa) values
-('guilherme@email.com', 'Guilherme@21', 1, 1),
-('fernanda.souza@email.com', 'Senha@456', 2, 1),
-('rafael.moreira@email.com', 'Senha@789', 3, 1);
+insert into usuario (login, senha, cargo, fkCliente, fkEmpresa) values
+('guilherme@email.com', 'Guilherme@21', 'Dono', 1, 1),
+('fernanda.souza@email.com', 'Senha@456', 'Dono', 2, 1),
+('rafael.moreira@email.com', 'Senha@789', 'Dono', 3, 1);
 
 select * from usuario;
  
