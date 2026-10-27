@@ -24,11 +24,13 @@ async function cadastrar(nomeFantasia, numeroCelular, cnpj, nome, email, senha, 
         INSERT INTO empresa (nomeFantasia, cnpj, fkCliente)
         VALUES ('${nomeFantasia}', '${cnpj}', ${idCliente});
     `;
-    await database.executar(sqlEmpresa);
 
+    var resultadoEmpresa = await database.executar(sqlEmpresa);
+    var idEmpresa = resultadoEmpresa.insertId;
+    
     var sqlUsuario = `
-        INSERT INTO usuario (login, senha, fkCliente)
-        VALUES ('${email}', '${senha}', ${idCliente});
+        INSERT INTO usuario (login, senha, fkCliente, fkEmpresa)
+        VALUES ('${email}', '${senha}', ${idCliente}, ${idEmpresa});
     `;
     return database.executar(sqlUsuario);
 }
