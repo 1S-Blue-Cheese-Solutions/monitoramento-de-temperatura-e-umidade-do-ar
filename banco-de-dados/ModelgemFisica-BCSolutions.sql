@@ -110,8 +110,7 @@ descricao varchar(100)
 
 insert into sensor (nome, descricao) values
 ('DHT11', 'Sensor de umidade e temperatura'),
-('DHT11', 'Sensor de umidade e temperatura'),
-('DHT11',  'Sensor analógico de temperatura');
+('DHT22', 'Sensor de umidade e temperatura');
 
 create table sensorAmbiente (
 idSensorAmbiente int auto_increment,
@@ -127,7 +126,7 @@ primary key (idSensorAmbiente,fkAmbienteProcesso)
 insert into sensorAmbiente (fkAmbienteProcesso, fkSensor) values
 (1, 1),
 (2, 2),
-(3, 3);
+(3, 2);
 
 create table leituraSensor (
 idLeituraSensor int auto_increment,
@@ -240,7 +239,6 @@ where fkAmbienteProcesso = 1
 	and dataHora >= now() - interval 24 hour
 group by date_format(dataHora, '%d/%m %H:%i:%s')
 order by min(dataHora);
-
 
 -- Gráfico de Umidade por hora (últimas 24 horas)
 select
