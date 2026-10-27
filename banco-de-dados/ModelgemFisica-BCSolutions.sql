@@ -89,13 +89,17 @@ senha varchar(45) not null,
 fkCliente int not null,
 constraint chkLogin check (login like '%_@_%.com'),
 constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
-primary key (idUsuario,fkCliente)
+fkEmpresa int,
+constraint fkUsuario_empresa foreign key (fkEmpresa) references empresa(idEmpresa),
+primary key (idUsuario,fkCliente,fkEmpresa)
 );
 
-insert into usuario (login, senha, fkCliente) values
-('guilherme@email.com', 'Guilherme@21', 1),
-('fernanda.souza@email.com', 'Senha@456', 2),
-('rafael.moreira@email.com', 'Senha@789', 3);
+insert into usuario (login, senha, fkCliente, fkEmpresa) values
+('guilherme@email.com', 'Guilherme@21', 1, 1),
+('fernanda.souza@email.com', 'Senha@456', 2, 1),
+('rafael.moreira@email.com', 'Senha@789', 3, 1);
+
+select * from usuario;
  
 create table sensor (
 idSensor int primary key auto_increment,
@@ -152,6 +156,9 @@ insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorA
 (92.3, 10.7, now() - interval 45 second, 1, 1),
 (92.6, 10.6, now() - interval 10 second, 1, 1);
 
+insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkAmbienteProcesso) values
+(180, 99, now() - interval 209 hour, 1, 1);
+
 select * from leituraSensor;
 
 -- Selects dashboard
@@ -196,6 +203,29 @@ from leituraSensor as l
 	join ambienteProcesso as a
 		on l.fkAmbienteProcesso = a.idAmbienteProcesso
         where l.fkAmbienteProcesso = 1;
+        
+-- Quarta KPI quantidade de alertas
+
+select
+sum(
+				case
+					when l.sensorTemperatura < a.temperaturaMin or l.sensorTemperatura > a.temperaturaMax
+					then 1
+					else 0
+				end
+			)
+			+ sum(
+				case
+					when l.sensorUmidade < a.umidadeMin or l.sensorUmidade > a.umidadeMax
+					then 1
+					else 0
+				end
+	) as 'Quantidade de alertas'
+from leituraSensor as l
+	join ambienteProcesso as a
+		on l.fkAmbienteProcesso = a.idAmbienteProcesso
+        where l.fkAmbienteProcesso = 1;
+
 
 -- Gráfico de Temperatura por hora (últimas 24 horas)
 select
