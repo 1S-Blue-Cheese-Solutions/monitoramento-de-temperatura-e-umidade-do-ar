@@ -86,6 +86,7 @@ create table usuario (
 idUsuario int auto_increment,
 login varchar(45) not null unique,
 senha varchar(45) not null,
+papel varchar(45) not null,
 fkCliente int not null,
 constraint chkLogin check (login like '%_@_%.com'),
 constraint fkUsuario_cliente foreign key (fkCliente) references cliente(idCliente),
@@ -157,7 +158,7 @@ insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorA
 (92.6, 10.6, now() - interval 10 second, 1, 1);
 
 insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkAmbienteProcesso) values
-(180, 99, now() - interval 209 hour, 1, 1);
+(180, 99, now() - interval 1 hour, 1, 1);
 
 select * from leituraSensor;
 
@@ -171,6 +172,7 @@ select sensorTemperatura as 'Temperatura',
 	end as 'Temperatura Atual'
 from leituraSensor;
 
+
 -- Segunda KPI: Umidade Atual
 select sensorUmidade as 'Umidade',
 	case
@@ -178,6 +180,7 @@ select sensorUmidade as 'Umidade',
         else 'Fora da faixa'
 	end as 'Umidade Atual'
 from leituraSensor;
+
 
 -- Terceira KPI: Tempo na Faixa Ideal
 select
@@ -204,8 +207,8 @@ from leituraSensor as l
 		on l.fkAmbienteProcesso = a.idAmbienteProcesso
         where l.fkAmbienteProcesso = 1;
         
+        
 -- Quarta KPI quantidade de alertas
-
 select
 sum(
 				case
@@ -224,7 +227,8 @@ sum(
 from leituraSensor as l
 	join ambienteProcesso as a
 		on l.fkAmbienteProcesso = a.idAmbienteProcesso
-        where l.fkAmbienteProcesso = 1;
+		where l.fkAmbienteProcesso = 1
+		and date(l.dataHora) >= curdate() - interval 1 day;
 
 
 -- Gráfico de Temperatura por hora (últimas 24 horas)
@@ -237,6 +241,7 @@ where fkAmbienteProcesso = 1
 group by date_format(dataHora, '%d/%m %H:%i:%s')
 order by min(dataHora);
 
+
 -- Gráfico de Umidade por hora (últimas 24 horas)
 select
 	date_format(dataHora, '%d/%m %H:%i:%s') as 'Horário',
@@ -247,9 +252,9 @@ where fkAmbienteProcesso = 1
 group by date_format(dataHora, '%d/%m %H:%i:%s')
 order by min(dataHora);
 
+
 -- Alertas recentes para queijo gorgonzola
 
--- Alerta umidade
 select 	
 	case 
 		when l.sensorUmidade between 85 and 95 then 'Normal'
