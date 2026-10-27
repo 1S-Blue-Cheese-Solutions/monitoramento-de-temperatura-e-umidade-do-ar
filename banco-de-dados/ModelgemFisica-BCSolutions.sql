@@ -30,7 +30,7 @@ numeroCelular char(11)
 );
 
 insert into cliente (nome, cpf, email, numeroCelular) values
-('Marcos Almeida', '123.456.789-01', 'marcos.almeida@queijariaserra.com.br', '11987654321'),
+('Guilherme Breda', '123.456.789-01', 'guilherme@email.com', '11987654321'),
 ('Fernanda Souza', '234.567.890-12', 'fernanda@laticiniosvale.com.br', '11976543210'),
 ('Rafael Moreira', '345.678.901-23', 'rafael.moreira@fazendaazul.com.br', '19965432109');
 
@@ -93,7 +93,7 @@ primary key (idUsuario,fkCliente)
 );
 
 insert into usuario (login, senha, fkCliente) values
-('marcos.almeida@email.com', 'Senha@123', 1),
+('guilherme@email.com', 'Guilherme@21', 1),
 ('fernanda.souza@email.com', 'Senha@456', 2),
 ('rafael.moreira@email.com', 'Senha@789', 3);
  
@@ -224,12 +224,14 @@ select
 	case 
 		when l.sensorUmidade between 85 and 95 then 'Normal'
 		when l.sensorUmidade between 83 and 97 then 'Atenção'
-		else 'Critíco'
+		else 'Crítico'
 	end as 'Alertas Recentes de Umidade',
 	case 
 		when l.sensorTemperatura between 6 and 8 then 'Normal'
 		when l.sensorTemperatura between 1 and 13 then 'Atenção'
-		else 'Critíco'
+		else 'Crítico'
 	end as 'Alertas Recentes de Temperatura'
 from leituraSensor as l
-where fkAmbienteProcesso = 1;
+where fkAmbienteProcesso = 1
+order by l.dataHora desc
+limit 10;
