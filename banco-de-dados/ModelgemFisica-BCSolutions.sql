@@ -136,9 +136,21 @@ fkAmbienteProcesso int not null,
 primary key (idLeituraSensor,fkSensorAmbiente,fkAmbienteProcesso)
 );
 
-insert into leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) values
-(88.5, 10.2, 1, 1),
-(92.1, 8.7, 1, 1);
+insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkAmbienteProcesso) values
+(91.5, 10.2, now() - interval 23 hour, 1, 1),
+(92.0, 10.4, now() - interval 20 hour, 1, 1),
+(90.8, 10.9, now() - interval 16 hour, 1, 1),
+(93.1, 11.3, now() - interval 12 hour, 1, 1),
+(92.4, 10.7, now() - interval 8 hour, 1, 1),
+(91.9, 10.1, now() - interval 4 hour, 1, 1),
+(92.7, 10.5, now() - interval 2 hour, 1, 1),
+(93.0, 10.8, now() - interval 50 minute, 1, 1),
+(92.2, 10.6, now() - interval 30 minute, 1, 1),
+(91.8, 10.3, now() - interval 10 minute, 1, 1),
+(92.5, 10.4, now() - interval 5 minute, 1, 1),
+(92.1, 10.5, now() - interval 90 second, 1, 1),
+(92.3, 10.7, now() - interval 45 second, 1, 1),
+(92.6, 10.6, now() - interval 10 second, 1, 1);
 
 select * from leituraSensor;
 
@@ -184,3 +196,40 @@ from leituraSensor as l
 	join ambienteProcesso as a
 		on l.fkAmbienteProcesso = a.idAmbienteProcesso
         where l.fkAmbienteProcesso = 1;
+
+-- Gráfico de Temperatura por hora (últimas 24 horas)
+select
+	date_format(dataHora, '%d/%m %H:%i:%s') as 'Horário',
+    round(avg(sensorTemperatura), 1) as 'Temperatura'
+from leituraSensor
+where fkAmbienteProcesso = 1
+	and dataHora >= now() - interval 24 hour
+group by date_format(dataHora, '%d/%m %H:%i:%s')
+order by min(dataHora);
+
+-- Gráfico de Umidade por hora (últimas 24 horas)
+select
+	date_format(dataHora, '%d/%m %H:%i:%s') as 'Horário',
+    round(avg(sensorUmidade), 1) as 'Umidade'
+from leituraSensor
+where fkAmbienteProcesso = 1
+	and dataHora >= now() - interval 24 hour
+group by date_format(dataHora, '%d/%m %H:%i:%s')
+order by min(dataHora);
+
+-- Alertas recentes para queijo gorgonzola
+
+-- Alerta umidade
+select 	
+	case 
+		when l.sensorUmidade between 85 and 95 then 'Normal'
+		when l.sensorUmidade between 83 and 97 then 'Atenção'
+		else 'Critíco'
+	end as 'Alertas Recentes de Umidade',
+	case 
+		when l.sensorTemperatura between 6 and 8 then 'Normal'
+		when l.sensorTemperatura between 1 and 13 then 'Atenção'
+		else 'Critíco'
+	end as 'Alertas Recentes de Temperatura'
+from leituraSensor as l
+where fkAmbienteProcesso = 1;
