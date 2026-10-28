@@ -47,6 +47,18 @@
             Editar
         </button>
     </div>
+    <div class="acesso">
+        <span class="acesso-avatar" id="avatar_login">MA</span>
+
+        <b id="nome_login">Pedro Ramirez</b>
+
+        <span class="acesso-voce">Você</span>
+
+        <button class="btn-link"
+            onclick="abrirEditarLogin(sessionStorage.NOME_CLIENTE)">
+            Editar
+        </button>
+    </div>
 </div>
 
   <!-- Pop-up: Novo login -->
@@ -70,6 +82,14 @@
           <input class="popup-input" id="input_confirmar_novo" type="password" placeholder="••••••••">
         </div>
       </div>
+
+      <p class="popup-label">Sala de maturação</p>
+      <select class="popup-input" id="select_sala_editar">
+        <option value="" disabled selected>Selecione uma opção</option>
+        <option value="1">Queijaria Serra Azul</option>
+        <option value="2">Laticínios Vale Verde</option>
+        <option value="3">Fazenda Azul Gourmet</option>
+      </select>
 
       <div class="popup-msg" id="div_msg_novo"></div>
 
@@ -101,6 +121,14 @@
           <input class="popup-input" id="input_confirmar_editar" type="password" placeholder="••••••••">
         </div>
       </div>
+
+      <p class="popup-label">Sala de maturação</p>
+      <select class="popup-input" id="select_sala_editar">
+        <option value="" disabled selected>Selecione uma opção</option>
+        <option value="1">Queijaria Serra Azul</option>
+        <option value="2">Laticínios Vale Verde</option>
+        <option value="3">Fazenda Azul Gourmet</option>
+      </select>
 
       <p class="acesso-ajuda">Deixe a senha em branco para manter a atual.</p>
       <div class="popup-msg" id="div_msg_editar"></div>
