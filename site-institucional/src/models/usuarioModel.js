@@ -3,7 +3,10 @@ var database = require("../database/config")
 function autenticar(email, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
     var instrucaoSql = `
-        SELECT u.idUsuario, u.login, u.senha, u.fkCliente, c.nome FROM usuario u INNER JOIN cliente c ON u.fkCliente = c.idCliente WHERE u.login = '${email}' AND u.senha = '${senha}';
+        SELECT u.idUsuario, u.login, u.senha, u.fkCliente, c.nome, e.nomeFantasia FROM usuario u 
+        JOIN cliente c ON u.fkCliente = c.idCliente 
+        JOIN empresa e ON u.fkEmpresa = e.idEmpresa
+        WHERE u.login = '${email}' AND u.senha = '${senha}';
     `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -29,8 +32,8 @@ async function cadastrar(nomeFantasia, numeroCelular, cnpj, nome, email, senha, 
     var idEmpresa = resultadoEmpresa.insertId;
     
     var sqlUsuario = `
-        INSERT INTO usuario (login, senha, fkCliente, fkEmpresa)
-        VALUES ('${email}', '${senha}', ${idCliente}, ${idEmpresa});
+        INSERT INTO usuario (login, senha, cargo, fkCliente, fkEmpresa)
+        VALUES ('${email}', '${senha}', 'Dono', ${idCliente}, ${idEmpresa});
     `;
     return database.executar(sqlUsuario);
 }
