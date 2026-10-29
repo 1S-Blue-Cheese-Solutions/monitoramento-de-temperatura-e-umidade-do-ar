@@ -9,6 +9,7 @@ grant insert on BlueCheeseSol.* to 'user_ino'@'localhost';
 
 -- Usuario web-data-viz
 create user 'user_dataViz'@'localhost' identified by 'Urubu@300';
+
 -- create user 'user_dataViz'@'%' identified by 'Urubu@300'; -- comando deve ser copiado na VM
 grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost';
 
@@ -103,16 +104,14 @@ insert into usuario (login, senha, cargo, fkCliente, fkEmpresa) values
 
 select * from usuario;
  
-create table sensor (
+create table modeloSensor (
 idSensor int primary key auto_increment,
 nome varchar(45),
 descricao varchar(100)
 );
 
 insert into sensor (nome, descricao) values
-('DHT11', 'Sensor de umidade e temperatura'),
-('DHT11', 'Sensor de umidade e temperatura'),
-('DHT11',  'Sensor analógico de temperatura');
+('DHT11', 'Sensor de umidade e temperatura');
 
 create table sensorAmbiente (
 idSensorAmbiente int auto_increment,
@@ -127,8 +126,8 @@ primary key (idSensorAmbiente,fkAmbienteProcesso)
 
 insert into sensorAmbiente (fkAmbienteProcesso, fkSensor) values
 (1, 1),
-(2, 2),
-(3, 3);
+(2, 1),
+(3, 1);
 
 create table leituraSensor (
 idLeituraSensor int auto_increment,
@@ -238,7 +237,7 @@ select
     round(avg(sensorTemperatura), 1) as 'Temperatura'
 from leituraSensor
 where fkAmbienteProcesso = 1
-	and dataHora >= now() - interval 24 hour
+	and dataHora >= curdate() - interval 24 hour
 group by date_format(dataHora, '%d/%m %H:%i:%s')
 order by min(dataHora);
 
@@ -248,7 +247,7 @@ select
     round(avg(sensorUmidade), 1) as 'Umidade'
 from leituraSensor
 where fkAmbienteProcesso = 1
-	and dataHora >= now() - interval 24 hour
+	and dataHora >= curdate() - interval 24 hour
 group by date_format(dataHora, '%d/%m %H:%i:%s')
 order by min(dataHora);
 
