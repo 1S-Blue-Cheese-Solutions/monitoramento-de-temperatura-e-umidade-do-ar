@@ -1,4 +1,3 @@
-
 function registrar() {
     let empresa = iempresa.value;
     let cnpj = icnpj.value;
