@@ -120,7 +120,7 @@ dtRemocao datetime,
 fkAmbienteProcesso int not null,
 	constraint fkSensorAmbiente_ambienteProcesso foreign key (fkAmbienteProcesso) references ambienteProcesso(idAmbienteProcesso),
 fkSensor int not null,
-	constraint fkSensorAmbiente_sensor foreign key (fkSensor) references sensor(idSensor),
+	constraint fkSensorAmbiente_sensor foreign key (fkSensor) references modeloSensor(idSensor),
 primary key (idSensorAmbiente,fkAmbienteProcesso)
 ) auto_increment=1;
 
