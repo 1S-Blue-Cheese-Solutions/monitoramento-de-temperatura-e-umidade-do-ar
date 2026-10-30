@@ -110,7 +110,7 @@ nome varchar(45),
 descricao varchar(100)
 );
 
-insert into sensor (nome, descricao) values
+insert into modeloSensor (nome, descricao) values
 ('DHT11', 'Sensor de umidade e temperatura');
 
 create table sensorAmbiente (
