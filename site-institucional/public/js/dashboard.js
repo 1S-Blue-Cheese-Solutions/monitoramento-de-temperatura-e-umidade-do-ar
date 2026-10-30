@@ -41,7 +41,7 @@ let chartTemperatura = new Chart(graficoTemperatura, {
   options: {
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
-    scales: { y: { min: 0, max: 14 } }
+    scales: { y: { min: 0, max: 16 } }
   }
 });
 
