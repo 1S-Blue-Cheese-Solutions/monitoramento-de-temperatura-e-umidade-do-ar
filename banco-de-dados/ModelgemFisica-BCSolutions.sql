@@ -129,16 +129,20 @@ insert into sensorAmbiente (fkAmbienteProcesso, fkSensor) values
 (2, 1),
 (3, 1);
 
-create table leituraSensor (
-idLeituraSensor int auto_increment,
-sensorUmidade float,
-sensorTemperatura float,
-dataHora timestamp default current_timestamp,
-fkSensorAmbiente int not null,
-	constraint fkLeituraSensor_SensorAmbiente foreign key (fkSensorAmbiente) references sensorAmbiente(idSensorAmbiente),
-fkAmbienteProcesso int not null,
-	constraint fkLeituraSensor_ambienteProcesso foreign key (fkAmbienteProcesso) references ambienteProcesso(idAmbienteProcesso),
-primary key (idLeituraSensor,fkSensorAmbiente,fkAmbienteProcesso)
+CREATE TABLE leituraSensor (
+    idLeituraSensor INT AUTO_INCREMENT,
+    sensorUmidade FLOAT,
+    sensorTemperatura FLOAT,
+    dataHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fkSensorAmbiente INT NOT NULL,
+    fkAmbienteProcesso INT NOT NULL,
+    CONSTRAINT fkLeituraSensor_SensorAmbiente
+        FOREIGN KEY (fkSensorAmbiente, fkAmbienteProcesso)
+        REFERENCES sensorAmbiente(idSensorAmbiente, fkAmbienteProcesso),
+    CONSTRAINT fkLeituraSensor_ambienteProcesso
+        FOREIGN KEY (fkAmbienteProcesso)
+        REFERENCES ambienteProcesso(idAmbienteProcesso),
+    PRIMARY KEY (idLeituraSensor, fkSensorAmbiente, fkAmbienteProcesso)
 );
 
 insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkAmbienteProcesso) values
