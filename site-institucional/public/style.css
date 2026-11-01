@@ -750,10 +750,11 @@ footer {
 
 /* Cards de indicadores */
 .dashboard-cards {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(4, 1fr);
-  gap: 13px;
-  justify-content: space-between;
+  gap: 70px;
+  justify-content: center;
+  align-items: center;
 }
 
 .dashboard-card,
@@ -766,6 +767,7 @@ footer {
 
 .dashboard-card {
   padding: 13px 14px;
+  width: calc(33.33% - 20px);
 }
 
 .dashboard-card-label {
