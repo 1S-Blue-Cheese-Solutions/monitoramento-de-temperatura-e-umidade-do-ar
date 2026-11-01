@@ -1296,6 +1296,21 @@ footer {
   font-weight: bold;
 }
 
+.acesso-empresa {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.acesso-adm {
+  padding: 4px 11px;
+  border-radius: 18px;
+  background: #6fbccccd;
+  font-size: 10px;
+  font-weight: bold; 
+}
+
 .acesso-ajuda {
   margin: 8px 0 0;
   font-size: 11px;
