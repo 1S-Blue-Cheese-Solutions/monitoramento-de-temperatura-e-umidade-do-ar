@@ -63,23 +63,146 @@ let chartUmidade = new Chart(graficoUmidade, {
   }
 });
 
-// Conformidade por câmara % tempo dentro da faixa
-new Chart(graficoConformidade, {
-  type: 'bar',
-  data: {
-    labels: ['Câmara 1', 'Câmara 2', 'Câmara 3'],
-    datasets: [
-      { label: 'Temperatura', data: [95, 94, 94], backgroundColor: '#173f73' },
-      { label: 'Umidade', data: [94, 94, 94], backgroundColor: '#29999b' }
-    ]
-  },
-  options: {
-    indexAxis: 'y',
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { x: { min: 0, max: 100 } }
+// ===== Desvios da faixa ideal =====
+
+// Percorre as leituras e junta as que ficaram fora da faixa em sequência.
+// lado: 1 = acima do máximo, -1 = abaixo do mínimo
+function acharDesvios(valores, minimo, maximo) {
+  let trechos = [];
+  let atual = null;
+
+  for (let i = 0; i < valores.length; i++) {
+    let lado = 0;
+    if (valores[i] > maximo) lado = 1;
+    if (valores[i] < minimo) lado = -1;
+
+    if (atual != null && atual.lado == lado) {
+      atual.fim = i;                       // continua o mesmo trecho
+    } else {
+      atual = null;
+      if (lado != 0) {                     // trecho novo
+        atual = { inicio: i, fim: i, lado: lado };
+        trechos.push(atual);
+      }
+    }
   }
-});
+
+    // Descobre momento q a linha cruzou o limite, entre as duas leituras
+  for (let i = 0; i < trechos.length; i++) {
+    let t = trechos[i];
+    let limite = t.lado == 1 ? maximo : minimo;
+
+    if (t.inicio > 0) {                    // cruzou entre a leitura anterior e a primeira fora
+      let antes = valores[t.inicio - 1];
+      let depois = valores[t.inicio];
+      t.inicio = (t.inicio - 1) + (limite - antes) / (depois - antes);
+    }
+    if (t.fim < valores.length - 1) {      // voltou entre a última fora e a próxima
+      let antes = valores[t.fim];
+      let depois = valores[t.fim + 1];
+      t.fim = t.fim + (limite - antes) / (depois - antes);
+    }
+  }
+
+  return trechos;
+}
+
+// Transforma posição fracionada em horário (ex.: 6.52 com rótulo "15:00" -> "15:31")
+function horaNaPosicao(rotulos, posicao) {
+  let i = Math.floor(posicao);
+  let minutos = Math.round((posicao - i) * 60);
+
+  if (minutos == 60) {                     // arredondou para a hora seguinte
+    i++;
+    minutos = 0;
+  }
+  if (i > rotulos.length - 1) {
+    i = rotulos.length - 1;
+  }
+  if (minutos == 0) {
+    return rotulos[i];
+  }
+
+  // rótulo pode ser "15:00" ou "12/10 15:00" - separa a data da hora
+  let partes = rotulos[i].split(' ');
+  let hora = partes.pop().split(':');
+  let minutosTotais = Number(hora[1]) + minutos;
+  let texto = hora[0] + ':' + String(minutosTotais).padStart(2, '0');
+
+  return partes.length > 0 ? partes[0] + ' ' + texto : texto;
+}
+
+// 100 minutos -> "1 h 40 min" (número grande e a unidade pequena)
+function valorDuracao(minutos) {
+  let horas = Math.floor(minutos / 60);
+  let resto = minutos % 60;
+
+  if (horas == 0) {
+    return resto + '<span class="card-unit">min</span>';
+  } else if (resto == 0) {
+    return horas + '<span class="card-unit">h</span>';
+  } else {
+    return horas + '<span class="card-unit">h</span> ' + resto + '<span class="card-unit">min</span>';
+  }
+}
+
+function montarKpiDesvio(nome, valores, rotulos, minimo, maximo, limite) {
+  let total = valores.length;
+  if (total == 0) {
+    return;
+  }
+
+  let trechos = acharDesvios(valores, minimo, maximo);
+  let intervalos = Math.max(total - 1, 1);   // espaços entre a 1ª e a última leitura
+  let minutosFora = 0;
+  let selos = '';
+  let linha = '';
+
+  for (let i = 0; i < trechos.length; i++) {
+    let t = trechos[i];
+    minutosFora += (t.fim - t.inicio) * 60;  // 1 posição = 1 hora
+
+    let seta = t.lado == 1 ? '↑' : '↓';
+    let classe = t.lado == 1 ? 'acima' : 'abaixo';
+    let horaInicio = horaNaPosicao(rotulos, t.inicio);
+    let horaFim = horaNaPosicao(rotulos, t.fim);
+    let horario = horaInicio == horaFim ? horaInicio : horaInicio + '–' + horaFim;
+
+    // mostra no máximo 2 selos, o resto vira "+N"
+    if (i < 2) {
+      selos += `<span class="dashboard-badge desvio-${classe}">${seta} ${horario}</span>`;
+    }
+    // trecho colorido na linha do tempo, em % da largura
+    linha += `<div class="desvio-trecho trecho-${classe}" style="left: ${t.inicio / intervalos * 100}%; width: ${(t.fim - t.inicio) / intervalos * 100}%"></div>`;
+  }
+
+  if (trechos.length > 2) {
+    selos += `<span class="dashboard-badge desvio-acima">+${trechos.length - 2}</span>`;
+  }
+  if (trechos.length == 0) {
+    selos = '<span class="dashboard-badge dashboard-ok">✓ Sem desvios</span>';
+  }
+
+  minutosFora = Math.round(minutosFora);
+  let porcentagem = (minutosFora / (intervalos * 60) * 100).toFixed(1).replace('.', ',');
+
+  document.getElementById('span_valor_' + nome).innerHTML = valorDuracao(minutosFora);
+  document.getElementById('span_info_' + nome).innerHTML = `${limite} · ${porcentagem}% do período`;
+  document.getElementById('div_selos_' + nome).innerHTML = selos;
+  document.getElementById('div_linha_' + nome).innerHTML = linha;
+  document.getElementById('div_horas_' + nome).innerHTML = `
+    <span>${rotulos[0]}</span>
+    <span>${rotulos[Math.floor(total / 2)]}</span>
+    <span>${rotulos[total - 1]}</span>
+  `;
+}
+
+function atualizarDesvios(rotulos, temperaturasPeriodo, umidadesPeriodo) {
+  montarKpiDesvio('temperatura', temperaturasPeriodo, rotulos, temperaturaMinima, temperaturaMaxima, 'Ideal ' + temperaturaMinima + ' a ' + temperaturaMaxima + ' °C');
+  montarKpiDesvio('umidade', umidadesPeriodo, rotulos, umidadeMinima, umidadeMaxima, 'Ideal ' + umidadeMinima + ' a ' + umidadeMaxima + '%');
+}
+
+
 
 // Troca os dados dos gráficos de temperatura e umidade
 function atualizarGraficos(rotulos, temperaturasPeriodo, umidadesPeriodo) {
@@ -94,6 +217,7 @@ function atualizarGraficos(rotulos, temperaturasPeriodo, umidadesPeriodo) {
   chartUmidade.data.datasets[1].data = Array(rotulos.length).fill(umidadeMaxima);
   chartUmidade.data.datasets[2].data = umidadesPeriodo;
   chartUmidade.update();
+  atualizarDesvios(rotulos, temperaturasPeriodo, umidadesPeriodo);   
 }
 
 // Últimas 24, 12 ou 6 h - pega as leituras mais recentes
@@ -113,5 +237,14 @@ function filtrar() {
   let inicio = dias.indexOf(input_inicio.value) * 24;
   let fim = (dias.indexOf(input_fim.value) + 1) * 24;
 
+    // se alguma data não existir ou o intervalo estiver invertido, não faz nada
+  if (dias.indexOf(input_inicio.value) == -1 || dias.indexOf(input_fim.value) == -1 || inicio >= fim) {
+    return;
+  }
+
   atualizarGraficos(datasHoras.slice(inicio, fim), temperaturas.slice(inicio, fim), umidades.slice(inicio, fim));
 }
+
+
+// Primeira carga dos cards de desvio: últimas 12 h, igual aos gráficos
+atualizarDesvios(horarios.slice(-12), temperaturas.slice(-12), umidades.slice(-12));
