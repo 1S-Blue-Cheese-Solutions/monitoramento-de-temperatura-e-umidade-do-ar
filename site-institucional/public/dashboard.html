@@ -95,18 +95,39 @@
     <div class="dashboard-grid">
 
 
-      <div class="dashboard-panel">
-            <div class="dashboard-panel-header">
-          <h2>Conformidade por câmara</h2>
-          <span>% do período dentro da faixa</span>
-        </div>        
-        <div class="dashboard-legend">
-          <span><span class="legend-cor legend-temperature"></span>Temperatura</span>
-          <span><span class="legend-cor legend-humidity"></span>Umidade</span>
+            <!-- 1º: Desvios da faixa ideal (esquerda, linha 1) -->
+      <div class="desvios-kpis">
+
+        <div class="dashboard-card desvio-kpi">
+          <div>
+            <div class="desvio-kpi-topo">
+              <span class="dashboard-card-label">DESVIO DE TEMPERATURA</span>
+              <div class="desvio-kpi-selos" id="div_selos_temperatura"></div>
+            </div>
+            <span class="card-valor" id="span_valor_temperatura"></span>
+            <span class="card-info" id="span_info_temperatura"></span>
+          </div>
+          <div>
+            <div class="desvio-linha" id="div_linha_temperatura"></div>
+            <div class="desvio-linha-horas" id="div_horas_temperatura"></div>
+          </div>
         </div>
-        <div class="dashboard-chart-container">
-          <canvas id="graficoConformidade"></canvas>
+
+         <div class="dashboard-card desvio-kpi">
+          <div>
+            <div class="desvio-kpi-topo">
+              <span class="dashboard-card-label">DESVIO DE UMIDADE</span>
+              <div class="desvio-kpi-selos" id="div_selos_umidade"></div>
+            </div>
+            <span class="card-valor" id="span_valor_umidade"></span>
+            <span class="card-info" id="span_info_umidade"></span>
+          </div>
+          <div>
+            <div class="desvio-linha" id="div_linha_umidade"></div>
+            <div class="desvio-linha-horas" id="div_horas_umidade"></div>
+          </div>
         </div>
+
       </div>
 
 
