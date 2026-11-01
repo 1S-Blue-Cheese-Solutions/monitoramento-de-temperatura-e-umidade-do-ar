@@ -93,6 +93,23 @@
 
     <!-- Gráficos e alertas -->
     <div class="dashboard-grid">
+
+
+      <div class="dashboard-panel">
+            <div class="dashboard-panel-header">
+          <h2>Conformidade por câmara</h2>
+          <span>% do período dentro da faixa</span>
+        </div>        
+        <div class="dashboard-legend">
+          <span><span class="legend-cor legend-temperature"></span>Temperatura</span>
+          <span><span class="legend-cor legend-humidity"></span>Umidade</span>
+        </div>
+        <div class="dashboard-chart-container">
+          <canvas id="graficoConformidade"></canvas>
+        </div>
+      </div>
+
+
       <div class="dashboard-panel">
         <div class="dashboard-panel-header">
           <h2>Temperatura em Graus Celsius por Hora</h2>
@@ -103,31 +120,7 @@
         </div>
       </div>
 
-      <div class="dashboard-panel">
-        <div class="dashboard-panel-header">
-          <h2>Conformidade por câmara</h2>
-          <span>% do período dentro da faixa</span>
-        </div>
-        <div class="dashboard-legend">
-          <span><span class="legend-cor legend-temperature"></span>Temperatura</span>
-          <span><span class="legend-cor legend-humidity"></span>Umidade</span>
-        </div>
-        <div class="dashboard-chart-container">
-          <canvas id="graficoConformidade"></canvas>
-        </div>
-      </div>
-
-      <div class="dashboard-panel">
-        <div class="dashboard-panel-header">
-          <h2>Umidade Relativa em Porcentagem por Hora</h2>
-          <span>Faixa sombreada = intervalo ideal da fase</span>
-        </div>
-        <div class="dashboard-chart-container">
-          <canvas id="graficoUmidade"></canvas>
-        </div>
-      </div>
-
-      <div class="dashboard-panel">
+            <div class="dashboard-panel">
         <div class="dashboard-panel-header">
           <h2>Alertas recentes</h2>
         </div>
@@ -189,6 +182,21 @@
           </div>
         </div>
       </div>
+      
+
+      <div class="dashboard-panel">
+        <div class="dashboard-panel-header">
+          <h2>Umidade Relativa em Porcentagem por Hora</h2>
+          <span>Faixa sombreada = intervalo ideal da fase</span>
+        </div>
+        <div class="dashboard-chart-container">
+          <canvas id="graficoUmidade"></canvas>
+        </div>
+      </div>
+
+
+
+
     </div>
 
   </div>
