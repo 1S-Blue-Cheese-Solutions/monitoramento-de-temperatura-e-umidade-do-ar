@@ -5,10 +5,6 @@ function fecharPopups() {
   popup_ambientes.style.display = 'none';
 }
 
-function abrirNovaEmpresa() {
-  popup_nova_empresa.style.display = 'flex';
-}
-
 function abrirEditarEmpresa(nome, cnpj) {
   input_nome_editar.value = nome;
   input_cnpj_editar.value = cnpj;
@@ -19,14 +15,6 @@ function abrirNovoEndereco(empresa) {
   div_empresa_endereco.innerHTML = empresa;
   popup_novo_endereco.style.display = 'flex';
 }
-
-function abrirAmbientes(endereco, ambientes) {
-  div_endereco_ambientes.innerHTML = endereco;
-  listaAmbientes = ambientes;
-  mostrarLista();
-  popup_ambientes.style.display = 'flex';
-}
-
 
 function salvarNovaEmpresa() {
   let nome = input_nome_nova.value;
