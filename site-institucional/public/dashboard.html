@@ -42,9 +42,9 @@
         </div>
         <label>Câmara
           <select>
-            <option>Câmara de Maturação 1</option>
-            <option>Câmara de Maturação 2</option>
-            <option>Câmara de Maturação 3</option>
+            <option>Câmara de Maturação 1 - Roquefort</option>
+            <option>Câmara de Maturação 2 - Gorgonzola</option>
+            <option>Câmara de Maturação 3 - Stilton </option>
           </select>
         </label>
         <label>Período
@@ -82,12 +82,7 @@
         <span class="card-info">Ideal 90 a 98%</span>
         <span class="dashboard-badge dashboard-ok">✓ Dentro da faixa</span>
       </div>
-      <div class="dashboard-card">
-        <span class="dashboard-card-label">TEMPO NA FAIXA IDEAL</span>
-        <span class="card-valor">94<span class="card-unit">%</span></span>
-        <span class="card-info">Esperado 95% a 100%</span>
-        <span class="dashboard-badge dashboard-bad">✗ Fora da faixa</span>
-      </div>
+      
       <div class="dashboard-card">
         <span class="dashboard-card-label">QUANTIDADE DE ALERTAS</span>
         <span class="card-valor">5<span class="card-unit">Alertas</span></span>
@@ -98,6 +93,44 @@
 
     <!-- Gráficos e alertas -->
     <div class="dashboard-grid">
+
+
+            <!-- 1º: Desvios da faixa ideal (esquerda, linha 1) -->
+      <div class="desvios-kpis">
+
+       <div class="dashboard-card desvio-kpi">
+          <div>
+            <div class="desvio-kpi-topo">
+              <span class="dashboard-card-label">DESVIO DE TEMPERATURA</span>
+              <div class="desvio-kpi-selos" id="div_selos_temperatura"></div>
+            </div>
+            <span class="card-valor" id="span_valor_temperatura"></span>
+            <span class="card-info" id="span_info_temperatura"></span>
+          </div>
+          <div>
+            <div class="desvio-linha" id="div_linha_temperatura"></div>
+            <div class="desvio-linha-horas" id="div_horas_temperatura"></div>
+          </div>
+        </div>
+
+         <div class="dashboard-card desvio-kpi">
+          <div>
+            <div class="desvio-kpi-topo">
+              <span class="dashboard-card-label">DESVIO DE UMIDADE</span>
+              <div class="desvio-kpi-selos" id="div_selos_umidade"></div>
+            </div>
+            <span class="card-valor" id="span_valor_umidade"></span>
+            <span class="card-info" id="span_info_umidade"></span>
+          </div>
+          <div>
+            <div class="desvio-linha" id="div_linha_umidade"></div>
+            <div class="desvio-linha-horas" id="div_horas_umidade"></div>
+          </div>
+        </div>
+
+      </div>
+
+
       <div class="dashboard-panel">
         <div class="dashboard-panel-header">
           <h2>Temperatura em Graus Celsius por Hora</h2>
@@ -108,31 +141,7 @@
         </div>
       </div>
 
-      <div class="dashboard-panel">
-        <div class="dashboard-panel-header">
-          <h2>Conformidade por câmara</h2>
-          <span>% do período dentro da faixa</span>
-        </div>
-        <div class="dashboard-legend">
-          <span><span class="legend-cor legend-temperature"></span>Temperatura</span>
-          <span><span class="legend-cor legend-humidity"></span>Umidade</span>
-        </div>
-        <div class="dashboard-chart-container">
-          <canvas id="graficoConformidade"></canvas>
-        </div>
-      </div>
-
-      <div class="dashboard-panel">
-        <div class="dashboard-panel-header">
-          <h2>Umidade Relativa em Porcentagem por Hora</h2>
-          <span>Faixa sombreada = intervalo ideal da fase</span>
-        </div>
-        <div class="dashboard-chart-container">
-          <canvas id="graficoUmidade"></canvas>
-        </div>
-      </div>
-
-      <div class="dashboard-panel">
+            <div class="dashboard-panel">
         <div class="dashboard-panel-header">
           <h2>Alertas recentes</h2>
         </div>
@@ -194,6 +203,21 @@
           </div>
         </div>
       </div>
+      
+
+      <div class="dashboard-panel">
+        <div class="dashboard-panel-header">
+          <h2>Umidade Relativa em Porcentagem por Hora</h2>
+          <span>Faixa sombreada = intervalo ideal da fase</span>
+        </div>
+        <div class="dashboard-chart-container">
+          <canvas id="graficoUmidade"></canvas>
+        </div>
+      </div>
+
+
+
+
     </div>
 
   </div>

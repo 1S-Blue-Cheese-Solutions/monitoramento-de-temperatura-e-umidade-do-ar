@@ -750,10 +750,11 @@ footer {
 
 /* Cards de indicadores */
 .dashboard-cards {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(4, 1fr);
-  gap: 13px;
-  justify-content: space-between;
+  gap: 70px;
+  justify-content: center;
+  align-items: center;
 }
 
 .dashboard-card,
@@ -762,10 +763,12 @@ footer {
   border-radius: 13px;
   background: white;
   box-shadow: 0 5px 15px rgba(30, 44, 61, 0.07);
+  
 }
 
 .dashboard-card {
   padding: 13px 14px;
+  width: calc(33.33% - 20px);
 }
 
 .dashboard-card-label {
@@ -831,7 +834,7 @@ footer {
 /* Painéis com gráficos e alertas (2 colunas x 2 linhas) */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2.05fr) minmax(350px, 1fr);
+  grid-template-columns: minmax(350px, 1fr) minmax(0, 2.05fr);
   grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   gap: 13px;
   min-height: 0;
@@ -1293,6 +1296,21 @@ footer {
   font-weight: bold;
 }
 
+.acesso-empresa {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.acesso-adm {
+  padding: 4px 11px;
+  border-radius: 18px;
+  background: #6fbccccd;
+  font-size: 10px;
+  font-weight: bold; 
+}
+
 .acesso-ajuda {
   margin: 8px 0 0;
   font-size: 11px;
@@ -1454,4 +1472,94 @@ footer {
 
 .buttonSimulador:hover {
   background-color: #1a569f;
+}
+
+/* ===== Desvios da faixa ideal (no lugar do gráfico de conformidade) ===== */
+
+/* caixa que ocupa o lugar do painel antigo: dois cards um embaixo do outro */
+.desvios-kpis {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 13px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* anula o width de 33% do .dashboard-card e organiza o conteúdo do card */
+.desvio-kpi {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* conteúdo em cima, linha do tempo embaixo */
+  min-height: 0;
+}
+
+/* rótulo à esquerda e os selos de horário ficam à direita */
+.desvio-kpi-topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.desvio-kpi-selos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.desvio-kpi-selos .dashboard-badge {
+  margin-top: 0;
+}
+
+.desvio-kpi .card-valor {
+  margin-top: 4px;
+}
+
+/* acima da faixa = vermelho, abaixo da faixa = azul */
+.desvio-acima,
+.desvio-abaixo {
+  color: #c05347;
+  background: #fde8e6;
+}
+
+.desvio-abaixo {
+  color: #245386;
+  background: #e6edf5;
+}
+
+/* linha do tempo: verde = dentro da faixa, trechos coloridos = fora */
+.desvio-linha {
+  position: relative;
+  height: 6px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: rgba(46, 139, 92, 0.45);
+}
+
+.desvio-trecho {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  min-width: 4px;
+  border-radius: 10px;
+}
+
+.trecho-acima,
+.trecho-abaixo {
+  background: #c05347;
+}
+
+.trecho-acima,
+.trecho-abaixo {
+  background: #c05347;
+}
+
+.desvio-linha-horas {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 9px;
+  color: #617890;
 }
