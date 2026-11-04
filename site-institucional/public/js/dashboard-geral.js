@@ -23,6 +23,9 @@ const resumoDia = [
   { fkAmbienteProcesso: 3, minutosFora: 0 }
 ];
 
+// Total de minutos fora da faixa no dia anterior, somando as câmaras
+const MINUTOS_FORA_ONTEM = 289;
+
 const HORA_ATUAL = '20:56';
 const LIMITE_SEM_DADOS = 120; // segundos sem leitura para considerar o sensor parado
 
@@ -119,6 +122,12 @@ function renderKpis() {
     infoDentro = fora.map(c => `${nomeCurto(c)} está fora da faixa há ${fmtDuracao(c.minutosDesdeUltimaDentro)}`).join(', ');
   }
 
+  // Menos tempo fora da faixa que ontem é bom (verde); mais tempo é ruim (vermelho)
+  let variacao = Math.round(Math.abs(totalFora - MINUTOS_FORA_ONTEM) / MINUTOS_FORA_ONTEM * 100);
+  let seloVariacao = totalFora < MINUTOS_FORA_ONTEM
+    ? `<span class="dashboard-badge dashboard-ok">↓ ${variacao}% a menos que o dia anterior</span>`
+    : `<span class="dashboard-badge dashboard-bad">↑ ${variacao}% a mais que o dia anterior</span>`;
+
   div_kpis.innerHTML = `
     <div class="dashboard-card geral-kpi ${dentro.length < total ? 'geral-kpi-alerta' : ''}">
       <span class="geral-kpi-rotulo">Dentro da faixa agora</span>
@@ -128,6 +137,7 @@ function renderKpis() {
     <div class="dashboard-card geral-kpi">
       <span class="geral-kpi-rotulo">Tempo fora da faixa hoje</span>
       <span class="geral-kpi-valor">${fmtDuracao(totalFora)}</span>
+      ${seloVariacao}
     </div>
     <div class="dashboard-card geral-kpi ${enviando.length < total ? 'geral-kpi-alerta' : ''}">
       <span class="geral-kpi-rotulo">Sensores enviando dados</span>

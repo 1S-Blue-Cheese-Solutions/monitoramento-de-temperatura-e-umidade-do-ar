@@ -1635,6 +1635,11 @@ footer {
   color: #5f748a;
 }
 
+/* o card é flex em coluna: sem isso o selo esticaria até a largura toda */
+.geral-kpi .dashboard-badge {
+  align-self: flex-start;
+}
+
 /* Tabela */
 .geral-painel {
   align-self: start;
