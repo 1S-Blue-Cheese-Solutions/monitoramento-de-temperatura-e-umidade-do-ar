@@ -1573,6 +1573,13 @@ footer {
 
 /* ===== Visão Geral (dashboard-geral.html) ===== */
 
+/* título à esquerda e seleção de empresa à direita, na mesma linha */
+.geral-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .geral-local {
   display: block;
   margin-top: 4px;
