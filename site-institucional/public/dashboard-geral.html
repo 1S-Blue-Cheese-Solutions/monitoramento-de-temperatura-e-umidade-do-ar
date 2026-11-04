@@ -30,15 +30,35 @@
     </div>
   </div>
 
-  <div class="dashboard dashboard-geral">
+  <div class="dashboard">
 
-    <div class="dashboard-title">
-      <h1>Visão Geral das Câmaras</h1>
-      <span class="geral-local" id="span_local"></span>
+    <div class="dashboard-header">
+      <div class="dashboard-title">
+        <h1>Visão Geral das Câmaras</h1>
+        <span class="geral-local">Laticínios Serra Azul · Rua das Acácias, 120 · Serro - MG</span>
+      </div>
     </div>
 
-    <div class="geral-kpis" id="div_kpis"></div>
+    <!-- Cards -->
+    <div class="dashboard-cards geral-cards">
+      <div class="dashboard-card">
+        <span class="dashboard-card-label">DENTRO DA FAIXA IDEAL AGORA</span>
+        <span class="card-valor" id="span_valor_dentro"></span>
+        <span class="card-info" id="span_info_dentro"></span>
+      </div>
+      <div class="dashboard-card">
+        <span class="dashboard-card-label">TEMPO FORA DA FAIXA IDEAL HOJE</span>
+        <span class="card-valor" id="span_valor_tempo"></span>
+        <div id="div_selo_tempo"></div>
+      </div>
+      <div class="dashboard-card">
+        <span class="dashboard-card-label">SENSORES ENVIANDO DADOS</span>
+        <span class="card-valor" id="span_valor_sensores"></span>
+        <span class="card-info" id="span_info_sensores"></span>
+      </div>
+    </div>
 
+    <!-- Tabela de câmaras -->
     <div class="dashboard-panel geral-painel">
       <table class="geral-tabela">
         <thead>
