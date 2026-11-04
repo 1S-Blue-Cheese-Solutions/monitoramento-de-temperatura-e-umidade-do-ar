@@ -1583,6 +1583,38 @@ footer {
 /* os cards têm conteúdo de alturas diferentes: estica para ficarem iguais */
 .geral-cards {
   align-items: stretch;
+  margin-bottom: 10px;
+}
+
+/* cards mais altos e com fontes maiores só nesta tela: a dashboard usa as mesmas classes */
+.geral-cards .dashboard-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 172px;
+  padding: 20px 22px;
+}
+
+.geral-cards .dashboard-card-label {
+  font-size: 15px;
+}
+
+.geral-cards .card-valor {
+  font-size: 44px;
+}
+
+.geral-cards .card-unit {
+  font-size: 20px;
+}
+
+.geral-cards .card-info {
+  font-size: 16px;
+}
+
+.geral-cards .dashboard-badge {
+  margin-top: 0;
+  padding: 4px 10px;
+  font-size: 14px;
 }
 
 .geral-valor-fora {
@@ -1594,20 +1626,20 @@ footer {
   align-self: start;
   max-height: 100%;
   overflow-y: auto;
-  padding: 6px 20px 10px;
+  padding: 6px 12px 10px;
 }
 
 .geral-tabela {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 16px;
   color: #344f6b;
 }
 
 .geral-tabela th {
-  padding: 14px 12px;
+  padding: 14px 8px;
   border-bottom: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-align: left;
@@ -1617,7 +1649,7 @@ footer {
 }
 
 .geral-tabela td {
-  padding: 16px 12px;
+  padding: 16px 8px;
   border-bottom: 1px solid #eee8df;
   vertical-align: middle;
 }
@@ -1633,19 +1665,20 @@ footer {
 .geral-tabela strong {
   display: block;
   white-space: nowrap;
-  font-size: 15px;
+  font-size: 18px;
   color: #193b61;
 }
 
 .geral-tabela .dashboard-badge {
   margin-top: 0;
+  font-size: 14px;
   white-space: nowrap;
 }
 
 .geral-sub {
   display: block;
   margin-top: 3px;
-  font-size: 12px;
+  font-size: 14px;
   color: #5f748a;
 }
 
@@ -1654,7 +1687,7 @@ footer {
 }
 
 .geral-valor {
-  font-size: 22px;
+  font-size: 27px;
   font-weight: 650;
   color: #173b62;
   white-space: nowrap;
@@ -1665,7 +1698,7 @@ footer {
 }
 
 .geral-tempo {
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 650;
   color: #173b62;
 }
@@ -1687,6 +1720,8 @@ footer {
 
 .geral-btn-dashboard {
   display: inline-block;
+  padding: 10px 14px;
+  font-size: 14px;
   white-space: nowrap;
   text-decoration: none;
 }
