@@ -755,7 +755,7 @@ footer {
   gap: 13px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 17px;
+  margin-bottom: 5px;
 }
 
 .dashboard-card,
@@ -768,19 +768,20 @@ footer {
 }
 
 .dashboard-card {
-  padding: 13px 14px;
+  padding: 15px 18px;
 }
 
 .dashboard-card-label {
   display: block;
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.05em;
-  color: #617890;
+  color: black;
+  
 }
 
 .card-valor {
   display: block;
-  font-size: 25px;
+  font-size: 30px;
   line-height: 1.15;
   font-weight: 650;
   color: #173b62;
@@ -790,13 +791,13 @@ footer {
   padding-left: 2px;
   font-size: 15px;
   font-weight: 400;
-  color: #6b8095;
+  color: black;
 }
 
 .card-info {
   display: block;
-  font-size: 10px;
-  color: #718398;
+  font-size: 14px;
+  color: #000;
 }
 
 .dashboard-badge {
@@ -804,7 +805,7 @@ footer {
   margin-top: 5px;
   padding: 3px 7px;
   border-radius: 20px;
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -863,13 +864,13 @@ footer {
 
 .dashboard-panel-header h2 {
   margin: 0;
-  font-size: 13px;
+  font-size: 18px;
   color: #193b61;
 }
 
 .dashboard-panel-header span {
-  font-size: 9px;
-  color: #7b8da0;
+  font-size: 12px;
+  color: black;
 }
 
 /* O gráfico ocupa todo o espaço que sobra no painel */
@@ -921,7 +922,7 @@ footer {
   padding: 4px 0;
   border-bottom: 1px solid #eee8df;
   font-size: 11px;
-  color: #344f6b;
+  color: black;
 }
 
 .alert-type {
@@ -945,7 +946,7 @@ footer {
 
 .alert-hora {
   font-size: 10px;
-  color: #6e8499;
+  color: black;
 }
 
 .dashboard-demo-notice {
@@ -1566,8 +1567,8 @@ footer {
   display: flex;
   justify-content: space-between;
   margin-top: 4px;
-  font-size: 9px;
-  color: #617890;
+  font-size: 13px;
+  color: black;
 }
 
 /* ===== Visão Geral (dashboard-geral.html) ===== */
