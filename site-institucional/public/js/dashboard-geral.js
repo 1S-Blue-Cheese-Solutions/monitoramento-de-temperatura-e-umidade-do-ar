@@ -182,7 +182,6 @@ function montarLinha(camara) {
     <tr>
       <td>
         <strong>${camara.nome}</strong>
-        <span class="geral-sub">${camara.descricao}</span>
       </td>
       <td>
         <span class="geral-valor ${classeTemperatura}">${formatarNumero(camara.temperatura)} °C</span>
