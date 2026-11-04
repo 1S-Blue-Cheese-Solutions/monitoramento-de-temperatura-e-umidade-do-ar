@@ -40,8 +40,11 @@ let chartTemperatura = new Chart(graficoTemperatura, {
   },
   options: {
     maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { y: { min: 0, max: 16 } }
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: (item) => `${item.formattedValue} °C` } }
+    },
+    scales: { y: { min: 0, max: 16, ticks: { callback: (valor) => `${valor} °C` } } }
   }
 });
 
@@ -58,8 +61,11 @@ let chartUmidade = new Chart(graficoUmidade, {
   },
   options: {
     maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { y: { min: 80, max: 100 } }
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: (item) => `${item.formattedValue}%` } }
+    },
+    scales: { y: { min: 80, max: 100, ticks: { callback: (valor) => `${valor}%` } } }
   }
 });
 
