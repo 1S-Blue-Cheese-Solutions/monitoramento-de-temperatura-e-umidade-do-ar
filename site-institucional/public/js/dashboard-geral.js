@@ -18,7 +18,7 @@ const camaras = [
 
 // Minutos fora da faixa desde 00:00, por câmara
 const resumoDia = [
-  { fkAmbienteProcesso: 1, minutosFora: 196 },
+  { fkAmbienteProcesso: 1, minutosFora: 234 },
   { fkAmbienteProcesso: 2, minutosFora: 127 },
   { fkAmbienteProcesso: 3, minutosFora: 0 }
 ];
