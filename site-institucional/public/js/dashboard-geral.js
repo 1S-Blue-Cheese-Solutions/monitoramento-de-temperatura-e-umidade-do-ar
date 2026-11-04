@@ -164,17 +164,6 @@ function linha(c) {
     </tr>`;
 }
 
-// Mostra o usuário logado no menu. Esta página não exige login, então sem sessão os campos ficam vazios
-function renderUsuario() {
-  let nome = sessionStorage.NOME_CLIENTE;
-  if (!nome) return;
-
-  let partes = nome.split(' ');
-  nome_usuario.textContent = nome;
-  avatar_usuario.textContent = partes.length >= 2 ? partes[0][0] + partes[1][0] : nome.slice(0, 2);
-}
-
-renderUsuario();
 renderCabecalho();
 renderKpis();
 tbody_camaras.innerHTML = ordenarPorGravidade(camaras).map(linha).join('');
