@@ -31,7 +31,6 @@
   <div class="locais">
     <div class="locais-header">
       <h1>Meus locais</h1>
-      <button class="btn-azul" onclick="abrirNovaEmpresa()">+ Nova empresa</button>
     </div>
 
     <!-- Empresa 1 -->
@@ -42,7 +41,6 @@
       </div>
       <div>
         <button class="btn-link" onclick="abrirEditarEmpresa('Laticínios Serra Azul', '12345678000190')">Editar empresa</button>
-        <button class="btn-branco" onclick="abrirNovoEndereco('Laticínios Serra Azul')">+ Novo endereço</button>
       </div>
     </div>
 
@@ -57,7 +55,6 @@
         </div>
         <p class="ambiente"><span class="bolinha">●</span> Sala de Maturação 1</p>
         <p class="ambiente"><span class="bolinha">●</span> Sala de Maturação 2</p>
-        <button class="btn-tracejado" onclick="abrirAmbientes('Rua das Acácias, 120 · Serro - MG', ['Sala de Maturação 1', 'Sala de Maturação 2'])">+ Adicionar ambiente</button>
       </div>
 
       <div class="endereco-card">
@@ -69,7 +66,6 @@
           <button class="btn-link" onclick="abrirNovoEndereco('Laticínios Serra Azul')">Editar</button>
         </div>
         <p class="vazio">Nenhum ambiente cadastrado.</p>
-        <button class="btn-tracejado" onclick="abrirAmbientes('Avenida Tiradentes, 845 · Poços de Caldas - MG', [])">+ Adicionar ambiente</button>
       </div>
     </div>
 
@@ -81,7 +77,6 @@
       </div>
       <div>
         <button class="btn-link" onclick="abrirEditarEmpresa('Queijaria Veia Azul', '23456789000101')">Editar empresa</button>
-        <button class="btn-branco" onclick="abrirNovoEndereco('Queijaria Veia Azul')">+ Novo endereço</button>
       </div>
     </div>
 
@@ -95,8 +90,6 @@
           <button class="btn-link" onclick="abrirNovoEndereco('Queijaria Veia Azul')">Editar</button>
         </div>
         <p class="ambiente"><span class="bolinha">●</span> Sala de Cura Gorgonzola</p>
-        <button class="btn-tracejado" onclick="abrirAmbientes('Estrada do Queijo Artesanal, 51 · Araxá - MG', ['Sala de Cura Gorgonzola'])">+ Adicionar ambiente</button>
-      </div>
     </div>
   </div>
 
@@ -140,7 +133,6 @@
       <div class="popup-msg" id="div_msg_editar"></div>
 
       <div class="popup-botoes">
-        <button class="btn-vermelho" onclick="fecharPopups()">Excluir empresa</button>
         <button class="btn-branco" onclick="fecharPopups()">Cancelar</button>
         <button class="btn-azul" onclick="salvarEditarEmpresa()">Salvar</button>
       </div>
@@ -256,13 +248,6 @@
           <input class="popup-input" id="input_umid_max" placeholder="98">
         </div>
       </div>
-
-      <div class="popup-msg" id="div_msg_ambientes"></div>
-
-      <button class="btn-branco btn-inteiro" onclick="adicionarAmbiente()">+ Adicionar à lista</button>
-
-      <div id="div_lista"></div>
-
       <div class="popup-botoes">
         <button class="btn-branco" onclick="fecharPopups()">Pular</button>
         <button class="btn-azul" onclick="fecharPopups()">Concluir</button>
