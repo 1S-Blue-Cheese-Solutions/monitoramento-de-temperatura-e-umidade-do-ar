@@ -1736,3 +1736,24 @@ footer {
   outline: 2px solid var(--navy);
   outline-offset: 2px;
 }
+
+.dashboard-grid {
+  grid-template-rows: minmax(296px, 1fr) minmax(0, 1fr);
+}
+
+.desvio-kpi {
+  padding: 10px 16px;
+}
+
+.desvio-kpi-topo .dashboard-card-label {
+  white-space: nowrap;
+}
+
+.desvio-kpi-selos {
+  flex: 1;
+}
+
+.desvio-kpi-selos .dashboard-badge {
+  padding: 2px 6px;
+  font-size: 12px;
+}
