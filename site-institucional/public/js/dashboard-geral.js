@@ -111,17 +111,12 @@ function renderKpis() {
   let fora = camaras.filter(c => enviandoDados(c) && estaFora(c));
   let enviando = camaras.filter(enviandoDados);
   let totalFora = camaras.reduce((soma, c) => soma + minutosForaHoje(c), 0);
-  let composicao = camaras
-    .filter(c => minutosForaHoje(c) > 0)
-    .sort((a, b) => minutosForaHoje(b) - minutosForaHoje(a))
-    .map(c => `${nomeCurto(c)}: ${fmtDuracao(minutosForaHoje(c))}`)
-    .join(' · ');
 
   let infoDentro = 'Demais câmaras sem dados';
   if (dentro.length == total) {
     infoDentro = 'Todas dentro da faixa ideal';
   } else if (fora.length > 0) {
-    infoDentro = fora.map(c => `${nomeCurto(c)} fora há ${fmtDuracao(c.minutosDesdeUltimaDentro)}`).join(', ');
+    infoDentro = fora.map(c => `${nomeCurto(c)} está fora da faixa há ${fmtDuracao(c.minutosDesdeUltimaDentro)}`).join(', ');
   }
 
   div_kpis.innerHTML = `
@@ -133,7 +128,6 @@ function renderKpis() {
     <div class="dashboard-card geral-kpi">
       <span class="geral-kpi-rotulo">Tempo fora da faixa hoje</span>
       <span class="geral-kpi-valor">${fmtDuracao(totalFora)}</span>
-      <span class="geral-kpi-info">${composicao || 'Nenhuma câmara saiu da faixa hoje'}</span>
     </div>
     <div class="dashboard-card geral-kpi ${enviando.length < total ? 'geral-kpi-alerta' : ''}">
       <span class="geral-kpi-rotulo">Sensores enviando dados</span>
