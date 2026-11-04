@@ -1,19 +1,19 @@
 // Dados mockados: a câmara 1 segue os dados da dashboard (dia 13/10), as câmaras 2 e 3 têm valores fictícios
 let camaras = [
   {
-    id: 1, nome: 'Câmara de Maturação 1', descricao: 'Maturação de Roquefort',
+    id: 1, nome: 'Câmara de Maturação 1',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 90, umidadeMaxima: 98,
     temperatura: 8.9, umidade: 92.7, horaLeitura: '20:56', segundosDesdeLeitura: 3,
     minutosForaAgora: 0, minutosForaHoje: 234
   },
   {
-    id: 2, nome: 'Câmara de Maturação 2', descricao: 'Maturação de Gorgonzola',
+    id: 2, nome: 'Câmara de Maturação 2',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
     temperatura: 12.9, umidade: 88.4, horaLeitura: '20:56', segundosDesdeLeitura: 2,
     minutosForaAgora: 52, minutosForaHoje: 127
   },
   {
-    id: 3, nome: 'Câmara de Maturação 3', descricao: 'Maturação de Stilton',
+    id: 3, nome: 'Câmara de Maturação 3',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
     temperatura: 9.7, umidade: 88.6, horaLeitura: '20:56', segundosDesdeLeitura: 4,
     minutosForaAgora: 0, minutosForaHoje: 0
