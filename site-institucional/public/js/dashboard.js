@@ -252,5 +252,11 @@ function filtrar() {
 }
 
 
+// Seleciona a câmara vinda do link da visão geral (dashboard.html?camara=2)
+let camaraDaUrl = new URLSearchParams(window.location.search).get('camara');
+if (['1', '2', '3'].includes(camaraDaUrl)) {
+  select_camara.value = camaraDaUrl;
+}
+
 // Primeira carga dos cards de desvio: últimas 12 h, igual aos gráficos
 atualizarDesvios(horarios.slice(-12), temperaturas.slice(-12), umidades.slice(-12));
