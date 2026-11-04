@@ -776,7 +776,7 @@ footer {
   font-size: 14px;
   letter-spacing: 0.05em;
   color: black;
-  font-style: bold;
+  
 }
 
 .card-valor {
@@ -922,7 +922,7 @@ footer {
   padding: 4px 0;
   border-bottom: 1px solid #eee8df;
   font-size: 11px;
-  color: #344f6b;
+  color: black;
 }
 
 .alert-type {
