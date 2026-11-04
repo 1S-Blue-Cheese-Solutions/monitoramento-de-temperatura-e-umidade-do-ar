@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Visão Geral | Blue Cheese</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="shortcut icon" href="./assets/LogoBlueCheese.png" type="image/x-icon">
+</head>
+<body class="dashboard-page">
+
+  <!-- Menu lateral -->
+  <div class="dashboard-sidebar">
+    <a class="sidebar-brand" href="./index.html">
+      <img src="./assets/LogoBlueCheese.png" alt="Blue Cheese">
+    </a>
+
+    <div class="sidebar-nav">
+      <a href="./dashboard-geral.html" class="active">Visão Geral</a>
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./meus-locais.html">Meus Locais</a>
+      <a href="./acessos.html">Usuários</a>
+    </div>
+
+    <div class="sidebar-account">
+      <div class="sidebar-user">
+    <span class="sidebar-avatar" id="avatar_usuario"></span>
+    <span id="nome_usuario"></span>
+      </div>
+      <a href="./index.html" onclick="limparSessao()">Sair</a>
+    </div>
+  </div>
+
+  <div class="dashboard dashboard-geral">
+
+    <div class="dashboard-title">
+      <h1>Visão Geral das Câmaras</h1>
+      <span class="geral-local" id="span_local"></span>
+    </div>
+
+    <div class="geral-kpis" id="div_kpis"></div>
+
+    <div class="dashboard-panel geral-painel">
+      <table class="geral-tabela">
+        <thead>
+          <tr>
+            <th>Câmara</th>
+            <th>Temperatura</th>
+            <th>Umidade</th>
+            <th>Situação</th>
+            <th>Fora da faixa hoje</th>
+            <th>Última leitura</th>
+            <th aria-label="Ações"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody_camaras"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script src="./js/dashboard-geral.js"></script>
+  <script src="./js/sessao.js"></script>
+</body>
+</html>
