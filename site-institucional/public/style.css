@@ -1573,12 +1573,6 @@ footer {
 
 /* ===== Visão Geral (dashboard-geral.html) ===== */
 
-.dashboard.dashboard-geral {
-  grid-template-rows: auto auto minmax(0, 1fr);
-  gap: 18px;
-  padding-bottom: 18px;
-}
-
 .geral-local {
   display: block;
   margin-top: 4px;
@@ -1586,53 +1580,13 @@ footer {
   color: #5f748a;
 }
 
-/* KPIs */
-.geral-kpis {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+/* os cards têm conteúdo de alturas diferentes: estica para ficarem iguais */
+.geral-cards {
+  align-items: stretch;
 }
 
-.geral-kpi {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 16px 20px;
-  border-top: 3px solid transparent;
-}
-
-.geral-kpi-alerta {
-  border-top-color: #d6544c;
-}
-
-.geral-kpi-alerta .geral-kpi-valor {
-  color: #c7443c;
-}
-
-.geral-kpi-rotulo {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #5f748a;
-}
-
-.geral-kpi-valor {
-  font-size: 32px;
-  font-weight: 650;
-  line-height: 1.2;
-  color: #173b62;
-}
-
-.geral-kpi-valor small {
-  font-size: 16px;
-  font-weight: 400;
-  color: #5f748a;
-}
-
-.geral-kpi-info {
-  font-size: 13px;
-  color: #5f748a;
+.geral-valor-fora {
+  color: #c05347;
 }
 
 /* Tabela */
@@ -1676,34 +1630,16 @@ footer {
   background: #fbfaf7;
 }
 
-/* Botão à direita de cada câmara: abre a dashboard já com ela selecionada */
-.geral-tabela .geral-acao {
-  text-align: right;
-}
-
-.geral-btn-dashboard {
-  display: inline-block;
-  white-space: nowrap;
-  text-decoration: none;
-  transition: background 0.15s, color 0.15s;
-}
-
-.geral-btn-dashboard:hover,
-.geral-btn-dashboard:focus-visible {
-  background: var(--navy);
-  color: white;
-}
-
-.geral-btn-dashboard:focus-visible {
-  outline: 2px solid var(--navy);
-  outline-offset: 2px;
-}
-
 .geral-tabela strong {
   display: block;
   white-space: nowrap;
   font-size: 15px;
   color: #193b61;
+}
+
+.geral-tabela .dashboard-badge {
+  margin-top: 0;
+  white-space: nowrap;
 }
 
 .geral-sub {
@@ -1724,8 +1660,8 @@ footer {
   white-space: nowrap;
 }
 
-.geral-valor-fora {
-  color: #c7443c !important;
+.geral-tabela .geral-valor-fora {
+  color: #c05347;
 }
 
 .geral-tempo {
@@ -1734,21 +1670,34 @@ footer {
   color: #173b62;
 }
 
-.geral-tempo.zero {
+.geral-tempo-zero {
   font-weight: 400;
   color: #8a9bb0;
 }
 
-/* Situação */
-.geral-selo {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
+.geral-sem-dados {
+  color: #5c6f83;
+  background: #eef1f4;
 }
 
-.geral-ok { color: #36865b; background: #e4f3e9; }
-.geral-fora { color: #c7443c; background: #fde8e6; }
-.geral-sem { color: #5c6f83; background: #eef1f4; }
+/* Botão à direita de cada câmara: abre a dashboard já com ela selecionada */
+.geral-acao {
+  text-align: right;
+}
+
+.geral-btn-dashboard {
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.geral-btn-dashboard:hover,
+.geral-btn-dashboard:focus-visible {
+  background: var(--navy);
+  color: white;
+}
+
+.geral-btn-dashboard:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
