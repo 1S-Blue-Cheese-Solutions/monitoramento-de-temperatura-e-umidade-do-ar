@@ -7,13 +7,13 @@ let camaras = [
     minutosForaAgora: 0, minutosForaHoje: 234
   },
   {
-    id: 2, nome: 'Câmara de Maturação 2 - Gorgonzola',
+    id: 2, nome: 'Câmara de Maturação 2 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
     temperatura: 12.9, umidade: 88.4, horaLeitura: '20:55', segundosDesdeLeitura: 2,
     minutosForaAgora: 52, minutosForaHoje: 127
   },
   {
-    id: 3, nome: 'Câmara de Maturação 3 - Stilton',
+    id: 3, nome: 'Câmara de Maturação 3 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
     temperatura: 9.7, umidade: 88.6, horaLeitura: '20:55', segundosDesdeLeitura: 4,
     minutosForaAgora: 0, minutosForaHoje: 0
