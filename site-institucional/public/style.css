@@ -1532,8 +1532,8 @@ footer {
 }
 
 .desvio-abaixo {
-  color: #245386;
-  background: #e6edf5;
+  color: #c05347;
+  background: #fde8e6;
 }
 
 /* linha do tempo: verde = dentro da faixa, trechos coloridos = fora */
@@ -1558,8 +1558,14 @@ footer {
   background: #c05347;
 }
 
-.trecho-acima,
+.trecho-acima{
+  background: #ebad6b;
+}
 .trecho-abaixo {
+  background: #c05347;
+}
+
+#div_linha_umidade .trecho-abaixo {
   background: #c05347;
 }
 

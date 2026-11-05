@@ -175,7 +175,7 @@ function montarKpiDesvio(nome, valores, rotulos, minimo, maximo, limite) {
     let horario = horaInicio == horaFim ? horaInicio : horaInicio + '–' + horaFim;
 
     // mostra no máximo 2 selos, o resto vira "+N"
-    if (i < 2) {
+    if (i < 1) {
       selos += `<span class="dashboard-badge desvio-${classe}">${seta} ${horario}</span>`;
     }
     // trecho colorido na linha do tempo, em % da largura
