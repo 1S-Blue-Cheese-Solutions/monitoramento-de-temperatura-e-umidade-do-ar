@@ -31,7 +31,7 @@ let umidadeMinima = 90;
 let chartTemperatura = new Chart(graficoTemperatura, {
   type: 'line',
   data: {
-    labels: horarios.slice(-13),
+    labels: horarios.slice(-12),
     datasets: [
       { data: Array(12).fill(temperaturaMinima), borderWidth: 0, pointRadius: 0 },
       { data: Array(12).fill(temperaturaMaxima), borderWidth: 0, pointRadius: 0, fill: '-1', backgroundColor: 'rgba(46, 139, 92, 0.1)' },
