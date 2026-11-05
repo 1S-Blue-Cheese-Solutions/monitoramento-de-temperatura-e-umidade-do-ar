@@ -48,7 +48,7 @@ function entrar() {
                 sessionStorage.FK_CLIENTE = json.fkCliente;
 
                 setTimeout(function () {
-                    window.location = "./dashboard.html";
+                    window.location = "./dashboard-geral.html";
                 }, 1000); // apenas para exibir o loading
 
             });
