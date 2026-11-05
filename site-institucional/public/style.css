@@ -720,6 +720,11 @@ footer {
 
 .dashboard-status {
   font-size: 11px;
+  color: #314861;
+}
+
+.dashboard-controls label {
+  color: #314861;
 }
 
 .status-bolinha {
@@ -739,6 +744,13 @@ footer {
   background: white;
   color: #314861;
   font-size: 11px;
+}
+
+#select_camara,
+#select_periodo,
+#select_empresa {
+  color: #000;
+  font-size: 13px;
 }
 
 /* Período personalizado: começa escondido, o JS mostra */

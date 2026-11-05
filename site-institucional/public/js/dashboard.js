@@ -8,7 +8,7 @@ let datasHoras = [
   '13/10 00:00', '13/10 01:00', '13/10 02:00', '13/10 03:00', '13/10 04:00', '13/10 05:00', '13/10 06:00', '13/10 07:00', '13/10 08:00', '13/10 09:00', '13/10 10:00', '13/10 11:00', '13/10 12:00', '13/10 13:00', '13/10 14:00', '13/10 15:00', '13/10 16:00', '13/10 17:00', '13/10 18:00', '13/10 19:00', '13/10 20:00'
 ];
 // Só a hora das últimas 24 leituras - usada nos períodos de 24, 12 e 6 h
-let horarios = ['21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+let horarios = ['21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
 let temperaturas = [
   9.8, 9.7, 9.5, 9.4, 9.2, 9.1, 9.0, 9.1, 9.3, 9.6, 9.9, 10.2, 10.5, 10.8, 11.0, 11.2, 11.1, 10.9, 10.7, 10.5, 10.3, 10.2, 10.0, 9.9,
   9.8, 9.6, 9.5, 9.3, 9.2, 9.1, 9.3, 9.5, 9.8, 10.1, 10.4, 10.8, 11.2, 11.7, 12.3, 12.1, 11.6, 11.2, 10.9, 10.7, 10.6, 10.7, 3.9, 11.3,
@@ -210,6 +210,75 @@ function atualizarDesvios(rotulos, temperaturasPeriodo, umidadesPeriodo) {
 
 
 
+// ===== Alertas recentes =====
+
+// Fora da faixa por mais que isto (°C ou pontos de %) é crítico; até isto, só alerta
+let desvioCritico = 5;
+
+// O gráfico tem uma leitura por hora e os alertas saem a cada 5 minutos:
+// o valor é estimado na reta entre duas leituras, igual ao cálculo dos desvios
+function coletarAlertas(nome, unidade, valores, rotulos, minimo, maximo) {
+  let alertas = [];
+
+  for (let i = 0; i < valores.length; i++) {
+    for (let passo = 0; passo < 12; passo++) {
+      if (i == valores.length - 1 && passo > 0) {
+        break;                             // depois da última leitura não há dados
+      }
+
+      let valor = valores[i];
+      if (passo > 0) {
+        valor = valores[i] + (valores[i + 1] - valores[i]) * passo / 12;
+      }
+      valor = Math.round(valor * 10) / 10; // classifica pelo mesmo valor que aparece na tela
+
+      let desvio = 0;
+      if (valor > maximo) desvio = valor - maximo;
+      if (valor < minimo) desvio = minimo - valor;
+
+      if (desvio > 0) {
+        let posicao = i + passo / 12;
+        alertas.push({
+          posicao: posicao,
+          hora: horaNaPosicao(rotulos, posicao),
+          critico: desvio > desvioCritico,
+          texto: `Câmara 1 · ${nome} ${valor.toFixed(1).replace('.', ',')}${unidade} (ideal ${minimo}–${maximo}${unidade})`
+        });
+      }
+    }
+  }
+
+  return alertas;
+}
+
+function atualizarAlertas(rotulos, temperaturasPeriodo, umidadesPeriodo) {
+  let alertas = coletarAlertas('Temperatura', ' °C', temperaturasPeriodo, rotulos, temperaturaMinima, temperaturaMaxima)
+    .concat(coletarAlertas('Umidade', '%', umidadesPeriodo, rotulos, umidadeMinima, umidadeMaxima));
+
+  alertas.sort(function (a, b) {           // mais recente primeiro
+    return b.posicao - a.posicao;
+  });
+
+  let linhas = '';
+  for (let i = 0; i < alertas.length; i++) {
+    let classe = alertas[i].critico ? 'dashboard-critical' : 'dashboard-warning';
+    let tipo = alertas[i].critico ? '✕ Crítico' : '! Alerta';
+
+    linhas += `
+      <div class="dashboard-alert ${classe}">
+        <span class="alert-type">${tipo}</span>
+        <span>${alertas[i].texto}</span>
+        <span class="alert-hora">${alertas[i].hora}</span>
+      </div>`;
+  }
+  if (alertas.length == 0) {
+    linhas = '<p class="vazio">Nenhum alerta no período.</p>';
+  }
+
+  document.getElementById('div_alertas').innerHTML = linhas;
+  document.getElementById('span_valor_alertas').innerHTML = alertas.length + '<span class="card-unit">Alertas</span>';
+}
+
 // Troca os dados dos gráficos de temperatura e umidade
 function atualizarGraficos(rotulos, temperaturasPeriodo, umidadesPeriodo) {
   chartTemperatura.data.labels = rotulos;
@@ -224,6 +293,7 @@ function atualizarGraficos(rotulos, temperaturasPeriodo, umidadesPeriodo) {
   chartUmidade.data.datasets[2].data = umidadesPeriodo;
   chartUmidade.update();
   atualizarDesvios(rotulos, temperaturasPeriodo, umidadesPeriodo);   
+  atualizarAlertas(rotulos, temperaturasPeriodo, umidadesPeriodo);
 }
 
 // Últimas 24, 12 ou 6 h - pega as leituras mais recentes
@@ -258,5 +328,6 @@ if (['1', '2', '3'].includes(camaraDaUrl)) {
   select_camara.value = camaraDaUrl;
 }
 
-// Primeira carga dos cards de desvio: últimas 12 h, igual aos gráficos
+// Primeira carga dos cards de desvio e dos alertas: últimas 12 h, igual aos gráficos
 atualizarDesvios(horarios.slice(-12), temperaturas.slice(-12), umidades.slice(-12));
+atualizarAlertas(horarios.slice(-12), temperaturas.slice(-12), umidades.slice(-12));
