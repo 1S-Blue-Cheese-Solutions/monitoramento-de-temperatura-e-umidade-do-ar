@@ -697,7 +697,7 @@ footer {
 
 .dashboard-title h1 {
   margin: 0;
-  font-family: var(--serif);
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
   line-height: 1.15;
   color: #172c46;
@@ -720,6 +720,11 @@ footer {
 
 .dashboard-status {
   font-size: 11px;
+  color: #314861;
+}
+
+.dashboard-controls label {
+  color: #314861;
 }
 
 .status-bolinha {
@@ -739,6 +744,13 @@ footer {
   background: white;
   color: #314861;
   font-size: 11px;
+}
+
+#select_camara,
+#select_periodo,
+#select_empresa {
+  color: #000;
+  font-size: 13px;
 }
 
 /* Período personalizado: começa escondido, o JS mostra */
@@ -921,7 +933,7 @@ footer {
   min-height: 35px;
   padding: 4px 0;
   border-bottom: 1px solid #eee8df;
-  font-size: 11px;
+  font-size: 14px;
   color: black;
 }
 
@@ -945,7 +957,7 @@ footer {
 }
 
 .alert-hora {
-  font-size: 10px;
+  font-size: 12px;
   color: black;
 }
 
@@ -975,7 +987,7 @@ footer {
 .locais h3,
 .popup h2 {
   margin: 0;
-  font-family: var(--serif);
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
 }
 
@@ -1532,8 +1544,8 @@ footer {
 }
 
 .desvio-abaixo {
-  color: #245386;
-  background: #e6edf5;
+  color: #c05347;
+  background: #fde8e6;
 }
 
 /* linha do tempo: verde = dentro da faixa, trechos coloridos = fora */
@@ -1558,8 +1570,14 @@ footer {
   background: #c05347;
 }
 
-.trecho-acima,
+.trecho-acima{
+  background: #ebad6b;
+}
 .trecho-abaixo {
+  background: #c05347;
+}
+
+#div_linha_umidade .trecho-abaixo {
   background: #c05347;
 }
 
@@ -1573,6 +1591,13 @@ footer {
 
 /* ===== Visão Geral (dashboard-geral.html) ===== */
 
+/* título à esquerda e seleção de empresa à direita, na mesma linha */
+.geral-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .geral-local {
   display: block;
   margin-top: 4px;
@@ -1583,6 +1608,38 @@ footer {
 /* os cards têm conteúdo de alturas diferentes: estica para ficarem iguais */
 .geral-cards {
   align-items: stretch;
+  margin-bottom: 10px;
+}
+
+/* cards mais altos e com fontes maiores só nesta tela: a dashboard usa as mesmas classes */
+.geral-cards .dashboard-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 172px;
+  padding: 20px 22px;
+}
+
+.geral-cards .dashboard-card-label {
+  font-size: 15px;
+}
+
+.geral-cards .card-valor {
+  font-size: 44px;
+}
+
+.geral-cards .card-unit {
+  font-size: 20px;
+}
+
+.geral-cards .card-info {
+  font-size: 16px;
+}
+
+.geral-cards .dashboard-badge {
+  margin-top: 0;
+  padding: 4px 10px;
+  font-size: 14px;
 }
 
 .geral-valor-fora {
@@ -1594,20 +1651,20 @@ footer {
   align-self: start;
   max-height: 100%;
   overflow-y: auto;
-  padding: 6px 20px 10px;
+  padding: 6px 12px 10px;
 }
 
 .geral-tabela {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 16px;
   color: #344f6b;
 }
 
 .geral-tabela th {
-  padding: 14px 12px;
+  padding: 14px 8px;
   border-bottom: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-align: left;
@@ -1617,7 +1674,7 @@ footer {
 }
 
 .geral-tabela td {
-  padding: 16px 12px;
+  padding: 16px 8px;
   border-bottom: 1px solid #eee8df;
   vertical-align: middle;
 }
@@ -1633,19 +1690,20 @@ footer {
 .geral-tabela strong {
   display: block;
   white-space: nowrap;
-  font-size: 15px;
+  font-size: 18px;
   color: #193b61;
 }
 
 .geral-tabela .dashboard-badge {
   margin-top: 0;
+  font-size: 14px;
   white-space: nowrap;
 }
 
 .geral-sub {
   display: block;
   margin-top: 3px;
-  font-size: 12px;
+  font-size: 14px;
   color: #5f748a;
 }
 
@@ -1654,7 +1712,7 @@ footer {
 }
 
 .geral-valor {
-  font-size: 22px;
+  font-size: 27px;
   font-weight: 650;
   color: #173b62;
   white-space: nowrap;
@@ -1665,7 +1723,7 @@ footer {
 }
 
 .geral-tempo {
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 650;
   color: #173b62;
 }
@@ -1687,6 +1745,8 @@ footer {
 
 .geral-btn-dashboard {
   display: inline-block;
+  padding: 10px 14px;
+  font-size: 14px;
   white-space: nowrap;
   text-decoration: none;
 }
@@ -1700,4 +1760,25 @@ footer {
 .geral-btn-dashboard:focus-visible {
   outline: 2px solid var(--navy);
   outline-offset: 2px;
+}
+
+.dashboard-grid {
+  grid-template-rows: minmax(296px, 1fr) minmax(0, 1fr);
+}
+
+.desvio-kpi {
+  padding: 10px 16px;
+}
+
+.desvio-kpi-topo .dashboard-card-label {
+  white-space: nowrap;
+}
+
+.desvio-kpi-selos {
+  flex: 1;
+}
+
+.desvio-kpi-selos .dashboard-badge {
+  padding: 2px 6px;
+  font-size: 12px;
 }

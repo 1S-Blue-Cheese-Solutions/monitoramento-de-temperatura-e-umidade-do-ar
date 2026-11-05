@@ -32,19 +32,28 @@
 
   <div class="dashboard">
 
-    <div class="dashboard-header">
+    <div class="dashboard-header geral-header">
       <div class="dashboard-title">
         <h1>Visão Geral das Câmaras</h1>
-        <span class="geral-local">Queijaria Serra Azul · Estrada do Queijo, 1500 · Cunha - SP</span>
+        <span class="geral-local">Laticínios Serra Azul · Rua das Acácias, 120 · Serro - MG</span>
+      </div>
+      <div class="dashboard-controls">
+        <!-- simulação: dá para escolher, mas a tela não muda -->
+        <label>Empresa
+          <select id="select_empresa" autocomplete="off">
+            <option value="1">Laticínios Serra Azul</option>
+            <option value="2">Queijaria Veia Azul</option>
+          </select>
+        </label>
       </div>
     </div>
 
-    <!-- Cards -->
+    <!-- Cards -->  
     <div class="dashboard-cards geral-cards">
       <div class="dashboard-card">
         <span class="dashboard-card-label">DENTRO DA FAIXA IDEAL AGORA</span>
         <span class="card-valor" id="span_valor_dentro"></span>
-        <span class="card-info" id="span_info_dentro"></span>
+        <div id="div_selo_dentro"></div>
       </div>
       <div class="dashboard-card">
         <span class="dashboard-card-label">TEMPO FORA DA FAIXA IDEAL HOJE</span>
@@ -54,7 +63,7 @@
       <div class="dashboard-card">
         <span class="dashboard-card-label">SENSORES ENVIANDO DADOS</span>
         <span class="card-valor" id="span_valor_sensores"></span>
-        <span class="card-info" id="span_info_sensores"></span>
+        <div id="div_selo_sensores"></div>
       </div>
     </div>
 
@@ -66,7 +75,7 @@
             <th>Câmara</th>
             <th>Temperatura</th>
             <th>Umidade</th>
-            <th>Situação</th>
+            <th>Situação</th> 
             <th>Fora da faixa hoje</th>
             <th>Última leitura</th>
             <th aria-label="Ações"></th>

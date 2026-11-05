@@ -39,13 +39,13 @@
       </div>
       <div class="dashboard-controls">
         <div class="dashboard-status">
-          <span class="status-bolinha"></span> Última leitura 20:56
+          <span class="status-bolinha"></span> Última leitura 20:55
         </div>
         <label>Câmara
           <select id="select_camara" autocomplete="off">
             <option value="1">Câmara de Maturação 1 - Roquefort</option>
-            <option value="2">Câmara de Maturação 2 - Gorgonzola</option>
-            <option value="3">Câmara de Maturação 3 - Stilton </option>
+            <option value="2">Câmara de Maturação 2 - Roquefort</option>
+            <option value="3">Câmara de Maturação 3 - Roquefort</option>
           </select>
         </label>
         <label>Período
@@ -85,9 +85,9 @@
       </div>
       
       <div class="dashboard-card">
-        <span class="dashboard-card-label">QUANTIDADE DE ALERTAS - ÚLTIMAS 24h</span>
-        <span class="card-valor">7<span class="card-unit">Alertas</span></span>
-        <span class="card-info">total de alertas nas últimas 24h</span>
+        <span class="dashboard-card-label">QUANTIDADE DE ALERTAS</span>
+        <span class="card-valor" id="span_valor_alertas"></span>
+        <span class="card-info">Total de alertas</span>
         <span class="dashboard-badge dashboard-bad">↑ 34% em relação ao periodo anterior</span>
       </div>
     </div>
@@ -134,7 +134,8 @@
 
       <div class="dashboard-panel">
         <div class="dashboard-panel-header">
-          <h2>Temperatura em Graus Celsius por Hora</h2>
+          <h2>Temperatura °C em relação ao tempo
+          </h2>
           <span>Faixa sombreada = intervalo ideal da fase</span>
         </div>
         <div class="dashboard-chart-container">
@@ -144,51 +145,15 @@
 
             <div class="dashboard-panel">
         <div class="dashboard-panel-header">
-          <h2>Alertas recentes - Últimas 24h</h2>
+          <h2>Alertas recentes</h2>
         </div>
-        <div class="dashboard-alertas">
-          <div class="dashboard-alert dashboard-critical">
-            <span class="alert-type">✕ Crítico</span>
-            <span>Câmara 1 · Temperatura 2,0 °C (ideal 8–12 °C)</span>
-            <span class="alert-hora">18:00 06/11</span>
-          </div>
-          <div class="dashboard-alert dashboard-warning">
-            <span class="alert-type">! Atenção</span>
-            <span>Câmara 1 · Umidade 88% (ideal 90–98 %)</span>
-            <span class="alert-hora">18:00 06/11</span>
-          </div>
-          <div class="dashboard-alert dashboard-warning">
-            <span class="alert-type">! Atenção</span>
-            <span>Câmara 1 · Umidade 87,1% (ideal 90–98 %)</span>
-            <span class="alert-hora">17:00 06/11</span>
-          </div>
-          <div class="dashboard-alert dashboard-warning">
-            <span class="alert-type">! Atenção</span>
-            <span>Câmara 1 · Umidade 88,2% (ideal 90–98 %)</span>
-            <span class="alert-hora">16:00 06/11</span>
-          </div>
-          <div class="dashboard-alert dashboard-warning">
-            <span class="alert-type">! Atenção</span>
-            <span>Câmara 1 · Temperatura 14,0 °C (ideal 8–12 °C)</span>
-            <span class="alert-hora">12:00 06/11</span>
-          </div>
-          <div class="dashboard-alert dashboard-critical">
-            <span class="alert-type">✕ Crítico</span>
-            <span>Câmara 1 · Temperatura 3,9 °C (ideal 8–12 °C)</span>
-            <span class="alert-hora">22:00 05/11</span>
-          </div>
-          <div class="dashboard-alert dashboard-warning">
-            <span class="alert-type">! Atenção</span>
-            <span>Câmara 1 · Umidade 99% (ideal 90–98 %)</span>
-            <span class="alert-hora">21:00 05/11</span>
-          </div>
-        </div>
+        <div class="dashboard-alertas" id="div_alertas"></div>
       </div>
       
 
       <div class="dashboard-panel">
         <div class="dashboard-panel-header">
-          <h2>Umidade Relativa em Porcentagem por Hora</h2>
+          <h2>Umidade % em relação ao tempo</h2>
           <span>Faixa sombreada = intervalo ideal da fase</span>
         </div>
         <div class="dashboard-chart-container">

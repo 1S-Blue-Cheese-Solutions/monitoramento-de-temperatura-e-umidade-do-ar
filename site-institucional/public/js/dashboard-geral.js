@@ -1,21 +1,21 @@
 // Dados mockados: a câmara 1 segue os dados da dashboard (dia 13/10), as câmaras 2 e 3 têm valores fictícios
 let camaras = [
   {
-    id: 1, nome: 'Câmara de Maturação 1', descricao: 'Maturação de Roquefort',
+    id: 1, nome: 'Câmara de Maturação 1 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 90, umidadeMaxima: 98,
-    temperatura: 8.9, umidade: 92.7, horaLeitura: '20:56', segundosDesdeLeitura: 3,
+    temperatura: 8.9, umidade: 92.7, horaLeitura: '20:55', segundosDesdeLeitura: 3,
     minutosForaAgora: 0, minutosForaHoje: 234
   },
   {
-    id: 2, nome: 'Câmara de Maturação 2', descricao: 'Maturação de Gorgonzola',
+    id: 2, nome: 'Câmara de Maturação 2 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
-    temperatura: 12.9, umidade: 88.4, horaLeitura: '20:56', segundosDesdeLeitura: 2,
+    temperatura: 12.9, umidade: 88.4, horaLeitura: '20:55', segundosDesdeLeitura: 2,
     minutosForaAgora: 52, minutosForaHoje: 127
   },
   {
-    id: 3, nome: 'Câmara de Maturação 3', descricao: 'Maturação de Stilton',
+    id: 3, nome: 'Câmara de Maturação 3 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
-    temperatura: 9.7, umidade: 88.6, horaLeitura: '20:56', segundosDesdeLeitura: 4,
+    temperatura: 9.7, umidade: 88.6, horaLeitura: '20:55', segundosDesdeLeitura: 4,
     minutosForaAgora: 0, minutosForaHoje: 0
   }
 ];
@@ -23,7 +23,6 @@ let camaras = [
 // Total de minutos fora da faixa no dia anterior, somando as câmaras
 let minutosForaOntem = 289;
 
-let horaAtual = '20:56';
 let limiteSemDados = 120; // segundos sem leitura para considerar o sensor parado
 
 // ===== Funções de apoio =====
@@ -104,7 +103,6 @@ function atualizarCards() {
   let dentro = 0;
   let enviando = 0;
   let minutosForaHoje = 0;
-  let camarasFora = [];
 
   for (let i = 0; i < total; i++) {
     let camara = camaras[i];
@@ -113,25 +111,18 @@ function atualizarCards() {
     if (enviandoDados(camara)) {
       enviando++;
 
-      if (estaFora(camara)) {
-        camarasFora.push(camara.nome.replace('Câmara de Maturação', 'Câmara') + ' está fora da faixa há ' + textoDuracao(camara.minutosForaAgora));
-      } else {
+      if (!estaFora(camara)) {
         dentro++;
       }
     }
   }
 
   // Dentro da faixa agora
-  let infoDentro = 'Demais câmaras sem dados';
-  if (dentro == total) {
-    infoDentro = 'Todas dentro da faixa ideal';
-  } else if (camarasFora.length > 0) {
-    infoDentro = camarasFora.join(', ');
-  }
-
   span_valor_dentro.innerHTML = `${dentro}<span class="card-unit">de ${total} câmaras</span>`;
-  span_info_dentro.innerHTML = infoDentro;
-  if (dentro < total) {
+  if (dentro == total) {
+    div_selo_dentro.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Condições ideais</span>';
+  } else {
+    div_selo_dentro.innerHTML = '<span class="dashboard-badge dashboard-bad">✕ Requer atenção</span>';
     span_valor_dentro.classList.add('geral-valor-fora');
   }
 
@@ -148,9 +139,9 @@ function atualizarCards() {
   // Sensores enviando dados
   span_valor_sensores.innerHTML = `${enviando}<span class="card-unit">de ${total}</span>`;
   if (enviando == total) {
-    span_info_sensores.innerHTML = `Última leitura às ${horaAtual}`;
+    div_selo_sensores.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Sensores ativos</span>';
   } else {
-    span_info_sensores.innerHTML = 'Verifique os sensores sem dados';
+    div_selo_sensores.innerHTML = '<span class="dashboard-badge dashboard-bad">✕ Sensores sem dados</span>';
     span_valor_sensores.classList.add('geral-valor-fora');
   }
 }
@@ -182,7 +173,6 @@ function montarLinha(camara) {
     <tr>
       <td>
         <strong>${camara.nome}</strong>
-        <span class="geral-sub">${camara.descricao}</span>
       </td>
       <td>
         <span class="geral-valor ${classeTemperatura}">${formatarNumero(camara.temperatura)} °C</span>
