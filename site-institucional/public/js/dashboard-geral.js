@@ -170,7 +170,7 @@ function atualizarCards() {
     }
 
     // Fora da faixa agora
-    span_valor_dentro.innerHTML = `${fora}<span class="card-unit">de ${total} câmaras</span>`;
+    span_valor_dentro.innerHTML = `${fora}<span class="card-unit"> de ${total} câmaras</span>`;
 
     if (fora == 0) {
         div_selo_dentro.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Todas dentro da faixa</span>';
@@ -191,7 +191,7 @@ function atualizarCards() {
     }
 
     // Sensores enviando dados
-    span_valor_sensores.innerHTML = `${enviando}<span class="card-unit">de ${total}</span>`;
+    span_valor_sensores.innerHTML = `${enviando}<span class="card-unit"> de ${total}</span>`;
 
     if (enviando == total) {
         div_selo_sensores.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Sensores ativos</span>';
