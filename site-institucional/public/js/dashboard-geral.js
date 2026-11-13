@@ -4,19 +4,55 @@ let camaras = [
     id: 1, nome: 'Câmara de Maturação 1 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 90, umidadeMaxima: 98,
     temperatura: 8.9, umidade: 92.7, horaLeitura: '20:55', segundosDesdeLeitura: 3,
-    minutosForaAgora: 0, minutosForaHoje: 234
+    minutosForaAgora: 0, minutosForaHoje: 234,
+    sensores: [
+      {
+        id: 1, nome: 'Sensor 1',
+        temperatura: 8.8, umidade: 92.9, horaLeitura: '20:55', segundosDesdeLeitura: 3,
+        minutosForaAgora: 0, minutosForaHoje: 118
+      },
+      {
+        id: 2, nome: 'Sensor 2',
+        temperatura: 9.1, umidade: 92.4, horaLeitura: '20:54', segundosDesdeLeitura: 45,
+        minutosForaAgora: 0, minutosForaHoje: 116
+      }
+    ]
   },
   {
     id: 2, nome: 'Câmara de Maturação 2 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
     temperatura: 12.9, umidade: 88.4, horaLeitura: '20:55', segundosDesdeLeitura: 2,
-    minutosForaAgora: 52, minutosForaHoje: 127
+    minutosForaAgora: 52, minutosForaHoje: 127,
+    sensores: [
+      {
+        id: 3, nome: 'Sensor 3',
+        temperatura: 13.2, umidade: 88.0, horaLeitura: '20:55', segundosDesdeLeitura: 2,
+        minutosForaAgora: 52, minutosForaHoje: 64
+      },
+      {
+        id: 4, nome: 'Sensor 4',
+        temperatura: 12.6, umidade: 88.8, horaLeitura: '20:55', segundosDesdeLeitura: 8,
+        minutosForaAgora: 48, minutosForaHoje: 63
+      }
+    ]
   },
   {
     id: 3, nome: 'Câmara de Maturação 3 - Roquefort',
     temperaturaMinima: 8, temperaturaMaxima: 12, umidadeMinima: 85, umidadeMaxima: 95,
     temperatura: 9.7, umidade: 88.6, horaLeitura: '20:55', segundosDesdeLeitura: 4,
-    minutosForaAgora: 0, minutosForaHoje: 0
+    minutosForaAgora: 0, minutosForaHoje: 0,
+    sensores: [
+      {
+        id: 5, nome: 'Sensor 5',
+        temperatura: 9.6, umidade: 88.7, horaLeitura: '20:55', segundosDesdeLeitura: 4,
+        minutosForaAgora: 0, minutosForaHoje: 0
+      },
+      {
+        id: 6, nome: 'Sensor 6',
+        temperatura: 9.8, umidade: 88.4, horaLeitura: '20:12', segundosDesdeLeitura: 2580,
+        minutosForaAgora: 0, minutosForaHoje: 0
+      }
+    ]
   }
 ];
 
@@ -74,6 +110,22 @@ function estaFora(camara) {
 
 function enviandoDados(camara) {
   return camara.segundosDesdeLeitura < limiteSemDados;
+}
+
+function sensorEnviandoDados(sensor) {
+  return sensor.segundosDesdeLeitura < limiteSemDados;
+}
+
+function sensorTemperaturaFora(camara, sensor) {
+  return sensor.temperatura < camara.temperaturaMinima || sensor.temperatura > camara.temperaturaMaxima;
+}
+
+function sensorUmidadeFora(camara, sensor) {
+  return sensor.umidade < camara.umidadeMinima || sensor.umidade > camara.umidadeMaxima;
+}
+
+function sensorEstaFora(camara, sensor) {
+  return sensorTemperaturaFora(camara, sensor) || sensorUmidadeFora(camara, sensor);
 }
 
 // "Temperatura acima do ideal"
@@ -158,6 +210,71 @@ function montarSituacao(camara) {
   return '<span class="dashboard-badge dashboard-ok">✓ Dentro da faixa</span>';
 }
 
+function montarSituacaoSensor(camara, sensor) {
+  if (!sensorEnviandoDados(sensor)) {
+    return '<span class="dashboard-badge geral-sem-dados">○ Sem dados</span>';
+  }
+  if (sensorEstaFora(camara, sensor)) {
+    return `<span class="dashboard-badge dashboard-bad">✕ Fora da faixa há ${textoDuracao(sensor.minutosForaAgora)}</span>`;
+  }
+  return '<span class="dashboard-badge dashboard-ok">✓ Dentro da faixa</span>';
+}
+
+function montarSensor(camara, sensor) {
+  let ativo = sensorEnviandoDados(sensor);
+  let classeTemperatura = ativo && sensorTemperaturaFora(camara, sensor) ? 'geral-valor-fora' : '';
+  let classeUmidade = ativo && sensorUmidadeFora(camara, sensor) ? 'geral-valor-fora' : '';
+  let classeTempo = sensor.minutosForaHoje > 0 ? '' : 'geral-tempo-zero';
+  let tempoHoje = sensor.minutosForaHoje > 0 ? textoDuracao(sensor.minutosForaHoje) : 'Nenhum';
+
+  return `
+    <a class="geral-sensor" href="./dashboard.html?camara=${camara.id}&sensor=${sensor.id}" aria-label="Ver dashboard do ${sensor.nome} da ${camara.nome}">
+      <span class="geral-sensor-topo">
+        <span class="geral-sensor-nome">${sensor.nome}</span>
+        ${montarSituacaoSensor(camara, sensor)}
+      </span>
+      <span class="geral-sensor-kpis">
+        <span class="geral-sensor-kpi">
+          <span class="geral-sensor-kpi-label">Temperatura</span>
+          <span class="geral-sensor-kpi-valor ${classeTemperatura}">${formatarNumero(sensor.temperatura)} °C</span>
+          <span class="geral-sensor-kpi-sub">ideal ${camara.temperaturaMinima} a ${camara.temperaturaMaxima} °C</span>
+        </span>
+        <span class="geral-sensor-kpi">
+          <span class="geral-sensor-kpi-label">Umidade</span>
+          <span class="geral-sensor-kpi-valor ${classeUmidade}">${formatarNumero(sensor.umidade)}%</span>
+          <span class="geral-sensor-kpi-sub">ideal ${camara.umidadeMinima} a ${camara.umidadeMaxima}%</span>
+        </span>
+        <span class="geral-sensor-kpi">
+          <span class="geral-sensor-kpi-label">Fora da faixa hoje</span>
+          <span class="geral-sensor-kpi-valor ${classeTempo}">${tempoHoje}</span>
+        </span>
+        <span class="geral-sensor-kpi">
+          <span class="geral-sensor-kpi-label">Última leitura</span>
+          <span class="geral-sensor-kpi-valor">${sensor.horaLeitura}</span>
+        </span>
+      </span>
+      <span class="geral-sensor-acao">Ver dashboard →</span>
+    </a>`;
+}
+
+function montarSensores(camara) {
+  let itens = '';
+
+  for (let i = 0; i < camara.sensores.length; i++) {
+    itens += montarSensor(camara, camara.sensores[i]);
+  }
+
+  return `
+    <tr class="geral-sensores-linha" id="sensores_camara_${camara.id}" hidden>
+      <td colspan="7">
+        <div class="geral-sensores">
+          <span class="geral-sensores-titulo">Sensores da ${camara.nome}</span>
+          <div class="geral-sensores-lista">${itens}</div>
+        </div>
+      </td>
+    </tr>`;
+}
+
 function montarLinha(camara) {
   // Sensor parado: o valor antigo não fica em vermelho, porque não diz como a câmara está agora
   let ativo = enviandoDados(camara);
@@ -170,9 +287,12 @@ function montarLinha(camara) {
   }
 
   return `
-    <tr>
+    <tr class="geral-linha-camara" data-camara="${camara.id}" aria-expanded="false">
       <td>
-        <strong>${camara.nome}</strong>
+        <span class="geral-camara-nome">
+          <strong>${camara.nome}</strong>
+          <span class="geral-seta" aria-hidden="true">▾</span>
+        </span>
       </td>
       <td>
         <span class="geral-valor ${classeTemperatura}">${formatarNumero(camara.temperatura)} °C</span>
@@ -186,10 +306,37 @@ function montarLinha(camara) {
       <td>${tempoHoje}</td>
       <td>${camara.horaLeitura}</td>
       <td class="geral-acao">
-        <a class="btn-branco geral-btn-dashboard" href="./dashboard.html?camara=${camara.id}" aria-label="Ver dashboard da ${camara.nome}">Ver dashboard</a>
+        <button type="button" class="btn-branco geral-btn-dashboard geral-btn-sensores" aria-expanded="false" aria-controls="sensores_camara_${camara.id}" aria-label="Ver sensores da ${camara.nome}">Sensores</button>
       </td>
-    </tr>`;
+    </tr>
+    ${montarSensores(camara)}`;
 }
+
+function alternarSensores(id) {
+  let linha = tbody_camaras.querySelector(`.geral-linha-camara[data-camara="${id}"]`);
+  let painel = document.getElementById('sensores_camara_' + id);
+  if (!linha || !painel) {
+    return;
+  }
+
+  let aberto = !painel.hidden;
+  painel.hidden = aberto;
+  linha.classList.toggle('geral-linha-aberta', !aberto);
+  linha.setAttribute('aria-expanded', String(!aberto));
+  linha.querySelector('.geral-btn-sensores').setAttribute('aria-expanded', String(!aberto));
+}
+
+// Clique na linha (ou no botão) abre e fecha a lista de sensores
+tbody_camaras.addEventListener('click', function (evento) {
+  if (evento.target.closest('a')) {
+    return;
+  }
+
+  let linha = evento.target.closest('.geral-linha-camara');
+  if (linha) {
+    alternarSensores(linha.dataset.camara);
+  }
+});
 
 // Primeiro as câmaras fora da faixa, depois as sem dados; em cada grupo, quem ficou mais tempo fora hoje
 function atualizarTabela() {
