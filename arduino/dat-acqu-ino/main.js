@@ -80,7 +80,7 @@ const serial = async (
         if (HABILITAR_OPERACAO_INSERIR) {
 
             await poolBancoDados.execute(
-                'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 1, 1)',
+                'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso, fkSensor) VALUES (?, ?, 1, 1, 1)',
                 [sensorAnalogicoUmidade, sensorAnalogicoTemp]
             );
             console.log("Valores da Câmara 1: ", sensorAnalogicoUmidade + ", " + sensorAnalogicoTemp);
@@ -88,7 +88,7 @@ const serial = async (
 
 
             await poolBancoDados.execute(
-                'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 2, 2)',
+                'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso, fkSensor) VALUES (?, ?, 2, 2, 1)',
                 [ACRESCIMO_SALA_2_UMIDADE, ACRESCIMO_SALA_2_TEMPERATURA]
             );
             console.log("Valores da Câmara 2: ", ACRESCIMO_SALA_2_UMIDADE + ", " + ACRESCIMO_SALA_2_TEMPERATURA);

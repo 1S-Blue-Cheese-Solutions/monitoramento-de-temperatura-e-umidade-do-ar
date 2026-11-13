@@ -121,7 +121,7 @@ fkAmbienteProcesso int not null,
 	constraint fkSensorAmbiente_ambienteProcesso foreign key (fkAmbienteProcesso) references ambienteProcesso(idAmbienteProcesso),
 fkSensor int not null,
 	constraint fkSensorAmbiente_sensor foreign key (fkSensor) references modeloSensor(idSensor),
-primary key (idSensorAmbiente,fkAmbienteProcesso)
+primary key (idSensorAmbiente,fkAmbienteProcesso,fkSensor)
 ) auto_increment=1;
 
 insert into sensorAmbiente (fkAmbienteProcesso, fkSensor) values
@@ -135,34 +135,32 @@ CREATE TABLE leituraSensor (
     sensorTemperatura FLOAT,
     dataHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fkSensorAmbiente INT NOT NULL,
+    fkSensor INT NOT NULL,
     fkAmbienteProcesso INT NOT NULL,
     CONSTRAINT fkLeituraSensor_SensorAmbiente
-        FOREIGN KEY (fkSensorAmbiente, fkAmbienteProcesso)
-        REFERENCES sensorAmbiente(idSensorAmbiente, fkAmbienteProcesso),
-    CONSTRAINT fkLeituraSensor_ambienteProcesso
-        FOREIGN KEY (fkAmbienteProcesso)
-        REFERENCES ambienteProcesso(idAmbienteProcesso),
-    PRIMARY KEY (idLeituraSensor, fkSensorAmbiente, fkAmbienteProcesso)
+        FOREIGN KEY (fkSensorAmbiente, fkSensor, fkAmbienteProcesso)
+        REFERENCES sensorAmbiente(idSensorAmbiente, fkSensor, fkAmbienteProcesso),
+    PRIMARY KEY (idLeituraSensor, fkSensorAmbiente, fkSensor, fkAmbienteProcesso)
 );
 
-insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkAmbienteProcesso) values
-(91.5, 10.2, now() - interval 23 hour, 1, 1),
-(92.0, 10.4, now() - interval 20 hour, 1, 1),
-(90.8, 10.9, now() - interval 16 hour, 1, 1),
-(93.1, 11.3, now() - interval 12 hour, 1, 1),
-(92.4, 10.7, now() - interval 8 hour, 1, 1),
-(91.9, 10.1, now() - interval 4 hour, 1, 1),
-(92.7, 10.5, now() - interval 2 hour, 1, 1),
-(93.0, 10.8, now() - interval 50 minute, 1, 1),
-(92.2, 10.6, now() - interval 30 minute, 1, 1),
-(91.8, 10.3, now() - interval 10 minute, 1, 1),
-(92.5, 10.4, now() - interval 5 minute, 1, 1),
-(92.1, 10.5, now() - interval 90 second, 1, 1),
-(92.3, 10.7, now() - interval 45 second, 1, 1),
-(92.6, 10.6, now() - interval 10 second, 1, 1);
+insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkSensor, fkAmbienteProcesso) values
+(91.5, 10.2, now() - interval 23 hour, 1, 1, 1),
+(92.0, 10.4, now() - interval 20 hour, 1, 1, 1),
+(90.8, 10.9, now() - interval 16 hour, 1, 1, 1),
+(93.1, 11.3, now() - interval 12 hour, 1, 1, 1),
+(92.4, 10.7, now() - interval 8 hour, 1, 1, 1),
+(91.9, 10.1, now() - interval 4 hour, 1, 1, 1),
+(92.7, 10.5, now() - interval 2 hour, 1, 1, 1),
+(93.0, 10.8, now() - interval 50 minute, 1, 1, 1),
+(92.2, 10.6, now() - interval 30 minute, 1, 1, 1),
+(91.8, 10.3, now() - interval 10 minute, 1, 1, 1),
+(92.5, 10.4, now() - interval 5 minute, 1, 1, 1),
+(92.1, 10.5, now() - interval 90 second, 1, 1, 1),
+(92.3, 10.7, now() - interval 45 second, 1, 1, 1),
+(92.6, 10.6, now() - interval 10 second, 1, 1, 1);
 
-insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkAmbienteProcesso) values
-(180, 99, now() - interval 1 hour, 1, 1);
+insert into leituraSensor (sensorUmidade, sensorTemperatura, dataHora, fkSensorAmbiente, fkSensor, fkAmbienteProcesso) values
+(180, 99, now() - interval 1 hour, 1, 1, 1);
 
 select * from leituraSensor;
 
