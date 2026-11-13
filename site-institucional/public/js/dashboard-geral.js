@@ -148,54 +148,57 @@ function gravidade(camara) {
   return estaFora(camara) ? 0 : 2;
 }
 
-// ===== Cards =====
-
+// ===== Cards =====  
 function atualizarCards() {
-  let total = camaras.length;
-  let dentro = 0;
-  let enviando = 0;
-  let minutosForaHoje = 0;
+    let total = camaras.length;
+    let fora = 0;
+    let enviando = 0;
+    let minutosForaHoje = 0;
 
-  for (let i = 0; i < total; i++) {
-    let camara = camaras[i];
-    minutosForaHoje += camara.minutosForaHoje;
+    for (let i = 0; i < total; i++) {
+        let camara = camaras[i];
 
-    if (enviandoDados(camara)) {
-      enviando++;
+        minutosForaHoje += camara.minutosForaHoje;
 
-      if (!estaFora(camara)) {
-        dentro++;
-      }
+        if (enviandoDados(camara)) {
+            enviando++;
+
+            if (estaFora(camara)) {
+                fora++;
+            }
+        }
     }
-  }
 
-  // Dentro da faixa agora
-  span_valor_dentro.innerHTML = `${dentro}<span class="card-unit">de ${total} câmaras</span>`;
-  if (dentro == total) {
-    div_selo_dentro.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Condições ideais</span>';
-  } else {
-    div_selo_dentro.innerHTML = '<span class="dashboard-badge dashboard-bad">✕ Requer atenção</span>';
-    span_valor_dentro.classList.add('geral-valor-fora');
-  }
+    // Fora da faixa agora
+    span_valor_dentro.innerHTML = `${fora}<span class="card-unit">de ${total} câmaras</span>`;
 
-  // Tempo fora da faixa hoje: menos tempo que ontem é bom (verde), mais tempo é ruim (vermelho)
-  let variacao = Math.round(Math.abs(minutosForaHoje - minutosForaOntem) / minutosForaOntem * 100);
+    if (fora == 0) {
+        div_selo_dentro.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Todas dentro da faixa</span>';
+    } else {
+        div_selo_dentro.innerHTML = '<span class="dashboard-badge dashboard-bad">✕ Requer atenção</span>';
+        span_valor_dentro.classList.add('geral-valor-fora');
+    }
 
-  span_valor_tempo.innerHTML = valorDuracao(minutosForaHoje);
-  if (minutosForaHoje < minutosForaOntem) {
-    div_selo_tempo.innerHTML = `<span class="dashboard-badge dashboard-ok">↓ ${variacao}% a menos que o dia anterior</span>`;
-  } else {
-    div_selo_tempo.innerHTML = `<span class="dashboard-badge dashboard-bad">↑ ${variacao}% a mais que o dia anterior</span>`;
-  }
+    // Tempo fora da faixa hoje
+    let variacao = Math.round(Math.abs(minutosForaHoje - minutosForaOntem) / minutosForaOntem * 100);
 
-  // Sensores enviando dados
-  span_valor_sensores.innerHTML = `${enviando}<span class="card-unit">de ${total}</span>`;
-  if (enviando == total) {
-    div_selo_sensores.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Sensores ativos</span>';
-  } else {
-    div_selo_sensores.innerHTML = '<span class="dashboard-badge dashboard-bad">✕ Sensores sem dados</span>';
-    span_valor_sensores.classList.add('geral-valor-fora');
-  }
+    span_valor_tempo.innerHTML = valorDuracao(minutosForaHoje);
+
+    if (minutosForaHoje < minutosForaOntem) {
+        div_selo_tempo.innerHTML = `<span class="dashboard-badge dashboard-ok">↓ ${variacao}% a menos que o dia anterior</span>`;
+    } else {
+        div_selo_tempo.innerHTML = `<span class="dashboard-badge dashboard-bad">↑ ${variacao}% a mais que o dia anterior</span>`;
+    }
+
+    // Sensores enviando dados
+    span_valor_sensores.innerHTML = `${enviando}<span class="card-unit">de ${total}</span>`;
+
+    if (enviando == total) {
+        div_selo_sensores.innerHTML = '<span class="dashboard-badge dashboard-ok">✓ Sensores ativos</span>';
+    } else {
+        div_selo_sensores.innerHTML = '<span class="dashboard-badge dashboard-bad">✕ Sensores sem dados</span>';
+        span_valor_sensores.classList.add('geral-valor-fora');
+    }
 }
 
 // ===== Tabela =====
