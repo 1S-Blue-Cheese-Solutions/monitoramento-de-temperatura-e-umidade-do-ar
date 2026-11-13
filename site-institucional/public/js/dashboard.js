@@ -322,11 +322,72 @@ function filtrar() {
 }
 
 
-// Seleciona a câmara vinda do link da visão geral (dashboard.html?camara=2)
-let camaraDaUrl = new URLSearchParams(window.location.search).get('camara');
+// ===== Filtro de sensores =====
+
+// Sensores de cada câmara, usados no filtro ao lado da seleção de câmara
+let sensoresPorCamara = {
+  '1': [
+    { id: 1, nome: 'Sensor 1' },
+    { id: 2, nome: 'Sensor 2' }
+  ],
+  '2': [
+    { id: 3, nome: 'Sensor 3' },
+    { id: 4, nome: 'Sensor 4' }
+  ],
+  '3': [
+    { id: 5, nome: 'Sensor 5' },
+    { id: 6, nome: 'Sensor 6' }
+  ]
+};
+
+// Preenche o filtro de sensores de acordo com a câmara escolhida
+function preencherSensores(sensorSelecionado) {
+  let sensores = sensoresPorCamara[select_camara.value] || [];
+  let selecionado = sensorSelecionado || select_sensor.value;
+
+  select_sensor.innerHTML = '';
+  for (let i = 0; i < sensores.length; i++) {
+    let opcao = document.createElement('option');
+    opcao.value = sensores[i].id;
+    opcao.textContent = sensores[i].nome;
+    select_sensor.appendChild(opcao);
+  }
+
+  let existe = sensores.some(function (sensor) {
+    return sensor.id == selecionado;
+  });
+  if (existe) {
+    select_sensor.value = selecionado;
+  }
+}
+
+// Mantém câmara e sensor na URL para o link continuar funcionando ao recarregar
+function atualizarParametrosUrl() {
+  let parametros = new URLSearchParams(window.location.search);
+  parametros.set('camara', select_camara.value);
+  parametros.set('sensor', select_sensor.value);
+  try {
+    window.history.replaceState(null, '', '?' + parametros.toString());
+  } catch (erro) {
+  }
+}
+
+select_camara.addEventListener('change', function () {
+  preencherSensores();
+  atualizarParametrosUrl();
+});
+
+select_sensor.addEventListener('change', atualizarParametrosUrl);
+
+// Seleciona a câmara e o sensor vindos dos links da visão geral
+let parametrosUrl = new URLSearchParams(window.location.search);
+let camaraDaUrl = parametrosUrl.get('camara');
+let sensorDaUrl = parametrosUrl.get('sensor');
+
 if (['1', '2', '3'].includes(camaraDaUrl)) {
   select_camara.value = camaraDaUrl;
 }
+preencherSensores(sensorDaUrl);
 
 // Primeira carga dos cards de desvio e dos alertas: últimas 12 h, igual aos gráficos
 atualizarDesvios(horarios.slice(-12), temperaturas.slice(-12), umidades.slice(-12));

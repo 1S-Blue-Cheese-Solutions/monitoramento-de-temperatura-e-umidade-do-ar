@@ -705,7 +705,9 @@ footer {
 
 .dashboard-controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 12px;
 }
 
@@ -747,6 +749,7 @@ footer {
 }
 
 #select_camara,
+#select_sensor,
 #select_periodo,
 #select_empresa {
   color: #000;
@@ -1738,7 +1741,146 @@ footer {
   background: #eef1f4;
 }
 
-/* Botão à direita de cada câmara: abre a dashboard já com ela selecionada */
+/* Linha da câmara: clique abre a lista de sensores logo abaixo */
+.geral-linha-camara {
+  cursor: pointer;
+}
+
+.geral-camara-nome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.geral-seta {
+  display: inline-block;
+  font-size: 14px;
+  color: #5f748a;
+  transition: transform 0.2s ease;
+}
+
+.geral-linha-aberta .geral-seta {
+  transform: rotate(180deg);
+}
+
+.geral-linha-aberta td {
+  background: #fbfaf7;
+}
+
+.geral-sensores-linha td {
+  padding: 0 8px 16px;
+  background: #fbfaf7;
+}
+
+.geral-sensores {
+  padding: 14px 16px;
+  border-left: 3px solid var(--navy);
+  border-radius: 8px;
+  background: white;
+}
+
+.geral-sensores-titulo {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #5f748a;
+}
+
+.geral-sensores-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.geral-sensor {
+  display: flex;
+  flex: 1 1 300px;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfaf7;
+  color: #193b61;
+  text-decoration: none;
+}
+
+.geral-sensor:hover,
+.geral-sensor:focus-visible {
+  border-color: var(--navy);
+  background: white;
+}
+
+.geral-sensor:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.geral-sensor-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.geral-sensor-nome {
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.geral-sensor-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+}
+
+.geral-sensor-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.geral-sensor-kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #5f748a;
+}
+
+.geral-sensor-kpi-valor {
+  font-size: 20px;
+  font-weight: 650;
+  color: #173b62;
+}
+
+.geral-sensor-kpi .geral-valor-fora {
+  color: #c05347;
+}
+
+.geral-sensor-kpi-valor.geral-tempo-zero {
+  font-weight: 400;
+  color: #8a9bb0;
+}
+
+.geral-sensor-kpi-sub {
+  font-size: 12px;
+  color: #5f748a;
+}
+
+.geral-sensor-acao {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+/* Botão à direita de cada câmara: abre a lista de sensores */
 .geral-acao {
   text-align: right;
 }
@@ -1746,6 +1888,7 @@ footer {
 .geral-btn-dashboard {
   display: inline-block;
   padding: 10px 14px;
+  font-family: inherit;
   font-size: 14px;
   white-space: nowrap;
   text-decoration: none;
