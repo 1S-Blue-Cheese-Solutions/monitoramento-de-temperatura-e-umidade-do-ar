@@ -56,7 +56,7 @@ bairro varchar(50) not null,
 cidade varchar(45) not null,
 estado char(2) not null,
 cep char(8) not null,
-fkEmpresa int not null,
+fkEmpresa int not null unique,
 	constraint fkEndereco_empresa foreign key (fkEmpresa) references empresa(idEmpresa)
 );
 
@@ -68,8 +68,6 @@ insert into endereco (logradouro, numero, bairro, cidade, estado, cep, fkEmpresa
 create table ambienteProcesso (
 idAmbienteProcesso int primary key auto_increment,
 nomePrincipal varchar(45) not null,
-nomeAuxiliar varchar(45),
-descricao varchar(45),
 temperaturaMin decimal(6,2) not null,
 temperaturaMax decimal(6,2) not null,
 umidadeMin int not null,
@@ -78,10 +76,10 @@ fkEndereco int not null,
 	constraint fkAmbienteProcesso_endereco foreign key (fkEndereco) references endereco(idEndereco)
 );
 
-insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
-('Câmara de Maturação 1', 'Câmara A', 'Maturação de Gorgonzola', 8.00, 12.00, 85, 95, 1),
-('Câmara de Maturação 2', 'Câmara B', 'Maturação de Roquefort', 6.00, 10.00, 90, 98, 1),
-('Câmara de Maturação 3', 'Câmara C', 'Maturação de Gorgonzola', 8.00, 12.00, 85, 95, 1);
+insert into ambienteProcesso (nomePrincipal, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
+('Câmara de Maturação 1', 8.00, 12.00, 85, 95, 1),
+('Câmara de Maturação 2', 6.00, 10.00, 90, 98, 1),
+('Câmara de Maturação 3', 8.00, 12.00, 85, 95, 1);
 
 create table usuario (
 idUsuario int auto_increment,
@@ -121,7 +119,7 @@ fkAmbienteProcesso int not null,
 	constraint fkSensorAmbiente_ambienteProcesso foreign key (fkAmbienteProcesso) references ambienteProcesso(idAmbienteProcesso),
 fkSensor int not null,
 	constraint fkSensorAmbiente_sensor foreign key (fkSensor) references modeloSensor(idSensor),
-primary key (idSensorAmbiente,fkAmbienteProcesso,fkSensor)
+primary key (idSensorAmbiente, fkSensor, fkAmbienteProcesso)
 ) auto_increment=1;
 
 insert into sensorAmbiente (fkAmbienteProcesso, fkSensor) values

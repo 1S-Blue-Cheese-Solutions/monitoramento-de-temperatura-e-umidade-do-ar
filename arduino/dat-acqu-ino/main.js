@@ -96,7 +96,7 @@ const serial = async (
             const ACRESCIMO_SALA_3_UMIDADE = sensorAnalogicoUmidade - 60;
             const ACRESCIMO_SALA_3_TEMPERATURA = (sensorAnalogicoTemp - 30).toFixed(1);
             await poolBancoDados.execute(
-                'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso) VALUES (?, ?, 3, 3)',
+                'INSERT INTO leituraSensor (sensorUmidade, sensorTemperatura, fkSensorAmbiente, fkAmbienteProcesso, fkSensor) VALUES (?, ?, 3, 3, 3)',
                 [ACRESCIMO_SALA_3_UMIDADE, ACRESCIMO_SALA_3_TEMPERATURA]
             );
             console.log("Valores da Câmara 3: ", ACRESCIMO_SALA_3_UMIDADE + ", " + ACRESCIMO_SALA_3_TEMPERATURA);
