@@ -213,50 +213,24 @@ function montarSituacao(camara) {
   return '<span class="dashboard-badge dashboard-ok">✓ Dentro da faixa</span>';
 }
 
-function montarSituacaoSensor(camara, sensor) {
-  if (!sensorEnviandoDados(sensor)) {
-    return '<span class="dashboard-badge geral-sem-dados">○ Sem dados</span>';
-  }
-  if (sensorEstaFora(camara, sensor)) {
-    return `<span class="dashboard-badge dashboard-bad">✕ Fora da faixa há ${textoDuracao(sensor.minutosForaAgora)}</span>`;
-  }
-  return '<span class="dashboard-badge dashboard-ok">✓ Dentro da faixa</span>';
-}
-
 function montarSensor(camara, sensor) {
   let ativo = sensorEnviandoDados(sensor);
   let classeTemperatura = ativo && sensorTemperaturaFora(camara, sensor) ? 'geral-valor-fora' : '';
   let classeUmidade = ativo && sensorUmidadeFora(camara, sensor) ? 'geral-valor-fora' : '';
-  let classeTempo = sensor.minutosForaHoje > 0 ? '' : 'geral-tempo-zero';
-  let tempoHoje = sensor.minutosForaHoje > 0 ? textoDuracao(sensor.minutosForaHoje) : 'Nenhum';
 
   return `
     <a class="geral-sensor" href="./dashboard.html?camara=${camara.id}&sensor=${sensor.id}" aria-label="Ver dashboard do ${sensor.nome} da ${camara.nome}">
-      <span class="geral-sensor-topo">
-        <span class="geral-sensor-nome">${sensor.nome}</span>
-        ${montarSituacaoSensor(camara, sensor)}
-      </span>
+      <span class="geral-sensor-nome">${sensor.nome}</span>
       <span class="geral-sensor-kpis">
         <span class="geral-sensor-kpi">
           <span class="geral-sensor-kpi-label">Temperatura</span>
           <span class="geral-sensor-kpi-valor ${classeTemperatura}">${formatarNumero(sensor.temperatura)} °C</span>
-          <span class="geral-sensor-kpi-sub">ideal ${camara.temperaturaMinima} a ${camara.temperaturaMaxima} °C</span>
         </span>
         <span class="geral-sensor-kpi">
           <span class="geral-sensor-kpi-label">Umidade</span>
           <span class="geral-sensor-kpi-valor ${classeUmidade}">${formatarNumero(sensor.umidade)}%</span>
-          <span class="geral-sensor-kpi-sub">ideal ${camara.umidadeMinima} a ${camara.umidadeMaxima}%</span>
-        </span>
-        <span class="geral-sensor-kpi">
-          <span class="geral-sensor-kpi-label">Fora da faixa hoje</span>
-          <span class="geral-sensor-kpi-valor ${classeTempo}">${tempoHoje}</span>
-        </span>
-        <span class="geral-sensor-kpi">
-          <span class="geral-sensor-kpi-label">Última leitura</span>
-          <span class="geral-sensor-kpi-valor">${sensor.horaLeitura}</span>
         </span>
       </span>
-      <span class="geral-sensor-acao">Ver dashboard →</span>
     </a>`;
 }
 
