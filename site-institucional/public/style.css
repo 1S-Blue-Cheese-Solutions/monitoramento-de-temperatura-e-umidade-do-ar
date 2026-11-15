@@ -1790,17 +1790,18 @@ footer {
 
 .geral-sensores-lista {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
   margin-top: 10px;
 }
 
 .geral-sensor {
   display: flex;
-  flex: 1 1 300px;
-  flex-direction: column;
-  gap: 14px;
-  padding: 14px 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 10px 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fbfaf7;
@@ -1819,29 +1820,21 @@ footer {
   outline-offset: 2px;
 }
 
-.geral-sensor-topo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
 .geral-sensor-nome {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 650;
 }
 
 .geral-sensor-kpis {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
 }
 
 .geral-sensor-kpi {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: baseline;
+  gap: 6px;
 }
 
 .geral-sensor-kpi-label {
@@ -1853,31 +1846,13 @@ footer {
 }
 
 .geral-sensor-kpi-valor {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 650;
   color: #173b62;
 }
 
 .geral-sensor-kpi .geral-valor-fora {
   color: #c05347;
-}
-
-.geral-sensor-kpi-valor.geral-tempo-zero {
-  font-weight: 400;
-  color: #8a9bb0;
-}
-
-.geral-sensor-kpi-sub {
-  font-size: 12px;
-  color: #5f748a;
-}
-
-.geral-sensor-acao {
-  margin-top: auto;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--navy);
-  white-space: nowrap;
 }
 
 /* Botão à direita de cada câmara: abre a lista de sensores */
