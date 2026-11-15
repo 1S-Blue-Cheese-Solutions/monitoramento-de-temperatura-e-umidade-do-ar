@@ -5,7 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "cross-env NODE_ENV=dev node app.js"
+    "dev": "nodemon --exec node app.js"
+  },
+  "nodemonConfig": {
+    "env": {
+      "NODE_ENV": "dev"
+    }
   },
   "author": "Feito pelos desenvolvedores @ São Paulo Tech School / Bandtec Digital School",
   "license": "MIT",
@@ -15,7 +20,6 @@
     "express": "^4.17.1",
     "mysql2": "^3.9.4",
     "nodemon": "^2.0.7",
-    "path": "^0.12.7",
-    "cross-env": "^10.1.0"
+    "path": "^0.12.7"
   }
 }
