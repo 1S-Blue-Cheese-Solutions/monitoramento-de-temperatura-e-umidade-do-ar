@@ -107,3 +107,26 @@ function mostrarLista() {
     i++;
   }
 }
+
+function startMeusLocais() {
+  fetch("/locais/buscarLocal", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(function (resposta) {
+      if (!resposta.ok) {
+        throw new Error("Erro ao buscar locais!");
+      }
+      return resposta.json();
+    })
+    .then(function (dados) {
+      h2_nome_empresa.innerHTML = dados.coelho;
+    })
+    .catch(function (erro) {
+      console.log(`#ERRO: ${erro}`);
+    });
+}
+
+startMeusLocais();
