@@ -11,7 +11,13 @@ grant insert on BlueCheeseSol.* to 'user_ino'@'localhost';
 create user 'user_dataViz'@'localhost' identified by 'Urubu@300';
 
 -- create user 'user_dataViz'@'%' identified by 'Urubu@300'; -- comando deve ser copiado na VM
-grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost';
+grant insert, select, update on BlueCheeseSol.* to 'user_dataViz'@'localhost';
+
+-- Usuario web-data-viz dono
+create user 'user_dataViz_dono'@'localhost' identified by 'Urubu@600';
+
+-- create user 'user_dataViz'@'%' identified by 'Urubu@300'; -- comando deve ser copiado na VM
+grant insert, select, update, delete on BlueCheeseSol.* to 'user_dataViz_dono'@'localhost';
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
@@ -19,6 +25,7 @@ flush privileges;
 -- verifica se a permissão foi salva
 show grants for 'user_ino'@'localhost';
 show grants for 'user_dataViz'@'localhost';
+show grants for 'user_dataViz_dono'@'localhost'
 
 
 create table cliente (
@@ -269,3 +276,28 @@ from leituraSensor as l
 where fkAmbienteProcesso = 1
 order by l.dataHora desc
 limit 10;
+
+-- Selects meus locais
+
+-- Lista empresas, endereço e ambientes do cliente (left join mantém endereço sem ambiente)
+select e.nomeFantasia, e.cnpj, en.*, a.nomePrincipal
+from empresa as e
+	join endereco as en
+		on en.fkEmpresa = e.idEmpresa
+	left join ambienteProcesso as a
+		on a.fkEndereco = en.idEndereco
+where e.fkCliente = 1
+order by e.nomeFantasia;
+
+-- Editar empresa
+update empresa set nomeFantasia = 'Queijaria Serra Azul', cnpj = '12.345.678/0001-90'
+where idEmpresa = 1;
+
+-- Editar endereço
+update endereco set logradouro = 'Estrada do Queijo', numero = '1500', bairro = 'Zona Rural',
+	cidade = 'Cunha', estado = 'SP', cep = '12530000'
+where idEndereco = 1;
+
+-- Cadastrar ambiente no endereço
+insert into ambienteProcesso (nomePrincipal, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
+('Câmara de Maturação 4', 8.00, 12.00, 85, 95, 1);
