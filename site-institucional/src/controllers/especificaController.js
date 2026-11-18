@@ -2,7 +2,17 @@ var especificaModel = require("../models/especificaModel");
 
 
 function kpi1(req, res) {
-    especificaModel.kpi1().then(function (resultado) {
+var fkSensorAmbiente = req.body.fkSensorAmbiente;
+var fkAmbienteProcesso = req.body.fkAmbienteProcesso;
+
+    if(fkSensorAmbiente == undefined) {
+        res.status(400).send("Seu fkSensorAmbiente está undefined!");
+    } else if(fkAmbienteProcesso == undefined){
+        res.status(400).send("Seu fkAmbienteProcesso está undefined!");
+
+    }
+
+    especificaModel.kpi1(fkSensorAmbiente, fkAmbienteProcesso).then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
             } else {
