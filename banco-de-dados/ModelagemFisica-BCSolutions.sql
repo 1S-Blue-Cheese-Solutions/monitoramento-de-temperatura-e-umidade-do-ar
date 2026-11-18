@@ -51,9 +51,9 @@ fkCliente int not null,
 );
 
 insert into empresa (nomeFantasia, cnpj, fkCliente) values
-('Queijaria Serra Azul', '12.345.678/0001-90', 1),
-('Laticínios Vale Verde', '23.456.789/0001-01', 2),
-('Fazenda Azul Gourmet', '34.567.890/0001-12', 3);
+('Queijaria Serra Azul', '12345678000190', 1),
+('Laticínios Vale Verde', '23456789000101', 2),
+('Fazenda Azul Gourmet', '34567890000112', 3);
 
 create table endereco (
 idEndereco int primary key auto_increment,
@@ -75,6 +75,8 @@ insert into endereco (logradouro, numero, bairro, cidade, estado, cep, fkEmpresa
 create table ambienteProcesso (
 idAmbienteProcesso int primary key auto_increment,
 nomePrincipal varchar(45) not null,
+nomeAuxiliar varchar(45),
+descricao varchar(100),
 temperaturaMin decimal(6,2) not null,
 temperaturaMax decimal(6,2) not null,
 umidadeMin int not null,
@@ -290,7 +292,7 @@ where e.fkCliente = 1
 order by e.nomeFantasia;
 
 -- Editar empresa
-update empresa set nomeFantasia = 'Queijaria Serra Azul', cnpj = '12.345.678/0001-90'
+update empresa set nomeFantasia = 'Queijaria Serra Azul', cnpj = '12345678000190'
 where idEmpresa = 1;
 
 -- Editar endereço
@@ -299,5 +301,5 @@ update endereco set logradouro = 'Estrada do Queijo', numero = '1500', bairro = 
 where idEndereco = 1;
 
 -- Cadastrar ambiente no endereço
-insert into ambienteProcesso (nomePrincipal, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
-('Câmara de Maturação 4', 8.00, 12.00, 85, 95, 1);
+insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
+('Câmara de Maturação 4', 'Câmara Fria D', 'Gorgonzola, 8 a 12 °C', 8.00, 12.00, 85, 95, 1);
