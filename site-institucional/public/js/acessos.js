@@ -44,4 +44,64 @@ function salvarLogin() {
     div_msg_editar.innerHTML = '';
     fecharPopups();
   }
+
+  function pegarIniciais(nome) {
+  let partes = nome.split(" ");
+  if (partes.length >= 2) {
+    return partes[0][0] + partes[1][0];
+  } else {
+    return partes[0][0] + partes[0][1];
+  }
+}
+
+function listarUsuarios() {
+  let idEmpresa = sessionStorage.FK_EMPRESA;
+  let idUsuarioLogado = sessionStorage.ID_USUARIO;
+
+  fetch(`/acessos/listar/${idEmpresa}`)
+    .then(function (resposta) {
+      if (resposta.status == 204) {
+        lista_usuarios.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
+        return;
+      }
+
+      if (resposta.ok) {
+        resposta.json().then(function (usuarios) {
+          console.log(usuarios);
+          lista_usuarios.innerHTML = '';
+
+          for (let i = 0; i < usuarios.length; i++) {
+            let usuario = usuarios[i];
+
+            let tagVoce = '';
+            if (usuario.idUsuario == idUsuarioLogado) {
+              tagVoce = '<span class="acesso-voce">Você</span>';
+            }
+
+            let tagAdm = '';
+            if (usuario.cargo == 'Dono') {
+              tagAdm = '<span class="acesso-adm">♙ Administrador</span>';
+            }
+
+            lista_usuarios.innerHTML += `
+              <div class="acesso">
+                <span class="acesso-avatar">${pegarIniciais(usuario.nome)}</span>
+                <b>${usuario.nome}</b>
+                ${tagVoce}
+                ${tagAdm}
+                <span class="acesso-empresa">${usuario.nomeFantasia}</span>
+                <button class="btn-link" onclick="abrirEditarLogin('${usuario.login}')">Editar</button>
+              </div>
+            `;
+          }
+        });
+      } else {
+        console.log("Erro ao listar usuários");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+    });
+}
+
 }
