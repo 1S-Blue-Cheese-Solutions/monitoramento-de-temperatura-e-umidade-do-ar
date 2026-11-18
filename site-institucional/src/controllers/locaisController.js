@@ -1,25 +1,31 @@
 var locaisModel = require("../models/locaisModel");
 
-function buscarPorId(req, res) {
-  //locaisModel.buscarPorId(id).then((resultado) => {
-    res.status(200).json({coelho: "AAAAAA"});
-    //console.log()
-  //});
+// Devolve o resultado do model ou o erro do MySQL, como no usuarioController
+function responder(res, promessa) {
+  promessa
+    .then(function (resultado) {
+      res.json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      res.status(500).json(erro.sqlMessage);
+    });
 }
 
-
-function editarLocal(req, res) {
-  //locaisModel.editarLocal(id).then((resultado) => {
-    res.status(200).json({coelho2: "BBBB"});
-    //console.log()
-  //});
+function listar(req, res) {
+  responder(res, locaisModel.listar(req.params.idCliente));
 }
 
 function editarEmpresa(req, res) {
-  //locaisModel.editarEmpresa(id).then((resultado) => {
-    res.status(200).json({coelho2: "BBBB"});
-    //console.log()
-  //});
+  responder(res, locaisModel.editarEmpresa(req.params.idEmpresa, req.body));
 }
 
-module.exports = { buscarPorId, editarEmpresa, editarLocal };
+function editarEndereco(req, res) {
+  responder(res, locaisModel.editarEndereco(req.params.idEndereco, req.body));
+}
+
+function cadastrarAmbiente(req, res) {
+  responder(res, locaisModel.cadastrarAmbiente(req.params.idEndereco, req.body));
+}
+
+module.exports = { listar, editarEmpresa, editarEndereco, cadastrarAmbiente };
