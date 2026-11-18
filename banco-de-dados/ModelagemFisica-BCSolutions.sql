@@ -11,7 +11,13 @@ grant insert on BlueCheeseSol.* to 'user_ino'@'localhost';
 create user 'user_dataViz'@'localhost' identified by 'Urubu@300';
 
 -- create user 'user_dataViz'@'%' identified by 'Urubu@300'; -- comando deve ser copiado na VM
-grant insert, select on BlueCheeseSol.* to 'user_dataViz'@'localhost';
+grant insert, select, update on BlueCheeseSol.* to 'user_dataViz'@'localhost';
+
+-- Usuario web-data-viz dono
+create user 'user_dataViz_dono'@'localhost' identified by 'Urubu@600';
+
+-- create user 'user_dataViz'@'%' identified by 'Urubu@300'; -- comando deve ser copiado na VM
+grant insert, select, update, delete on BlueCheeseSol.* to 'user_dataViz_dono'@'localhost';
 
 -- comando para salvar as mudanças de usuario
 flush privileges;
@@ -19,6 +25,7 @@ flush privileges;
 -- verifica se a permissão foi salva
 show grants for 'user_ino'@'localhost';
 show grants for 'user_dataViz'@'localhost';
+show grants for 'user_dataViz_dono'@'localhost'
 
 
 create table cliente (
@@ -44,9 +51,9 @@ fkCliente int not null,
 );
 
 insert into empresa (nomeFantasia, cnpj, fkCliente) values
-('Queijaria Serra Azul', '12.345.678/0001-90', 1),
-('Laticínios Vale Verde', '23.456.789/0001-01', 2),
-('Fazenda Azul Gourmet', '34.567.890/0001-12', 3);
+('Queijaria Serra Azul', '12345678000190', 1),
+('Laticínios Vale Verde', '23456789000101', 2),
+('Fazenda Azul Gourmet', '34567890000112', 3);
 
 create table endereco (
 idEndereco int primary key auto_increment,
@@ -68,6 +75,8 @@ insert into endereco (logradouro, numero, bairro, cidade, estado, cep, fkEmpresa
 create table ambienteProcesso (
 idAmbienteProcesso int primary key auto_increment,
 nomePrincipal varchar(45) not null,
+nomeAuxiliar varchar(45),
+descricao varchar(100),
 temperaturaMin decimal(6,2) not null,
 temperaturaMax decimal(6,2) not null,
 umidadeMin int not null,
@@ -269,3 +278,28 @@ from leituraSensor as l
 where fkAmbienteProcesso = 1
 order by l.dataHora desc
 limit 10;
+
+-- Selects meus locais
+
+-- Lista empresas, endereço e ambientes do cliente (left join mantém endereço sem ambiente)
+select e.nomeFantasia, e.cnpj, en.*, a.nomePrincipal
+from empresa as e
+	join endereco as en
+		on en.fkEmpresa = e.idEmpresa
+	left join ambienteProcesso as a
+		on a.fkEndereco = en.idEndereco
+where e.fkCliente = 1
+order by e.nomeFantasia;
+
+-- Editar empresa
+update empresa set nomeFantasia = 'Queijaria Serra Azul', cnpj = '12345678000190'
+where idEmpresa = 1;
+
+-- Editar endereço
+update endereco set logradouro = 'Estrada do Queijo', numero = '1500', bairro = 'Zona Rural',
+	cidade = 'Cunha', estado = 'SP', cep = '12530000'
+where idEndereco = 1;
+
+-- Cadastrar ambiente no endereço
+insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
+('Câmara de Maturação 4', 'Câmara Fria D', 'Gorgonzola, 8 a 12 °C', 8.00, 12.00, 85, 95, 1);

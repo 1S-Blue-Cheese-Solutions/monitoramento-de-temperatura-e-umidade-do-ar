@@ -1,3 +1,9 @@
+// Linhas vindas do banco (uma por ambiente) e o local aberto no pop-up
+let locais = [];
+let localEditando;
+
+const camposEndereco = ['cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'];
+
 function fecharPopups() {
   popup_nova_empresa.style.display = 'none';
   popup_editar_empresa.style.display = 'none';
@@ -5,15 +11,102 @@ function fecharPopups() {
   popup_ambientes.style.display = 'none';
 }
 
-function abrirEditarEmpresa(nome, cnpj) {
-  input_nome_editar.value = nome;
-  input_cnpj_editar.value = cnpj;
+// Envia o corpo em JSON e só resolve se o back-end responder ok
+function enviar(rota, metodo, corpo) {
+  return fetch(rota, {
+    method: metodo,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(corpo),
+  }).then(function (resposta) {
+    if (!resposta.ok) {
+      throw new Error("Erro ao salvar!");
+    }
+  });
+}
+
+function formatarCnpj(cnpj) {
+  return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+}
+
+function startMeusLocais() {
+  fetch(`/locais/listar/${sessionStorage.FK_CLIENTE}`)
+    .then(function (resposta) {
+      if (!resposta.ok) {
+        throw new Error("Erro ao buscar locais!");
+      }
+      return resposta.json();
+    })
+    .then(function (dados) {
+      locais = dados;
+      mostrarLocais();
+    })
+    .catch(function (erro) {
+      console.log(`#ERRO: ${erro}`);
+    });
+}
+
+function mostrarLocais() {
+  // Map mantém a ordem do ORDER BY; cada endereço junta seus ambientes
+  let cards = new Map();
+
+  locais.forEach(function (linha) {
+    if (!cards.has(linha.idEndereco)) {
+      cards.set(linha.idEndereco, []);
+    }
+    if (linha.nomePrincipal) {
+      cards.get(linha.idEndereco).push(`<p class="ambiente"><span class="bolinha">●</span> ${linha.nomePrincipal}</p>`);
+    }
+  });
+
+  div_locais.innerHTML = [...cards].map(function ([id, ambientes]) {
+    let l = buscarLocal(id);
+    return `
+      <div class="empresa-header">
+        <div><h2>${l.nomeFantasia}</h2></div>
+        <div><button class="btn-link" onclick="abrirEditarEmpresa(${id})">Editar empresa</button></div>
+      </div>
+      <div class="enderecos">
+        <div class="endereco-card">
+          <div class="endereco-header">
+            <div>
+              <h3>${l.logradouro}, ${l.numero}</h3>
+              <p>CNPJ ${formatarCnpj(l.cnpj)}</p>
+              <p>${l.cidade} - ${l.estado}</p>
+            </div>
+            <button class="btn-link" onclick="abrirEditarEndereco(${id})">Editar</button>
+          </div>
+          ${ambientes.join('') ||'<p class="vazio">Nenhum ambiente cadastrado.</p>'}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function buscarLocal(idEndereco) {
+  return locais.find(function (l) {
+    return l.idEndereco == idEndereco;
+  });
+}
+
+function abrirEditarEmpresa(idEndereco) {
+  localEditando = buscarLocal(idEndereco);
+  input_nome_editar.value = localEditando.nomeFantasia;
+  input_cnpj_editar.value = localEditando.cnpj;
   popup_editar_empresa.style.display = 'flex';
 }
 
-function abrirNovoEndereco(empresa) {
-  div_empresa_endereco.innerHTML = empresa;
+function abrirEditarEndereco(idEndereco) {
+  localEditando = buscarLocal(idEndereco);
+  div_empresa_endereco.innerHTML = localEditando.nomeFantasia;
+  camposEndereco.forEach(function (campo) {
+    window[`input_${campo}`].value = localEditando[campo];
+  });
   popup_novo_endereco.style.display = 'flex';
+}
+
+function abrirAmbientes(endereco) {
+  div_endereco_ambientes.innerHTML = endereco;
+  popup_ambientes.style.display = 'flex';
 }
 
 function salvarNovaEmpresa() {
@@ -36,74 +129,75 @@ function salvarEditarEmpresa() {
 
   if (nome == '') {
     div_msg_editar.innerHTML = 'Preencha o nome fantasia';
-  } else if (cnpj.length != 14) {
+  } else if (!/^\d{14}$/.test(cnpj)) {
     div_msg_editar.innerHTML = 'O CNPJ deve ter 14 números';
   } else {
-    div_msg_editar.innerHTML = '';
-    fecharPopups();
+    enviar(`/locais/editarEmpresa/${localEditando.fkEmpresa}`, 'PUT', { nomeFantasia: nome, cnpj: cnpj })
+      .then(function () {
+        div_msg_editar.innerHTML = '';
+        fecharPopups();
+        startMeusLocais();
+      })
+      .catch(function () {
+        div_msg_editar.innerHTML = 'Não foi possível salvar a empresa';
+      });
   }
 }
 
 function proximo() {
-  let cep = input_cep.value;
-  let logradouro = input_logradouro.value;
-  let numero = input_numero.value;
-  let bairro = input_bairro.value;
-  let cidade = input_cidade.value;
-  let estado = input_estado.value;
+  let endereco = {};
+  camposEndereco.forEach(function (campo) {
+    endereco[campo] = window[`input_${campo}`].value;
+  });
 
-  if (cep.length != 8) {
+  if (!/^\d{8}$/.test(endereco.cep)) {
     div_msg_endereco.innerHTML = 'O CEP deve ter 8 números';
-  } else if (logradouro == '' || numero == '' || bairro == '' || cidade == '') {
+  } else if (endereco.logradouro == '' || endereco.numero == '' || endereco.bairro == '' || endereco.cidade == '') {
     div_msg_endereco.innerHTML = 'Preencha todos os campos';
-  } else if (estado.length != 2) {
-    div_msg_endereco.innerHTML = 'O estado deve ter pelo menos 2 letras';
+  } else if (endereco.estado.length != 2) {
+    div_msg_endereco.innerHTML = 'O estado deve ter 2 letras';
   } else {
-    div_msg_endereco.innerHTML = '';
-    fecharPopups();
-    abrirAmbientes(`${logradouro}, ${numero} · ${cidade} - ${estado}`, []);
+    enviar(`/locais/editarEndereco/${localEditando.idEndereco}`, 'PUT', endereco)
+      .then(function () {
+        div_msg_endereco.innerHTML = '';
+        fecharPopups();
+        startMeusLocais();
+        abrirAmbientes(`${endereco.logradouro}, ${endereco.numero} · ${endereco.cidade} - ${endereco.estado}`);
+      })
+      .catch(function () {
+        div_msg_endereco.innerHTML = 'Não foi possível salvar o endereço';
+      });
   }
 }
 
-// Vetor com os ambientes que aparecem na lista do pop-up
-let listaAmbientes = [];
+function salvarAmbiente() {
+  let ambiente = {
+    nomePrincipal: input_nome_principal.value,
+    nomeAuxiliar: input_nome_auxiliar.value,
+    descricao: input_descricao.value,
+    temperaturaMin: Number(input_temp_min.value),
+    temperaturaMax: Number(input_temp_max.value),
+    umidadeMin: Number(input_umid_min.value),
+    umidadeMax: Number(input_umid_max.value),
+  };
 
-function adicionarAmbiente() {
-  let nome = input_nome_principal.value;
-  let tempMin = Number(input_temp_min.value);
-  let tempMax = Number(input_temp_max.value);
-  let umidMin = Number(input_umid_min.value);
-  let umidMax = Number(input_umid_max.value);
-
-  if (nome == '') {
+  if (ambiente.nomePrincipal == '') {
     div_msg_ambientes.innerHTML = 'Preencha o nome principal';
-  } else if (tempMin >= tempMax) {
+  } else if (ambiente.temperaturaMin >= ambiente.temperaturaMax) {
     div_msg_ambientes.innerHTML = 'A temperatura mínima deve ser menor que a máxima';
-  } else if (umidMin >= umidMax) {
+  } else if (ambiente.umidadeMin >= ambiente.umidadeMax) {
     div_msg_ambientes.innerHTML = 'A umidade mínima deve ser menor que a máxima';
   } else {
-    div_msg_ambientes.innerHTML = '';
-    listaAmbientes.push(nome);
-    mostrarLista();
+    enviar(`/locais/cadastrarAmbiente/${localEditando.idEndereco}`, 'POST', ambiente)
+      .then(function () {
+        div_msg_ambientes.innerHTML = '';
+        fecharPopups();
+        startMeusLocais();
+      })
+      .catch(function () {
+        div_msg_ambientes.innerHTML = 'Não foi possível salvar o ambiente';
+      });
   }
 }
 
-function removerAmbiente(posicao) {
-  listaAmbientes.splice(posicao, 1);
-  mostrarLista();
-}
-
-function mostrarLista() {
-  div_lista.innerHTML = '';
-  let i = 0;
-
-  while (i < listaAmbientes.length) {
-    div_lista.innerHTML += `
-      <div class="item-lista">
-        <span><span class="bolinha">●</span> ${listaAmbientes[i]}</span>
-        <button class="btn-vermelho" onclick="removerAmbiente(${i})">Remover</button>
-      </div>
-    `;
-    i++;
-  }
-}
+startMeusLocais();

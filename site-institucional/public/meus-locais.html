@@ -34,65 +34,7 @@
       <h1>Meus locais</h1>
     </div>
 
-    <!-- Empresa 1 -->
-    <div class="empresa-header">
-      <div>
-        <h2>Laticínios Serra Azul</h2>
-      </div>
-      <div>
-        <button class="btn-link" onclick="abrirEditarEmpresa('Laticínios Serra Azul', '12345678000190')">Editar empresa</button>
-      </div>
-    </div>
-
-    <div class="enderecos">
-      <div class="endereco-card">
-        <div class="endereco-header">
-          <div>
-            <h3>Rua das Acácias, 120</h3>
-            <p>CNPJ 12.345.678/0001-90</p>
-            <p>Serro - MG</p>
-          </div>
-          <button class="btn-link" onclick="abrirNovoEndereco('Laticínios Serra Azul')">Editar</button>
-        </div>
-        <p class="ambiente"><span class="bolinha">●</span> Sala de Maturação 1</p>
-        <p class="ambiente"><span class="bolinha">●</span> Sala de Maturação 2</p>
-      </div>
-
-      <div class="endereco-card">
-        <div class="endereco-header">
-          <div>
-            <h3>Avenida Tiradentes, 845</h3>
-            <p>CNPJ 12.345.678/0001-90</p>
-            <p>Poços de Caldas - MG</p>
-          </div>
-          <button class="btn-link" onclick="abrirNovoEndereco('Laticínios Serra Azul')">Editar</button>
-        </div>
-        <p class="vazio">Nenhum ambiente cadastrado.</p>
-      </div>
-    </div>
-
-    <!-- Empresa 2 -->
-    <div class="empresa-header">
-      <div>
-        <h2>Queijaria Veia Azul</h2>
-      </div>
-      <div>
-        <button class="btn-link" onclick="abrirEditarEmpresa('Queijaria Veia Azul', '23456789000101')">Editar empresa</button>
-      </div>
-    </div>
-
-    <div class="enderecos">
-      <div class="endereco-card">
-        <div class="endereco-header">
-          <div>
-            <h3>Estrada do Queijo Artesanal, 51</h3>
-            <p>CNPJ 23.456.789/0001-01</p>
-            <p>Araxá - MG</p>
-          </div>
-          <button class="btn-link" onclick="abrirNovoEndereco('Queijaria Veia Azul')">Editar</button>
-        </div>
-        <p class="ambiente"><span class="bolinha">●</span> Sala de Cura Roquefort</p>
-    </div>
+    <div id="div_locais"></div>
   </div>
 
   <!-- Pop-up: Nova empresa -->
@@ -145,7 +87,7 @@
   <div class="popup-fundo" id="popup_novo_endereco">
     <div class="popup">
       <div class="popup-header">
-        <h2>Novo endereço</h2>
+        <h2>Editar endereço</h2>
         <button class="popup-fechar" onclick="fecharPopups()">✕</button>
       </div>
 
@@ -250,9 +192,11 @@
           <input class="popup-input" id="input_umid_max" placeholder="98">
         </div>
       </div>
+      <div class="popup-msg" id="div_msg_ambientes"></div>
+
       <div class="popup-botoes">
         <button class="btn-branco" onclick="fecharPopups()">Pular</button>
-        <button class="btn-azul" onclick="fecharPopups()">Concluir</button>
+        <button class="btn-azul" onclick="salvarAmbiente()">Concluir</button>
       </div>
     </div>
   </div>
