@@ -24,6 +24,8 @@ function autenticar(req, res) {
                             id: resultadoAutenticar[0].idUsuario,
                             email: resultadoAutenticar[0].login,
                             fkCliente: resultadoAutenticar[0].fkCliente,
+                            fkEmpresa: resultadoAutenticar[0].fkEmpresa,
+                            cargo: resultadoAutenticar[0].cargo,
                             nome: resultadoAutenticar[0].nome
                         });
                         
