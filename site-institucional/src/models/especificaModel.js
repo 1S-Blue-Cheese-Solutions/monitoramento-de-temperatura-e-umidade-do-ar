@@ -22,7 +22,33 @@ function kpi2(fkSensorAmbiente, fkAmbienteProcesso) {
     return database.executar(instrucaoSql);
 }
 
+function kpi4(fkSensorAmbiente, fkAmbienteProcesso) {
+    var instrucaoSql = `
+    select
+sum(
+				case
+					when l.sensorTemperatura < a.temperaturaMin or l.sensorTemperatura > a.temperaturaMax
+					then 1
+					else 0
+				end
+			)
+			+ sum(
+				case
+					when l.sensorUmidade < a.umidadeMin or l.sensorUmidade > a.umidadeMax
+					then 1
+					else 0
+				end
+	) as 'Quantidade de alertas'
+from leituraSensor as l
+	join ambienteProcesso as a
+		on l.fkAmbienteProcesso = a.idAmbienteProcesso
+		where l.fkAmbienteProcesso = ${fkAmbienteProcesso} and l.fkSensorAmbiente = ${fkAmbienteProcesso}
+		and date(l.dataHora) >= curdate() - interval 1 day;
+    `
+}
+
 module.exports = {
     kpi1,
-    kpi2
+    kpi2,
+    kpi4
 }
