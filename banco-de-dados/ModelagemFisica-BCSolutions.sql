@@ -303,3 +303,4 @@ where idEndereco = 1;
 -- Cadastrar ambiente no endereço
 insert into ambienteProcesso (nomePrincipal, nomeAuxiliar, descricao, temperaturaMin, temperaturaMax, umidadeMin, umidadeMax, fkEndereco) values
 ('Câmara de Maturação 4', 'Câmara Fria D', 'Gorgonzola, 8 a 12 °C', 8.00, 12.00, 85, 95, 1);
+    
