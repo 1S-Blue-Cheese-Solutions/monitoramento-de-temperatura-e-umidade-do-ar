@@ -16,6 +16,7 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var especificaRouter = require("./src/routes/especifica");
 var locaisRouter = require("./src/routes/locais");
+var usuarioInterno = require("./src/routes/usuarioInterno");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,6 +28,7 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/especifica", especificaRouter);
 app.use("/locais", locaisRouter);
+app.use("/usuarioInterno", usuarioInterno);
 
 app.listen(PORTA_APP, function () {
     console.log(`

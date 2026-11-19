@@ -8,7 +8,7 @@ function listarPorEmpresa(req, res) {
         return;
     }
 
-    acessoModel.listarPorEmpresa(idEmpresa)
+    usuarioInternoModel.listarPorEmpresa(idEmpresa)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
