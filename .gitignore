@@ -7,3 +7,9 @@ package-lock.json
 
 # backups do MER do mysql workbench
 *.mwb.bak
+
+# variáveis de ambiente (senhas e configurações locais)
+# copie o .env.exemplo da pasta para .env / .env.dev e preencha com seus dados
+.env
+.env.*
+!.env.exemplo
