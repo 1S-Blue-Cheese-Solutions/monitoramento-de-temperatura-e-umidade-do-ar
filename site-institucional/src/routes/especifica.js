@@ -8,4 +8,8 @@ router.get("/kpi1", function (req, res) {
     especificaController.kpi1(req, res);
 })
 
+router.get("/kpi2", function (req, res) {
+    especificaController.kpi2(req, res);
+})
+
 module.exports = router;
