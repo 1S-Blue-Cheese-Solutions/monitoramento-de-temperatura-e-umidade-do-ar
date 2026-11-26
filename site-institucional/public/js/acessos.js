@@ -59,7 +59,7 @@ function listarUsuarios() {
   let idEmpresa = sessionStorage.FK_EMPRESA;
   let idUsuarioLogado = sessionStorage.ID_USUARIO;
 
-  fetch(`/acessos/listar/${idEmpresa}`)
+  fetch(`/usuarioInterno/listar/${idEmpresa}`)
     .then(function (resposta) {
       if (resposta.status == 204) {
         lista_usuarios.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
