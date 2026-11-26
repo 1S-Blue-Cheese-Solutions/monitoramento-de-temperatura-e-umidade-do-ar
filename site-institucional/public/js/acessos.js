@@ -44,8 +44,9 @@ function salvarLogin() {
     div_msg_editar.innerHTML = '';
     fecharPopups();
   }
+}
 
-  function pegarIniciais(nome) {
+function pegarIniciais(nome) {
   let partes = nome.split(" ");
   if (partes.length >= 2) {
     return partes[0][0] + partes[1][0];
@@ -102,6 +103,4 @@ function listarUsuarios() {
     .catch(function (erro) {
       console.log(erro);
     });
-}
-
 }
