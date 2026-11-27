@@ -25,7 +25,41 @@ function listar(req, res) {
   var idCliente = req.params.idCliente;
   if (idInvalido(res, idCliente, "idCliente")) return;
 
-  responder(res, locaisModel.listar(idCliente));
+  // empresa atual de quem está logado (vem como ?idEmpresa=); 0 quando não vier
+  var idEmpresaAtual = Number(req.query.idEmpresa) || 0;
+
+  responder(res, locaisModel.listar(idCliente, idEmpresaAtual));
+}
+
+// Cria a empresa junto com o endereço (o endereço é obrigatório para ela aparecer na tela)
+function cadastrarEmpresa(req, res) {
+  var e = req.body;
+  var en = e.endereco || {};
+
+  if (idInvalido(res, e.fkCliente, "fkCliente")) return;
+
+  if (!e.nomeFantasia) {
+    return res.status(400).send("Preencha o nome fantasia!");
+  }
+  if (!/^\d{14}$/.test(e.cnpj || "")) {
+    return res.status(400).send("O CNPJ deve ter 14 números!");
+  }
+  if (!/^\d{8}$/.test(en.cep || "") || !en.logradouro || !en.bairro || !en.cidade || !en.estado || en.estado.length != 2) {
+    return res.status(400).send("Endereço incompleto!");
+  }
+
+  locaisModel.cadastrarEmpresa(e.fkCliente, e, en)
+    .then(function (resultado) {
+      res.status(201).json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      if (erro.code == "ER_DUP_ENTRY") {
+        res.status(409).send("Já existe uma empresa com esse CNPJ!");
+      } else {
+        res.status(500).json(erro.sqlMessage);
+      }
+    });
 }
 
 function editarEmpresa(req, res) {
@@ -33,6 +67,13 @@ function editarEmpresa(req, res) {
   if (idInvalido(res, idEmpresa, "idEmpresa")) return;
 
   responder(res, locaisModel.editarEmpresa(idEmpresa, req.body));
+}
+
+function cadastrarEndereco(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+  if (idInvalido(res, idEmpresa, "idEmpresa")) return;
+
+  responder(res, locaisModel.cadastrarEndereco(idEmpresa, req.body));
 }
 
 function editarEndereco(req, res) {
@@ -49,4 +90,4 @@ function cadastrarAmbiente(req, res) {
   responder(res, locaisModel.cadastrarAmbiente(idEndereco, req.body));
 }
 
-module.exports = { listar, editarEmpresa, editarEndereco, cadastrarAmbiente };
+module.exports = { listar, cadastrarEmpresa, editarEmpresa, cadastrarEndereco, editarEndereco, cadastrarAmbiente };

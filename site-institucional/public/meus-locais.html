@@ -32,6 +32,7 @@
   <div class="locais">
     <div class="locais-header">
       <h1>Meus locais</h1>
+      <button class="btn-azul" onclick="abrirNovaEmpresa()">+ Nova empresa</button>
     </div>
 
     <div id="div_locais"></div>
@@ -55,7 +56,7 @@
 
       <div class="popup-botoes">
         <button class="btn-branco" onclick="fecharPopups()">Cancelar</button>
-        <button class="btn-azul" onclick="salvarNovaEmpresa()">Salvar empresa</button>
+        <button class="btn-azul" onclick="salvarNovaEmpresa()">Próximo →</button>
       </div>
     </div>
   </div>
@@ -87,7 +88,7 @@
   <div class="popup-fundo" id="popup_novo_endereco">
     <div class="popup">
       <div class="popup-header">
-        <h2>Editar endereço</h2>
+        <h2 id="titulo_endereco">Editar endereço</h2>
         <button class="popup-fechar" onclick="fecharPopups()">✕</button>
       </div>
 

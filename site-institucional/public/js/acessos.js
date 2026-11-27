@@ -20,7 +20,7 @@ function abrirEditarLogin(login) {
 function carregarEmpresas() {
   let idCliente = sessionStorage.FK_CLIENTE;
 
-  fetch(`/usuarioInterno/empresas/${idCliente}`)
+  fetch(`/usuarioInterno/empresas/${idCliente}?idEmpresa=${sessionStorage.FK_EMPRESA}`)
     .then(function (resposta) {
       if (resposta.status == 204) {
         return;

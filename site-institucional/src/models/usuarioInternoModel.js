@@ -14,11 +14,11 @@ function listarPorEmpresa(idEmpresa) {
     return database.executar(instrucaoSql);
 }
 
-function listarEmpresas(idCliente) {
+function listarEmpresas(idCliente, idEmpresaAtual) {
     var instrucaoSql = `
         SELECT idEmpresa, nomeFantasia
         FROM empresa
-        WHERE fkCliente = ${idCliente}
+        WHERE fkCliente = ${idCliente} OR idEmpresa = ${idEmpresaAtual}
         ORDER BY nomeFantasia;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

@@ -30,7 +30,10 @@ function listarEmpresas(req, res) {
         return;
     }
 
-    usuarioInternoModel.listarEmpresas(idCliente)
+    // empresa atual de quem está logado (vem como ?idEmpresa=); 0 quando não vier
+    var idEmpresaAtual = Number(req.query.idEmpresa) || 0;
+
+    usuarioInternoModel.listarEmpresas(idCliente, idEmpresaAtual)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
