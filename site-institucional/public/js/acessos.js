@@ -4,6 +4,11 @@ function fecharPopups() {
 }
 
 function abrirNovoLogin() {
+  input_login_novo.value = '';
+  input_senha_novo.value = '';
+  input_confirmar_novo.value = '';
+  select_sala_novo.value = sessionStorage.FK_EMPRESA || '';
+  div_msg_novo.innerHTML = '';
   popup_novo_login.style.display = 'flex';
 }
 
@@ -12,20 +17,79 @@ function abrirEditarLogin(login) {
   popup_editar_login.style.display = 'flex';
 }
 
+function carregarEmpresas() {
+  let idCliente = sessionStorage.FK_CLIENTE;
+
+  fetch(`/usuarioInterno/empresas/${idCliente}`)
+    .then(function (resposta) {
+      if (resposta.status == 204) {
+        return;
+      }
+
+      if (resposta.ok) {
+        resposta.json().then(function (empresas) {
+          let opcoes = '<option value="" disabled>Selecione uma empresa</option>';
+
+          for (let i = 0; i < empresas.length; i++) {
+            opcoes += `<option value="${empresas[i].idEmpresa}">${empresas[i].nomeFantasia}</option>`;
+          }
+
+          select_sala_novo.innerHTML = opcoes;
+          select_sala_editar.innerHTML = opcoes;
+
+          // deixa a empresa atual de quem está logado já selecionada
+          select_sala_novo.value = sessionStorage.FK_EMPRESA || '';
+        });
+      } else {
+        console.log("Erro ao listar empresas");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+    });
+}
+
 function criarLogin() {
   let login = input_login_novo.value;
   let senha = input_senha_novo.value;
   let confirmar = input_confirmar_novo.value;
+  let fkEmpresa = select_sala_novo.value;
 
   if (login == '') {
     div_msg_novo.innerHTML = 'Informe um login';
+  } else if (!(login.includes('@') && login.endsWith('.com'))) {
+    div_msg_novo.innerHTML = 'O login deve ser um e-mail (com \'@\' e terminando em \'.com\')';
   } else if (senha.length < 8) {
     div_msg_novo.innerHTML = 'A senha precisa ter pelo menos 8 caracteres';
   } else if (senha != confirmar) {
     div_msg_novo.innerHTML = 'As senhas não coincidem';
+  } else if (fkEmpresa == '') {
+    div_msg_novo.innerHTML = 'Selecione uma empresa';
   } else {
     div_msg_novo.innerHTML = '';
-    fecharPopups();
+
+    fetch('/usuarioInterno/cadastrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        loginServer: login,
+        senhaServer: senha,
+        fkClienteServer: sessionStorage.FK_CLIENTE,
+        fkEmpresaServer: fkEmpresa
+      })
+    }).then(function (resposta) {
+      if (resposta.ok) {
+        fecharPopups();
+        listarUsuarios();
+      } else {
+        resposta.text().then(function (texto) {
+          div_msg_novo.innerHTML = texto || 'Erro ao criar login';
+        });
+      }
+    }).catch(function (erro) {
+      console.log(erro);
+      div_msg_novo.innerHTML = 'Erro ao criar login';
+    });
   }
 }
 

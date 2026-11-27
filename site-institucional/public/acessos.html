@@ -6,7 +6,7 @@
   <link rel="shortcut icon" href="./assets/LogoBlueCheese.png" type="image/x-icon">
   <link rel="stylesheet" href="./style.css">
 </head>
-<body onload="validarSessao(); listarUsuarios()">
+<body onload="validarSessao(); listarUsuarios(); carregarEmpresas()">
 
   <!-- Menu lateral -->
   <div class="dashboard-sidebar">
@@ -46,7 +46,7 @@
       </div>
 
       <p class="popup-label">Login</p>
-      <input class="popup-input" id="input_login_novo" placeholder="sala.maturacao">
+      <input class="popup-input" id="input_login_novo" placeholder="funcionario@empresa.com">
 
       <div class="linha">
         <div>
@@ -59,12 +59,9 @@
         </div>
       </div>
 
-      <p class="popup-label">Sala de maturação</p>
+      <p class="popup-label">Empresa</p>
       <select class="popup-input" id="select_sala_novo">
-        <option value="" disabled selected>Selecione uma opção</option>
-        <option value="1">Queijaria Serra Azul</option>
-        <option value="2">Laticínios Vale Verde</option>
-        <option value="3">Fazenda Azul Gourmet</option>
+        <option value="" disabled selected>Selecione uma empresa</option>
       </select>
 
       <div class="popup-msg" id="div_msg_novo"></div>
@@ -98,12 +95,9 @@
         </div>
       </div>
 
-      <p class="popup-label">Sala de maturação</p>
+      <p class="popup-label">Empresa</p>
       <select class="popup-input" id="select_sala_editar">
-        <option value="" disabled selected>Selecione uma opção</option>
-        <option value="1">Queijaria Serra Azul</option>
-        <option value="2">Laticínios Vale Verde</option>
-        <option value="3">Fazenda Azul Gourmet</option>
+        <option value="" disabled selected>Selecione uma empresa</option>
       </select>
 
       <p class="acesso-ajuda">Deixe a senha em branco para manter a atual.</p>
