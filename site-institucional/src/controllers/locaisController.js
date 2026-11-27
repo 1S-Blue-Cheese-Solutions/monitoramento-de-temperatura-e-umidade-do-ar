@@ -12,88 +12,41 @@ function responder(res, promessa) {
     });
 }
 
-function listar(req, res) {
-  responder(res, locaisModel.listar(req.params.idCliente));
+// Responde 400 e retorna true quando o id da rota não veio
+function idInvalido(res, id, nome) {
+  if (id == undefined || id == "undefined") {
+    res.status(400).send(`Seu ${nome} está undefined!`);
+    return true;
+  }
+  return false;
+}
 
-  var fkCliente = req.body.fkCliente;
-  
-    if(fkCliente == undefined) {
-        res.status(400).send("Seu fkCliente está undefined!");
-      } 
-         locaisModel.listar(fkCliente).then(function (resultado) {
-            if (resultado.length > 0) {
-                res.status(200).json(resultado);
-            } else {
-                  res.status(204).send("Nenhum resultado encontrado!")
-              }
-          }).catch(function (erro) {
-              console.log(erro);
-              console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
-              res.status(500).json(erro.sqlMessage);
-          });
+function listar(req, res) {
+  var idCliente = req.params.idCliente;
+  if (idInvalido(res, idCliente, "idCliente")) return;
+
+  responder(res, locaisModel.listar(idCliente));
 }
 
 function editarEmpresa(req, res) {
-  responder(res, locaisModel.editarEmpresa(req.params.idEmpresa, req.body));
+  var idEmpresa = req.params.idEmpresa;
+  if (idInvalido(res, idEmpresa, "idEmpresa")) return;
 
-    var idEmpresa = req.body.idEmpresa;
-  
-    if(idEmpresa == undefined) {
-        res.status(400).send("Seu idEmpresa está undefined!");
-      } 
-         locaisModel.listar(idEmpresa).then(function (resultado) {
-            if (resultado.length > 0) {
-                res.status(200).json(resultado);
-            } else {
-                  res.status(204).send("Nenhum resultado encontrado!")
-              }
-          }).catch(function (erro) {
-              console.log(erro);
-              console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
-              res.status(500).json(erro.sqlMessage);
-          });
+  responder(res, locaisModel.editarEmpresa(idEmpresa, req.body));
 }
 
 function editarEndereco(req, res) {
-  responder(res, locaisModel.editarEndereco(req.params.idEndereco, req.body));
+  var idEndereco = req.params.idEndereco;
+  if (idInvalido(res, idEndereco, "idEndereco")) return;
 
-      var idEndereco = req.body.idEmpresa;
-
-      if(idEndereco == undefined) {
-        res.status(400).send("Seu idEmpresa está undefined!");
-      } 
-         locaisModel.listar(idEndereco).then(function (resultado) {
-            if (resultado.length > 0) {
-                res.status(200).json(resultado);
-            } else {
-                  res.status(204).send("Nenhum resultado encontrado!")
-              }
-          }).catch(function (erro) {
-              console.log(erro);
-              console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
-              res.status(500).json(erro.sqlMessage);
-          });
+  responder(res, locaisModel.editarEndereco(idEndereco, req.body));
 }
 
 function cadastrarAmbiente(req, res) {
-  responder(res, locaisModel.cadastrarAmbiente(req.params.idEndereco, req.body));
+  var idEndereco = req.params.idEndereco;
+  if (idInvalido(res, idEndereco, "idEndereco")) return;
 
-        var idEndereco = req.body.idEmpresa;
-
-      if(idEndereco == undefined) {
-        res.status(400).send("Seu idEmpresa está undefined!");
-      } 
-         locaisModel.listar(idEndereco).then(function (resultado) {
-            if (resultado.length > 0) {
-                res.status(200).json(resultado);
-            } else {
-                  res.status(204).send("Nenhum resultado encontrado!")
-              }
-          }).catch(function (erro) {
-              console.log(erro);
-              console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
-              res.status(500).json(erro.sqlMessage);
-          });
+  responder(res, locaisModel.cadastrarAmbiente(idEndereco, req.body));
 }
 
 module.exports = { listar, editarEmpresa, editarEndereco, cadastrarAmbiente };
